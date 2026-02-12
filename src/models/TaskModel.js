@@ -38,5 +38,9 @@ export default class TaskModel {
   hydrate(tasks) {
     this.#tasks = Array.isArray(tasks) ? tasks : [];
   }
+
+  clear() {
+    this.#tasks = [];
+  }
   
 }

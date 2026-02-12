@@ -9,22 +9,18 @@ export default class AppController {
   }
 
   #sync() {
+    this.storage.save(this.model.getState().tasks);
     this.bus.emit("tasks:changed", this.model.getState());
   }
 
-  #saveToStorage() {
-    this.storage.save(this.model.getState().tasks);
-  }
-
-  #loadFromStorage() {
+  #start() {
     const data = this.storage.load();
     if (data) {
       this.model.hydrate(data.tasks);
+      this.#sync();
+    }else{
+      this.#sync();
     }
-  }
-
-  #clearStorage() {
-    this.storage.clear();
   }
 
   #changeBusListener() {
@@ -39,7 +35,6 @@ export default class AppController {
     this.view.bindAddTask((title) => {
       if (!title.trim()) return; // validação mínima
       this.model.addTask(title);
-      this.#saveToStorage();
       this.view.resetTaskForm();
       this.#sync();
     });
@@ -48,21 +43,25 @@ export default class AppController {
     this.view.bindTaskActions({
       onToggle: (id) => {
         this.model.toggleTask(id);
-        this.#saveToStorage();
         this.#sync();
       },
       onRemove: (id) => {
-        this.model.removeTask(id);  
-        this.#saveToStorage();
+        this.model.removeTask(id);
         this.#sync();
       },
+    });
+
+    this.view.bindClearAllTasks(() => {
+      this.model.clear();
+      this.storage.clear();
+      this.#sync();
     });
 
     // 3) Model -> Controller -> View (reatividade)
     this.#changeBusListener();
 
     // 4) primeiro render
-    this.#loadFromStorage();
-    this.#sync();
+    this.#start();
+    
   }
 }
