@@ -52,7 +52,7 @@ export default class AppController {
     });
 
     this.view.bindClearAllTasks(() => {
-      this.model.clear();
+      this.model.clearAll();
       this.storage.clear();
       this.#sync();
     });

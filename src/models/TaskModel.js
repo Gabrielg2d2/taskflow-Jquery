@@ -39,7 +39,7 @@ export default class TaskModel {
     this.#tasks = Array.isArray(tasks) ? tasks : [];
   }
 
-  clear() {
+  clearAll() {
     this.#tasks = [];
   }
   
