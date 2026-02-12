@@ -1,4 +1,4 @@
-export default class AppController {
+export default class TaskController {
   #unsubTasksChanged;
 
   constructor({ bus, model, view, storage }) {

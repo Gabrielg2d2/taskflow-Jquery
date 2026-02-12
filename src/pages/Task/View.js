@@ -1,5 +1,5 @@
 import $ from "jquery";
-import escapeHtml from "../@utils/escapeHtml.js";
+import escapeHtml from "../../@utils/escapeHtml.js";
 
 const styles = {
   container: "max-w-xl mx-auto p-6",
@@ -27,7 +27,6 @@ const styles = {
 
 export default class TaskView {
   #minCharLength = 1;
-  #minTasksLength = 0;
 
   constructor(rootSelector) {
     this.$root = $(rootSelector);
