@@ -10,7 +10,7 @@ export default class AppController {
       this.view.bindAddTask((title) => {
         if (!title) return; // validação mínima
         this.model.addTask(title);
-        this.view.clearForm();
+        this.view.resetTaskForm();
       });
   
       // 2) View -> Controller -> Model

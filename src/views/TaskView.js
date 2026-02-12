@@ -84,7 +84,7 @@ export default class TaskView {
     this.$input.trigger("focus");
   }
 
-  clearForm() {
+  resetTaskForm() {
     this.#clearInput();
     this.#updateSubmitButtonState();
   }
