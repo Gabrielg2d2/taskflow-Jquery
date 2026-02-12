@@ -3,7 +3,6 @@ import escapeHtml from "../@utils/escapeHtml.js";
 
 const styles = {
   container: "max-w-xl mx-auto p-6",
-  title: "text-2xl font-semibold mb-4",
   form: "flex gap-2 mb-4",
   input: "flex-1 border rounded-xl px-3 py-2",
   button: "bg-black text-white px-4 py-2 rounded-xl",
@@ -15,6 +14,11 @@ const styles = {
   itemBtns: "flex gap-2",
   itemBtnToggle: "px-3 py-1 rounded-xl border",
   itemBtnRemove: "px-3 py-1 rounded-xl border text-red-600",
+  header: "flex items-center justify-between mb-4",
+  title: "text-2xl font-semibold mb-4",
+  sectionTotal: "flex items-center gap-3",
+  subtitle: "text-gray-500",
+  number: "text-gray-700 font-bold",
 };
 
 export default class TaskView {
@@ -25,7 +29,15 @@ export default class TaskView {
 
     this.$root.html(`
       <div class="${styles.container}">
+
+      <div class="${styles.header}">
         <h1 class="${styles.title}">TaskFlow</h1>
+          <div class="${styles.sectionTotal}">
+            <span class="${styles.subtitle}">Total: <span class="${styles.number}">0</span></span>
+            <span class="${styles.subtitle}">Feitas: <span class="${styles.number}">0</span></span>
+            <span class="${styles.subtitle}">Pendentes: <span class="${styles.number}">0</span></span>
+          </div>
+        </div>
 
         <form data-js="task-form" class="${styles.form}">
           <input
