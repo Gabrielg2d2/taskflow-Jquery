@@ -73,7 +73,7 @@ export default class TaskView {
     this.$statsPending = this.$root.find('[data-js="pending-tasks"]');
 
     // watch input changes
-    this.$input.on("input", () => this.#updateSubmitButtonState());
+    this.$input.off("input.taskflow").on("input.taskflow", () => this.#updateSubmitButtonState());
   }
 
   #updateSubmitButtonState() {
@@ -132,20 +132,24 @@ export default class TaskView {
   }
 
   bindAddTask(handler) {
-    this.$form.off("submit").on("submit", (e) => {
+    this.$form.off("submit.taskflow");
+
+    this.$form.on("submit.taskflow", (e) => {
       e.preventDefault();
       const title = this.$input.val().trim();
-      handler?.(title);
+      handler(title);
     });
   }
 
   bindTaskActions({ onToggle, onRemove }) {
-    this.$list.off("click").on("click", '[data-action="toggle"]', (e) => {
+    this.$list.off("click.taskflow");
+
+    this.$list.on("click.taskflow", '[data-action="toggle"]', (e) => {
       const id = $(e.currentTarget).closest("[data-id]").data("id");
       onToggle(id);
     });
 
-    this.$list.off("click").on("click", '[data-action="remove"]', (e) => {
+    this.$list.on("click.taskflow", '[data-action="remove"]', (e) => {
       const id = $(e.currentTarget).closest("[data-id]").data("id");
       onRemove(id);
     });
