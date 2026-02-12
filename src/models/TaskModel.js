@@ -4,6 +4,11 @@ export default class TaskModel {
   getState() {
     return {
       tasks: this.#tasks.slice(),
+      sectionTotal: {
+        total: this.#tasks.length,
+        done: this.#tasks.filter((item) => item.done).length,
+        pending: this.#tasks.filter((item) => !item.done).length,
+      },
     };
   }
 

@@ -28,11 +28,11 @@ export default class AppController {
   
       // 3) Model -> Controller -> View (reatividade)
       this.bus.on("tasks:changed", (state) => {
-        this.view.render(state);
+        this.view.renderTaskList(state);
       });
   
       // 4) primeiro render
-      this.view.render(this.model.getState());
+      this.view.renderTaskList(this.model.getState());
     }
   }
   
