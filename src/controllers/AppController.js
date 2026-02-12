@@ -9,8 +9,9 @@ export default class AppController {
   }
 
   #sync() {
-    this.storage.save(this.model.getState().tasks);
-    this.bus.emit("tasks:changed", this.model.getState());
+    const state = this.model.getState();
+    this.storage.save(state.tasks);
+    this.bus.emit("tasks:changed", state);
   }
 
   #start() {
