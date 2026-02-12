@@ -33,9 +33,9 @@ export default class TaskView {
       <div class="${styles.header}">
         <h1 class="${styles.title}">TaskFlow</h1>
           <div class="${styles.sectionTotal}">
-            <span class="${styles.subtitle}">Total: <span class="${styles.number}">0</span></span>
-            <span class="${styles.subtitle}">Feitas: <span class="${styles.number}">0</span></span>
-            <span class="${styles.subtitle}">Pendentes: <span class="${styles.number}">0</span></span>
+            <span class="${styles.subtitle}">Total: <strong class="${styles.number} data-js="total-tasks">0</strong></span>
+            <span class="${styles.subtitle}">Feitas: <strong class="${styles.number} data-js="done-tasks">0</strong></span>
+            <span class="${styles.subtitle}">Pendentes: <strong class="${styles.number} data-js="pending-tasks">0</strong></span>
           </div>
         </div>
 
@@ -60,6 +60,9 @@ export default class TaskView {
     this.$input = this.$root.find('[data-js="task-input"]');
     this.$button = this.$root.find('[data-js="task-submit"]');
     this.$list = this.$root.find('[data-js="task-list"]');
+    this.$totalTasks = this.$root.find('[data-js="total-tasks"]');
+    this.$doneTasks = this.$root.find('[data-js="done-tasks"]');
+    this.$pendingTasks = this.$root.find('[data-js="pending-tasks"]');
 
     // watch input changes
     this.$input.on("input", () => this.updateSubmitButtonState());
@@ -101,7 +104,7 @@ export default class TaskView {
     this.updateSubmitButtonState();
   }
 
-  render(state) {
+  renderTaskList(state) {
     const html = state.tasks
       .map((item) => {
         const safeTitle = escapeHtml(item.title);
