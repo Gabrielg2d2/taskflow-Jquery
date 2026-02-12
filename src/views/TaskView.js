@@ -73,52 +73,27 @@ export default class TaskView {
     this.$statsPending = this.$root.find('[data-js="pending-tasks"]');
 
     // watch input changes
-    this.$input.on("input", () => this.updateSubmitButtonState());
+    this.$input.on("input", () => this.#updateSubmitButtonState());
   }
 
-  bindAddTask(handler) {
-    this.$form.on("submit", (e) => {
-      e.preventDefault();
-      const title = this.$input.val().trim();
-      handler(title);
-    });
-  }
-
-  bindTaskActions({ onToggle, onRemove }) {
-    this.$list.on("click", '[data-action="toggle"]', (e) => {
-      const id = $(e.currentTarget).closest("[data-id]").data("id");
-      onToggle(id);
-    });
-
-    this.$list.on("click", '[data-action="remove"]', (e) => {
-      const id = $(e.currentTarget).closest("[data-id]").data("id");
-      onRemove(id);
-    });
-  }
-
-  updateSubmitButtonState() {
+  #updateSubmitButtonState() {
     const hasValue = this.$input.val().trim().length > this.#minCharLength;
     this.$button.prop("disabled", !hasValue);
     this.$button.toggleClass(styles.buttonDisabled, !hasValue);
   }
 
-  clearInput() {
+  #clearInput() {
     this.$input.val("");
     this.$input.trigger("focus");
   }
 
-  resetTaskForm() {
-    this.clearInput();
-    this.updateSubmitButtonState();
-  }
-
-  renderTaskHeader(state) {
+  #renderTaskHeader(state) {
     this.$statsTotal.text(state.stats.total);
     this.$statsDone.text(state.stats.done);
     this.$statsPending.text(state.stats.pending);
   }
 
-  renderTaskList(state) {
+  #renderTaskList(state) {
     const html = state.tasks
       .map((item) => {
         const safeTitle = escapeHtml(item.title);
@@ -146,8 +121,33 @@ export default class TaskView {
     this.$list.html(html);
   }
 
+  resetTaskForm() {
+    this.#clearInput();
+    this.#updateSubmitButtonState();
+  }
+
   render(state) {
-    this.renderTaskList(state);
-    this.renderTaskHeader(state);
+    this.#renderTaskList(state);
+    this.#renderTaskHeader(state);
+  }
+
+  bindAddTask(handler) {
+    this.$form.on("submit", (e) => {
+      e.preventDefault();
+      const title = this.$input.val().trim();
+      handler(title);
+    });
+  }
+
+  bindTaskActions({ onToggle, onRemove }) {
+    this.$list.on("click", '[data-action="toggle"]', (e) => {
+      const id = $(e.currentTarget).closest("[data-id]").data("id");
+      onToggle(id);
+    });
+
+    this.$list.on("click", '[data-action="remove"]', (e) => {
+      const id = $(e.currentTarget).closest("[data-id]").data("id");
+      onRemove(id);
+    });
   }
 }
