@@ -18,10 +18,8 @@ export default class AppController {
     const data = this.storage.load();
     if (data) {
       this.model.hydrate(data.tasks);
-      this.#sync();
-    }else{
-      this.#sync();
     }
+    this.#sync();
   }
 
   #changeBusListener() {
@@ -34,7 +32,7 @@ export default class AppController {
   init() {
     // 1) View -> Controller -> Model
     this.view.bindAddTask((title) => {
-      if (!title.trim()) return; // validação mínima
+      if (!title.trim()) return;
       this.model.addTask(title);
       this.view.resetTaskForm();
       this.#sync();
@@ -63,6 +61,5 @@ export default class AppController {
 
     // 4) primeiro render
     this.#start();
-    
   }
 }
