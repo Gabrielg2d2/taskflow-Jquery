@@ -132,20 +132,20 @@ export default class TaskView {
   }
 
   bindAddTask(handler) {
-    this.$form.on("submit", (e) => {
+    this.$form.off("submit").on("submit", (e) => {
       e.preventDefault();
       const title = this.$input.val().trim();
-      handler(title);
+      handler?.(title);
     });
   }
 
   bindTaskActions({ onToggle, onRemove }) {
-    this.$list.on("click", '[data-action="toggle"]', (e) => {
+    this.$list.off("click").on("click", '[data-action="toggle"]', (e) => {
       const id = $(e.currentTarget).closest("[data-id]").data("id");
       onToggle(id);
     });
 
-    this.$list.on("click", '[data-action="remove"]', (e) => {
+    this.$list.off("click").on("click", '[data-action="remove"]', (e) => {
       const id = $(e.currentTarget).closest("[data-id]").data("id");
       onRemove(id);
     });
