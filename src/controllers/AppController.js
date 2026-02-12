@@ -11,12 +11,19 @@ export default class AppController {
         if (!title) return; // validação mínima
         this.model.addTask(title);
         this.view.resetTaskForm();
+        this.bus.emit("tasks:changed", this.model.getState());
       });
   
       // 2) View -> Controller -> Model
       this.view.bindTaskActions({
-        onToggle: (id) => this.model.toggleTask(id),
-        onRemove: (id) => this.model.removeTask(id),
+        onToggle: (id) => {
+          this.model.toggleTask(id);
+          this.bus.emit("tasks:changed", this.model.getState());
+        },
+        onRemove: (id) => {
+          this.model.removeTask(id);
+          this.bus.emit("tasks:changed", this.model.getState());
+        },
       });
   
       // 3) Model -> Controller -> View (reatividade)

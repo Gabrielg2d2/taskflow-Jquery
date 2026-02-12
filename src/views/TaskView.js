@@ -73,20 +73,20 @@ export default class TaskView {
     });
   }
 
-  #updateSubmitButtonState() {
+  updateSubmitButtonState() {
     const hasValue = this.$input.val().trim().length > this.#minCharLength;
     this.$button.prop("disabled", !hasValue);
     this.$button.toggleClass(styles.buttonDisabled, !hasValue);
   }
 
-  #clearInput() {
+  clearInput() {
     this.$input.val("");
     this.$input.trigger("focus");
   }
 
   resetTaskForm() {
-    this.#clearInput();
-    this.#updateSubmitButtonState();
+    this.clearInput();
+    this.updateSubmitButtonState();
   }
 
   render(state) {
