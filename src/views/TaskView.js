@@ -16,9 +16,9 @@ const styles = {
   itemBtnRemove: "px-3 py-1 rounded-xl border text-red-600",
   header: "flex items-center justify-between mb-4",
   title: "text-2xl font-semibold mb-4",
-  sectionTotal: "flex items-center gap-3",
+  sectionStats: "flex items-center gap-3",
   subtitle: "text-gray-500",
-  number: "text-gray-700 font-bold",
+  numberTasks: "text-gray-700 font-bold",
 };
 
 export default class TaskView {
@@ -32,10 +32,16 @@ export default class TaskView {
 
       <div class="${styles.header}">
         <h1 class="${styles.title}">TaskFlow</h1>
-          <div class="${styles.sectionTotal}">
-            <span class="${styles.subtitle}">Total: <strong class="${styles.number} data-js="total-tasks">0</strong></span>
-            <span class="${styles.subtitle}">Feitas: <strong class="${styles.number} data-js="done-tasks">0</strong></span>
-            <span class="${styles.subtitle}">Pendentes: <strong class="${styles.number} data-js="pending-tasks">0</strong></span>
+          <div class="${styles.sectionStats}">
+            <span class="${styles.subtitle}">
+              Total: <strong data-js="total-tasks" class="${styles.numberTasks}">0</strong>
+            </span>
+            <span class="${styles.subtitle}">
+              Feitas: <strong data-js="done-tasks" class="${styles.numberTasks}">0</strong>
+            </span>
+            <span class="${styles.subtitle}">
+              Pendentes: <strong data-js="pending-tasks" class="${styles.numberTasks}">0</strong>
+            </span>
           </div>
         </div>
 
@@ -60,9 +66,11 @@ export default class TaskView {
     this.$input = this.$root.find('[data-js="task-input"]');
     this.$button = this.$root.find('[data-js="task-submit"]');
     this.$list = this.$root.find('[data-js="task-list"]');
-    this.$totalTasks = this.$root.find('[data-js="total-tasks"]');
-    this.$doneTasks = this.$root.find('[data-js="done-tasks"]');
-    this.$pendingTasks = this.$root.find('[data-js="pending-tasks"]');
+
+    // cache task header
+    this.$statsTotal = this.$root.find('[data-js="total-tasks"]');
+    this.$statsDone = this.$root.find('[data-js="done-tasks"]');
+    this.$statsPending = this.$root.find('[data-js="pending-tasks"]');
 
     // watch input changes
     this.$input.on("input", () => this.updateSubmitButtonState());
@@ -104,6 +112,12 @@ export default class TaskView {
     this.updateSubmitButtonState();
   }
 
+  renderTaskHeader(state) {
+    this.$statsTotal.text(state.stats.total);
+    this.$statsDone.text(state.stats.done);
+    this.$statsPending.text(state.stats.pending);
+  }
+
   renderTaskList(state) {
     const html = state.tasks
       .map((item) => {
@@ -117,10 +131,10 @@ export default class TaskView {
             <span class="${doneClass}">${safeTitle}</span>
 
             <div class="${styles.itemBtns}">
-              <button data-action="toggle" class="${styles.itemBtnToggle}">
+              <button type="button" data-action="toggle" class="${styles.itemBtnToggle}">
                 ${btnText}
               </button>
-              <button data-action="remove" class="${styles.itemBtnRemove}">
+              <button type="button" data-action="remove" class="${styles.itemBtnRemove}">
                 Remover
               </button>
             </div>
@@ -130,5 +144,10 @@ export default class TaskView {
       .join("");
 
     this.$list.html(html);
+  }
+
+  render(state) {
+    this.renderTaskList(state);
+    this.renderTaskHeader(state);
   }
 }

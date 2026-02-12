@@ -4,6 +4,10 @@ export default class AppController {
       this.model = model;
       this.view = view;
     }
+
+    #sync() {
+      this.bus.emit("tasks:changed", this.model.getState());
+    }
   
     init() {
       // 1) View -> Controller -> Model
@@ -11,28 +15,28 @@ export default class AppController {
         if (!title) return; // validação mínima
         this.model.addTask(title);
         this.view.resetTaskForm();
-        this.bus.emit("tasks:changed", this.model.getState());
+        this.#sync();
       });
   
       // 2) View -> Controller -> Model
       this.view.bindTaskActions({
         onToggle: (id) => {
           this.model.toggleTask(id);
-          this.bus.emit("tasks:changed", this.model.getState());
+          this.#sync();
         },
         onRemove: (id) => {
           this.model.removeTask(id);
-          this.bus.emit("tasks:changed", this.model.getState());
+          this.#sync();
         },
       });
   
       // 3) Model -> Controller -> View (reatividade)
       this.bus.on("tasks:changed", (state) => {
-        this.view.renderTaskList(state);
+        this.view.render(state);
       });
   
       // 4) primeiro render
-      this.view.renderTaskList(this.model.getState());
+      this.#sync();
     }
   }
   

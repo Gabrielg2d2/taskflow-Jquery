@@ -2,12 +2,15 @@ export default class TaskModel {
   #tasks = [];
 
   getState() {
+    const total = this.#tasks.length;
+    const done = this.#tasks.filter(t => t.done).length;
+
     return {
       tasks: this.#tasks.slice(),
-      sectionTotal: {
-        total: this.#tasks.length,
-        done: this.#tasks.filter((item) => item.done).length,
-        pending: this.#tasks.filter((item) => !item.done).length,
+      stats: {
+        total,
+        done,
+        pending: total - done,
       },
     };
   }
