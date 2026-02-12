@@ -16,9 +16,12 @@ export default class TaskModel {
   }
 
   addTask(title) {
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) return;
+
     const task = {
       id: crypto.randomUUID(),
-      title,
+      title: trimmedTitle,
       done: false,
       createdAt: Date.now(),
     };
