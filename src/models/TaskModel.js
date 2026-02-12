@@ -34,4 +34,9 @@ export default class TaskModel {
   removeTask(id) {
     this.#tasks = this.#tasks.filter((item) => item.id !== id);
   }
+
+  hydrate(tasks) {
+    this.#tasks = Array.isArray(tasks) ? tasks : [];
+  }
+  
 }
