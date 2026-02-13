@@ -31,14 +31,13 @@ export default class TaskController {
   }
 
   init() {
-    // View -> Controller -> Model
     this.view.bindAddTask((title) => {
       if (!title.trim()) return;
       this.model.addTask(title);
+
       this.#sync();
     });
 
-    // View -> Controller -> Model
     this.view.bindTaskActions({
       onToggle: (id) => {
         this.model.toggleTask(id);
@@ -47,8 +46,18 @@ export default class TaskController {
       onRemove: (id) => {
         this.model.removeTask(id);
         this.#sync();
-      }
+      },
+      onEdit: (id, title) => {
+        this.view.enterEditMode(id, title);
+      },
     });
+
+    this.view.bindSaveTask((id, title) => {
+      this.model.editTask(id, title);
+      this.#sync();
+    });
+
+    this.view.cancelEditTask();
 
     this.view.bindClearAllTasks(() => {
       this.model.clearAll();
@@ -56,17 +65,7 @@ export default class TaskController {
       this.#sync();
     });
 
-    this.view.bindSaveEditTask((id, title) => {
-      this.model.editTask(id, title);
-      this.#sync();
-    });
-
-    this.view.cancelEditTask();
-
-    // Model -> Controller -> View (reatividade)
     this.#changeBusListener();
-
-    // primeiro render
     this.#start();
   }
 }

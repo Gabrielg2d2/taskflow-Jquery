@@ -143,7 +143,7 @@ export default class TaskView {
               <button type="button" data-action="remove" class="${styles.itemBtnRemove}">
                 Remover
               </button>
-              <button type="button" data-action="edit" class="${styles.itemBtnEdit}">
+              <button type="button" data-id="${dataId}" data-title="${safeTitle}" data-action="edit" class="${styles.itemBtnEdit}">
                 Editar
               </button>
             </div>
@@ -163,6 +163,21 @@ export default class TaskView {
     this.$button.removeClass("hidden");
     this.$buttonCancel.addClass("hidden");
     this.$list.find("li").removeClass("bg-green-200");
+    this.#updateSubmitButtonState();
+  }
+
+  /** Entra no modo edição: preenche o input, mostra Salvar/Cancelar, destaca o item. */
+  enterEditMode(id, title) {
+    this.$input.val(title);
+    this.$input.data("id", id);
+    this.$input.trigger("focus");
+
+    this.$button.addClass("hidden");
+    this.$buttonSave.removeClass("hidden");
+    this.$buttonCancel.removeClass("hidden");
+
+    this.$list.find("li").removeClass("bg-green-200");
+    this.$list.find(`li[data-id="${id}"]`).addClass("bg-green-200");
   }
 
   cancelEditTask() {
@@ -183,6 +198,12 @@ export default class TaskView {
     this.#renderTaskList(state);
     this.#renderTaskHeader(state);
     this.#updateClearAllTasksButtonState(state);
+    // Mantém destaque do item em edição após re-render
+    const editingId = this.$input.data("id");
+    if (editingId) {
+      this.$list.find("li").removeClass("bg-green-200");
+      this.$list.find(`li[data-id="${editingId}"]`).addClass("bg-green-200");
+    }
   }
 
   bindClearAllTasks(handler) {
@@ -195,15 +216,15 @@ export default class TaskView {
 
   bindAddTask(handler) {
     this.$form.off("submit.taskflow");
-
     this.$form.on("submit.taskflow", (e) => {
       e.preventDefault();
+      if (this.$input.data("id")) return; // em edição: não adicionar
       const title = this.$input.val().trim();
       handler(title);
     });
   }
 
-  bindTaskActions({ onToggle, onRemove }) {
+  bindTaskActions({ onToggle, onRemove, onEdit }) {
     this.$list.off("click.taskflow");
 
     this.$list.on("click.taskflow", '[data-action="toggle"]', (e) => {
@@ -217,30 +238,20 @@ export default class TaskView {
     });
 
     this.$list.on("click.taskflow", '[data-action="edit"]', (e) => {
-      const $li = $(e.currentTarget).closest("li");
-      const id = $li.data("id");
-      const title = $li.find("span").text();
-      this.$input.val(title);
-      this.$input.data("id", id);
-      this.$input.trigger("focus");
-
-      this.$button.addClass("hidden");
-      this.$buttonSave.removeClass("hidden");
-      this.$buttonCancel.removeClass("hidden");
-
-      $(e.currentTarget).closest(`li[data-id='${id}']`).addClass("bg-green-200");
-      this.$list.find("li").not($(e.currentTarget).closest("li")).removeClass("bg-green-200");
+      e.preventDefault();
+      const id = $(e.currentTarget).data("id");
+      const title = $(e.currentTarget).data("title");
+      onEdit(id, title);
     });
   }
 
-  
-
-  bindSaveEditTask(handler) {
+  bindSaveTask(handler) {
     this.$buttonSave.off("click.taskflow");
     this.$buttonSave.on("click.taskflow", (e) => {
       e.preventDefault();
       const id = this.$input.data("id");
       const title = this.$input.val().trim();
+      if (!id || !title) return;
       handler(id, title);
     });
   }
