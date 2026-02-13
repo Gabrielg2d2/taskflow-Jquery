@@ -162,6 +162,7 @@ export default class TaskView {
     this.$buttonSave.addClass("hidden");
     this.$button.removeClass("hidden");
     this.$buttonCancel.addClass("hidden");
+    this.$list.find("li").removeClass("bg-gray-200");
   }
 
   resetTaskForm() {
@@ -237,7 +238,7 @@ export default class TaskView {
       e.preventDefault();
       const id = this.$input.data("id");
       const title = this.$input.val().trim();
-      handler(id, title);  
+      handler(id, title);
     });
   }
 }
