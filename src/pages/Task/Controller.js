@@ -11,6 +11,7 @@ export default class TaskController {
   #sync() {
     const state = this.model.getState();
     this.storage.save(state.tasks);
+    this.view.resetTaskForm();
     this.bus.emit("tasks:changed", state);
   }
 
@@ -34,7 +35,6 @@ export default class TaskController {
     this.view.bindAddTask((title) => {
       if (!title.trim()) return;
       this.model.addTask(title);
-      this.view.resetTaskForm();
       this.#sync();
     });
 
@@ -58,7 +58,6 @@ export default class TaskController {
 
     this.view.bindSaveEditTask((id, title) => {
       this.model.editTask(id, title);
-      this.view.resetTaskForm();
       this.#sync();
     });
 
