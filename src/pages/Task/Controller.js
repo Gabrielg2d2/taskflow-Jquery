@@ -58,6 +58,8 @@ export default class TaskController {
 
     this.view.editTask();
 
+    this.view.cancelEditTask();
+
     this.view.bindSaveTask((id, title) => {
       this.model.editTask(id, title);
       this.view.resetTaskForm();

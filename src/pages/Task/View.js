@@ -25,6 +25,7 @@ const styles = {
   buttonClearText: "text-white",
   itemBtnEdit: "px-3 py-1 rounded-xl border text-blue-600",
   buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl hidden",
+  buttonCancel: "bg-red-500 text-white px-4 py-2 rounded-xl hidden",
 };
 
 export default class TaskView {
@@ -64,6 +65,9 @@ export default class TaskView {
           <button data-js="task-save" class="${styles.buttonSave}" type="button">
             Salvar
           </button>
+          <button data-js="task-cancel" class="${styles.buttonCancel}" type="button">
+            Cancelar
+          </button>
         </form>
         
         <button data-js="task-clear" class="${styles.buttonClear} ${styles.buttonClearDisabled}" type="button" disabled>
@@ -84,6 +88,8 @@ export default class TaskView {
     this.$buttonClear = this.$root.find('[data-js="task-clear"]');
     this.$list = this.$root.find('[data-js="task-list"]');
     this.$buttonSave = this.$root.find('[data-js="task-save"]');
+    this.$buttonCancel = this.$root.find('[data-js="task-cancel"]');
+
     // cache task header
     this.$statsTotal = this.$root.find('[data-js="total-tasks"]');
     this.$statsDone = this.$root.find('[data-js="done-tasks"]');
@@ -155,6 +161,7 @@ export default class TaskView {
     this.$input.trigger("focus");
     this.$buttonSave.addClass("hidden");
     this.$button.removeClass("hidden");
+    this.$buttonCancel.addClass("hidden");
   }
 
   resetTaskForm() {
@@ -212,7 +219,15 @@ export default class TaskView {
 
       this.$button.addClass("hidden");
       this.$buttonSave.removeClass("hidden");
-  
+      this.$buttonCancel.removeClass("hidden");
+    });
+  }
+
+  cancelEditTask() {
+    this.$buttonCancel.off("click.taskflow");
+    this.$buttonCancel.on("click.taskflow", (e) => {
+      e.preventDefault();
+      this.#resetEditTaskForm();
     });
   }
 
