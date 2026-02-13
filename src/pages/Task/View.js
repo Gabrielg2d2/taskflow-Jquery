@@ -25,7 +25,6 @@ const styles = {
   buttonClearText: "text-white",
   itemBtnEdit: "px-3 py-1 rounded-xl border text-blue-600",
   buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl hidden",
-  buttonSaveDisabled: "opacity-50 cursor-not-allowed",
 };
 
 export default class TaskView {
@@ -62,7 +61,7 @@ export default class TaskView {
           <button data-js="task-submit" class="${styles.button} ${styles.buttonDisabled}" type="submit" disabled>
             Adicionar
           </button>
-          <button data-js="task-save" class="${styles.buttonSave} ${styles.buttonSaveDisabled}" type="button">
+          <button data-js="task-save" class="${styles.buttonSave}" type="button">
             Salvar
           </button>
         </form>
@@ -150,9 +149,18 @@ export default class TaskView {
     this.$list.html(html);
   }
 
+  #resetEditTaskForm() {
+    this.$input.val("");
+    this.$input.data("id", "");
+    this.$input.trigger("focus");
+    this.$buttonSave.addClass("hidden");
+    this.$button.removeClass("hidden");
+  }
+
   resetTaskForm() {
     this.#clearInput();
     this.#updateSubmitButtonState();
+    this.#resetEditTaskForm();
   }
 
   render(state) {
@@ -205,6 +213,16 @@ export default class TaskView {
       this.$button.addClass("hidden");
       this.$buttonSave.removeClass("hidden");
   
+    });
+  }
+
+  bindSaveTask(handler) {
+    this.$buttonSave.off("click.taskflow");
+    this.$buttonSave.on("click.taskflow", (e) => {
+      e.preventDefault();
+      const id = this.$input.data("id");
+      const title = this.$input.val().trim();
+      handler(id, title);  
     });
   }
 }
