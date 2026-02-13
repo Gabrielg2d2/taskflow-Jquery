@@ -198,12 +198,7 @@ export default class TaskView {
     this.#renderTaskList(state);
     this.#renderTaskHeader(state);
     this.#updateClearAllTasksButtonState(state);
-    // Mantém destaque do item em edição após re-render
-    const editingId = this.$input.data("id");
-    if (editingId) {
-      this.$list.find("li").removeClass("bg-green-200");
-      this.$list.find(`li[data-id="${editingId}"]`).addClass("bg-green-200");
-    }
+   
   }
 
   bindClearAllTasks(handler) {
