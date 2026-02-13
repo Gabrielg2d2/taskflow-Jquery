@@ -231,7 +231,7 @@ export default class TaskView {
     });
   }
 
-  bindSaveTask(handler) {
+  bindSaveEditTask(handler) {
     this.$buttonSave.off("click.taskflow");
     this.$buttonSave.on("click.taskflow", (e) => {
       e.preventDefault();
