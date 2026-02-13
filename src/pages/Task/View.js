@@ -162,6 +162,8 @@ export default class TaskView {
     this.$buttonSave.addClass("hidden");
     this.$button.removeClass("hidden");
     this.$buttonCancel.addClass("hidden");
+    this.$list.find("li").closest("li").removeClass("bg-green-200");
+
   }
 
   resetTaskForm() {
