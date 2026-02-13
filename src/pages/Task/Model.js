@@ -3,7 +3,7 @@ export default class TaskModel {
 
   getState() {
     const total = this.#tasks.length;
-    const done = this.#tasks.filter(t => t.done).length;
+    const done = this.#tasks.filter((t) => t.done).length;
 
     return {
       tasks: this.#tasks.slice(),
@@ -39,8 +39,14 @@ export default class TaskModel {
   }
 
   editTask(id, newTitle) {
+    const currentTitle = this.#tasks.find((item) => item.id === id)?.title;
+    const trimmedNewTitle = newTitle.trim();
+    
+    if (!trimmedNewTitle) return;
+    if (trimmedNewTitle === currentTitle) return;
+
     this.#tasks = this.#tasks.map((item) =>
-      item.id === id ? { ...item, title: newTitle } : item,
+      item.id === id ? { ...item, title: trimmedNewTitle } : item,
     );
   }
 
@@ -51,5 +57,4 @@ export default class TaskModel {
   clearAll() {
     this.#tasks = [];
   }
-  
 }
