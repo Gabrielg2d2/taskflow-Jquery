@@ -143,7 +143,7 @@ export default class TaskView {
               <button type="button" data-action="remove" class="${styles.itemBtnRemove}">
                 Remover
               </button>
-              <button type="button" data-id="${dataId}" data-title="${safeTitle}" data-action="edit" class="${styles.itemBtnEdit}">
+              <button type="button" data-action="edit" class="${styles.itemBtnEdit}">
                 Editar
               </button>
             </div>
@@ -163,7 +163,14 @@ export default class TaskView {
     this.$button.removeClass("hidden");
     this.$buttonCancel.addClass("hidden");
     this.$list.find("li").removeClass("bg-green-200");
+  }
 
+  cancelEditTask() {
+    this.$buttonCancel.off("click.taskflow");
+    this.$buttonCancel.on("click.taskflow", (e) => {
+      e.preventDefault();
+      this.#resetEditTaskForm();
+    });
   }
 
   resetTaskForm() {
@@ -208,16 +215,13 @@ export default class TaskView {
       const id = $(e.currentTarget).closest("[data-id]").data("id");
       onRemove(id);
     });
-  }
 
-  editTask() {
-    this.$list.off("click.taskflow");
     this.$list.on("click.taskflow", '[data-action="edit"]', (e) => {
-      e.preventDefault();
-      const id = $(e.currentTarget).data("id");
-
-      this.$input.val($(e.currentTarget).data("title"));
-      this.$input.data("id", $(e.currentTarget).data("id"));
+      const $li = $(e.currentTarget).closest("li");
+      const id = $li.data("id");
+      const title = $li.find("span").text();
+      this.$input.val(title);
+      this.$input.data("id", id);
       this.$input.trigger("focus");
 
       this.$button.addClass("hidden");
@@ -229,14 +233,7 @@ export default class TaskView {
     });
   }
 
-  cancelEditTask() {
-    this.$buttonCancel.off("click.taskflow");
-    this.$buttonCancel.on("click.taskflow", (e) => {
-      e.preventDefault();
-      this.#resetEditTaskForm();
-      
-    });
-  }
+  
 
   bindSaveEditTask(handler) {
     this.$buttonSave.off("click.taskflow");

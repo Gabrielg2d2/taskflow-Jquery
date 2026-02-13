@@ -30,7 +30,7 @@ export default class TaskController {
   }
 
   init() {
-    // 1) View -> Controller -> Model
+    // View -> Controller -> Model
     this.view.bindAddTask((title) => {
       if (!title.trim()) return;
       this.model.addTask(title);
@@ -38,7 +38,7 @@ export default class TaskController {
       this.#sync();
     });
 
-    // 2) View -> Controller -> Model
+    // View -> Controller -> Model
     this.view.bindTaskActions({
       onToggle: (id) => {
         this.model.toggleTask(id);
@@ -47,7 +47,7 @@ export default class TaskController {
       onRemove: (id) => {
         this.model.removeTask(id);
         this.#sync();
-      },
+      }
     });
 
     this.view.bindClearAllTasks(() => {
@@ -56,20 +56,18 @@ export default class TaskController {
       this.#sync();
     });
 
-    this.view.editTask();
-
-    this.view.cancelEditTask();
-
     this.view.bindSaveEditTask((id, title) => {
       this.model.editTask(id, title);
       this.view.resetTaskForm();
       this.#sync();
     });
 
-    // 3) Model -> Controller -> View (reatividade)
+    this.view.cancelEditTask();
+
+    // Model -> Controller -> View (reatividade)
     this.#changeBusListener();
 
-    // 4) primeiro render
+    // primeiro render
     this.#start();
   }
 }
