@@ -23,6 +23,7 @@ const styles = {
     "bg-red-500 text-white px-4 py-2 rounded-xl flex items-center gap-2 mb-2 ",
   buttonClearDisabled: "opacity-50 cursor-not-allowed",
   buttonClearText: "text-white",
+  itemBtnEdit: "px-3 py-1 rounded-xl border text-blue-600",
 };
 
 export default class TaskView {
@@ -78,6 +79,7 @@ export default class TaskView {
     this.$button = this.$root.find('[data-js="task-submit"]');
     this.$buttonClear = this.$root.find('[data-js="task-clear"]');
     this.$list = this.$root.find('[data-js="task-list"]');
+    this.$buttonEdit = this.$root.find('[data-js="task-edit"]');
 
     // cache task header
     this.$statsTotal = this.$root.find('[data-js="total-tasks"]');
@@ -133,6 +135,9 @@ export default class TaskView {
               <button type="button" data-action="remove" class="${styles.itemBtnRemove}">
                 Remover
               </button>
+              <button type="button" data-action="edit" class="${styles.itemBtnEdit}">
+                Editar
+              </button>
             </div>
           </li>
         `;
@@ -183,5 +188,9 @@ export default class TaskView {
       const id = $(e.currentTarget).closest("[data-id]").data("id");
       onRemove(id);
     });
+  }
+
+  bindEditTask(handler) {
+    
   }
 }

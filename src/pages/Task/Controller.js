@@ -56,6 +56,11 @@ export default class TaskController {
       this.#sync();
     });
 
+    this.view.bindEditTask((id, newTitle) => {
+      this.model.editTask(id, newTitle);
+      this.#sync();
+    });
+
     // 3) Model -> Controller -> View (reatividade)
     this.#changeBusListener();
 

@@ -38,6 +38,12 @@ export default class TaskModel {
     this.#tasks = this.#tasks.filter((item) => item.id !== id);
   }
 
+  editTask(id, newTitle) {
+    this.#tasks = this.#tasks.map((item) =>
+      item.id === id ? { ...item, title: newTitle } : item,
+    );
+  }
+
   hydrate(tasks) {
     this.#tasks = Array.isArray(tasks) ? tasks : [];
   }
