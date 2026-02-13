@@ -24,6 +24,8 @@ const styles = {
   buttonClearDisabled: "opacity-50 cursor-not-allowed",
   buttonClearText: "text-white",
   itemBtnEdit: "px-3 py-1 rounded-xl border text-blue-600",
+  buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl hidden",
+  buttonSaveDisabled: "opacity-50 cursor-not-allowed",
 };
 
 export default class TaskView {
@@ -60,6 +62,9 @@ export default class TaskView {
           <button data-js="task-submit" class="${styles.button} ${styles.buttonDisabled}" type="submit" disabled>
             Adicionar
           </button>
+          <button data-js="task-save" class="${styles.buttonSave} ${styles.buttonSaveDisabled}" type="button">
+            Salvar
+          </button>
         </form>
         
         <button data-js="task-clear" class="${styles.buttonClear} ${styles.buttonClearDisabled}" type="button" disabled>
@@ -79,8 +84,7 @@ export default class TaskView {
     this.$button = this.$root.find('[data-js="task-submit"]');
     this.$buttonClear = this.$root.find('[data-js="task-clear"]');
     this.$list = this.$root.find('[data-js="task-list"]');
-    this.$buttonEdit = this.$root.find('[data-js="task-edit"]');
-
+    this.$buttonSave = this.$root.find('[data-js="task-save"]');
     // cache task header
     this.$statsTotal = this.$root.find('[data-js="total-tasks"]');
     this.$statsDone = this.$root.find('[data-js="done-tasks"]');
@@ -90,7 +94,6 @@ export default class TaskView {
     this.$input
       .off("input.taskflow")
       .on("input.taskflow", () => this.#updateSubmitButtonState());
-
   }
 
   #updateClearAllTasksButtonState(state) {
@@ -135,7 +138,7 @@ export default class TaskView {
               <button type="button" data-action="remove" class="${styles.itemBtnRemove}">
                 Remover
               </button>
-              <button type="button" data-action="edit" class="${styles.itemBtnEdit}">
+              <button type="button" data-id="${dataId}" data-title="${safeTitle}" data-action="edit" class="${styles.itemBtnEdit}">
                 Editar
               </button>
             </div>
@@ -190,7 +193,18 @@ export default class TaskView {
     });
   }
 
-  bindEditTask(handler) {
-    
+  editTask() {
+    this.$list.off("click.taskflow");
+    this.$list.on("click.taskflow", '[data-action="edit"]', (e) => {
+      e.preventDefault();
+
+      this.$input.val($(e.currentTarget).data("title"));
+      this.$input.data("id", $(e.currentTarget).data("id"));
+      this.$input.trigger("focus");
+
+      this.$button.addClass("hidden");
+      this.$buttonSave.removeClass("hidden");
+  
+    });
   }
 }
