@@ -162,7 +162,6 @@ export default class TaskView {
     this.$buttonSave.addClass("hidden");
     this.$button.removeClass("hidden");
     this.$buttonCancel.addClass("hidden");
-    this.$list.find("li").removeClass("bg-gray-200");
   }
 
   resetTaskForm() {
@@ -213,6 +212,7 @@ export default class TaskView {
     this.$list.off("click.taskflow");
     this.$list.on("click.taskflow", '[data-action="edit"]', (e) => {
       e.preventDefault();
+      const id = $(e.currentTarget).data("id");
 
       this.$input.val($(e.currentTarget).data("title"));
       this.$input.data("id", $(e.currentTarget).data("id"));
@@ -221,6 +221,9 @@ export default class TaskView {
       this.$button.addClass("hidden");
       this.$buttonSave.removeClass("hidden");
       this.$buttonCancel.removeClass("hidden");
+
+      $(e.currentTarget).closest(`li[data-id='${id}']`).addClass("bg-green-200");
+      this.$list.find("li").not($(e.currentTarget).closest("li")).removeClass("bg-green-200");
     });
   }
 
