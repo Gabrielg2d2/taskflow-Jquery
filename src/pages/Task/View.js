@@ -166,7 +166,6 @@ export default class TaskView {
     this.#updateSubmitButtonState();
   }
 
-  /** Entra no modo edição: preenche o input, mostra Salvar/Cancelar, destaca o item. */
   enterEditMode(id, title) {
     this.$input.val(title);
     this.$input.data("id", id);
@@ -198,7 +197,6 @@ export default class TaskView {
     this.#renderTaskList(state);
     this.#renderTaskHeader(state);
     this.#updateClearAllTasksButtonState(state);
-   
   }
 
   bindClearAllTasks(handler) {
