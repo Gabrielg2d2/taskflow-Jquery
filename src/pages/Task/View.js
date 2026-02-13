@@ -162,7 +162,7 @@ export default class TaskView {
     this.$buttonSave.addClass("hidden");
     this.$button.removeClass("hidden");
     this.$buttonCancel.addClass("hidden");
-    this.$list.find("li").closest("li").removeClass("bg-green-200");
+    this.$list.find("li").removeClass("bg-green-200");
 
   }
 
@@ -234,6 +234,7 @@ export default class TaskView {
     this.$buttonCancel.on("click.taskflow", (e) => {
       e.preventDefault();
       this.#resetEditTaskForm();
+      
     });
   }
 
