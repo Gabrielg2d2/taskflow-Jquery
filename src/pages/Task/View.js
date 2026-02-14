@@ -81,12 +81,16 @@ export default class TaskView {
       </div>
     `);
 
-    // cache
+    // cache task form
     this.$form = this.$root.find('[data-js="task-form"]');
     this.$input = this.$root.find('[data-js="task-input"]');
     this.$button = this.$root.find('[data-js="task-submit"]');
-    this.$buttonClear = this.$root.find('[data-js="task-clear"]');
     this.$list = this.$root.find('[data-js="task-list"]');
+
+    // cache task clear button
+    this.$buttonClear = this.$root.find('[data-js="task-clear"]');
+
+    // cache task save and cancel buttons
     this.$buttonSave = this.$root.find('[data-js="task-save"]');
     this.$buttonCancel = this.$root.find('[data-js="task-cancel"]');
 
@@ -111,11 +115,6 @@ export default class TaskView {
     const hasValue = this.$input.val().trim().length >= this.#minCharLength;
     this.$button.prop("disabled", !hasValue);
     this.$button.toggleClass(styles.buttonDisabled, !hasValue);
-  }
-
-  #clearInput() {
-    this.$input.val("");
-    this.$input.trigger("focus");
   }
 
   #renderTaskHeader(state) {
@@ -163,7 +162,6 @@ export default class TaskView {
     this.$button.removeClass("hidden");
     this.$buttonCancel.addClass("hidden");
     this.$list.find("li").removeClass("bg-green-200");
-    this.#updateSubmitButtonState();
   }
 
   enterEditMode(id, title) {
@@ -188,7 +186,8 @@ export default class TaskView {
   }
 
   resetTaskForm() {
-    this.#clearInput();
+    this.$input.val("");
+    this.$input.trigger("focus");
     this.#updateSubmitButtonState();
     this.#resetEditTaskForm();
   }
