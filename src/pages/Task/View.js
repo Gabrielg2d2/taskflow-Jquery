@@ -37,20 +37,21 @@ export default class TaskView {
     this.$root.html(`
       <div class="${styles.container}">
 
-      <div class="${styles.header}">
-        <h1 class="${styles.title}">TaskFlow</h1>
-          <div class="${styles.sectionStats}">
-            <span class="${styles.subtitle}">
-              Feitas: <strong data-js="done-tasks" class="${styles.numberTasks}">0</strong>
-            </span>
-            <span class="${styles.subtitle}">
-              Pendentes: <strong data-js="pending-tasks" class="${styles.numberTasks}">0</strong>
-            </span>
-            <span class="${styles.subtitle}">
-              Total: <strong data-js="total-tasks" class="${styles.numberTasks}">0</strong>
-            </span>
-          </div>
+        <div class="${styles.header}">
+          <h1 class="${styles.title}">TaskFlow</h1>
+            <div class="${styles.sectionStats}">
+              <span class="${styles.subtitle}">
+                Feitas: <strong data-js="done-tasks" class="${styles.numberTasks}">0</strong>
+              </span>
+              <span class="${styles.subtitle}">
+                Pendentes: <strong data-js="pending-tasks" class="${styles.numberTasks}">0</strong>
+              </span>
+              <span class="${styles.subtitle}">
+                Total: <strong data-js="total-tasks" class="${styles.numberTasks}">0</strong>
+              </span>
+            </div>
         </div>
+
 
         <form data-js="task-form" class="${styles.form}">
           <input
