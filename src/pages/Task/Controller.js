@@ -66,6 +66,7 @@ export default class TaskController {
     });
 
     this.#changeBusListener();
+
     this.#start();
   }
 }
