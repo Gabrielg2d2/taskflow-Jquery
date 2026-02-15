@@ -26,6 +26,9 @@ const styles = {
   itemBtnEdit: "px-3 py-1 rounded-xl border text-blue-600",
   buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl",
   buttonCancel: "bg-red-500 text-white px-4 py-2 rounded-xl",
+  toolbar: "flex gap-2 mb-4",
+  search: "flex-1 border rounded-xl px-3 py-2",
+  buttonFilter: "px-2 py-1 rounded-xl border",
 };
 
 export default class TaskView {
@@ -56,6 +59,23 @@ export default class TaskView {
               </span>
             </div>
         </div>
+    `;
+  }
+
+  #templateToolbar() {
+    return `
+      <div class="${styles.toolbar}">
+      <div class="flex-1">
+        <input
+          data-js="task-search"
+          class="${styles.search}"
+          placeholder="Buscar..."
+        />
+      </div>
+        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter}">Todas</button>
+        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter}">Pendentes</button>
+        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter}">Feitas</button>
+      </div>
     `;
   }
 
@@ -148,6 +168,8 @@ export default class TaskView {
           ${this.#templateHeader(domainState.stats)}
           ${this.#templateForm(editingTask)}
             ${this.#templateClearAllTasksButton(hasTasks)}
+            <br />
+            ${this.#templateToolbar()}
             ${this.#templateTaskList(domainState.tasks)}
         </div>
       `,
