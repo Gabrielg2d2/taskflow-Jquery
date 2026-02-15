@@ -63,7 +63,7 @@ export default class TaskView {
     `;
   }
 
-  #templateToolbar(filter = "all") {
+  #templateToolbar() {
     return `
       <div class="${styles.toolbar}">
         <div class="flex-1">
@@ -74,9 +74,9 @@ export default class TaskView {
           />
         </div>
 
-        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${filter === "all" ? styles.buttonFilterActive : ""}">Todas</button>
-        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${filter === "pending" ? styles.buttonFilterActive : ""}">Pendentes</button>
-        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter} ${filter === "done" ? styles.buttonFilterActive : ""}">Feitas</button>
+        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${styles.buttonFilterActive}">Todas</button>
+        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter}">Pendentes</button>
+        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter}">Feitas</button>
       </div>
     `;
   }
