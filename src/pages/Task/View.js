@@ -203,16 +203,21 @@ export default class TaskView {
 
   filterChange() {
     this.$root.off("click.taskflow", '[data-js^="task-filter-"]');
-  
-    this.$root.on("click.taskflow", '[data-js^="task-filter-"]', (e) => {
-      e.preventDefault();   
 
-      this.$root.find('[data-js^="task-filter-"]').removeClass(styles.buttonFilterActive);
-  
+    this.$root.on("click.taskflow", '[data-js^="task-filter-"]', (e) => {
+      e.preventDefault();
+
+      this.$root
+        .find('[data-js^="task-filter-"]')
+        .removeClass(styles.buttonFilterActive);
+
       $(e.currentTarget).addClass(styles.buttonFilterActive);
-      });
+
+      // Definir url com o filtro
+      const filter = $(e.currentTarget).data("js").replace("task-filter-", "");
+      window.history.pushState({ filter }, "", `?filter=${filter}`);
+    });
   }
-  
 
   bindAddTask(handler) {
     this.$root.off("submit.taskflow", '[data-js="task-form"]');
