@@ -151,21 +151,29 @@ export default class TaskView {
     `;
   }
 
-  #templateTaskList(tasks, filter) {
+  #templateTaskList(tasks) {
     if (tasks.length === 0) return this.#templateEmpty();
-
-    const dataTasks = filter === "all" ? tasks : tasks.filter((item) =>
-      filter === "done" ? item.done : !item.done,
-    );
 
     return `
       <ul data-js="task-list" class="${styles.list}">
-        ${dataTasks.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
+        ${tasks.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
       </ul>
     `;
   }
 
   render(domainState, editingTask = null, filter = "all") {
+    const dataFilter = ["all", "pending", "done"];
+    if (!dataFilter.includes(filter)) {
+      filter = "all";
+    }
+
+    const tasks =
+      filter === "all"
+        ? domainState.tasks
+        : domainState.tasks.filter((item) =>
+            filter === "done" ? item.done : !item.done,
+          );
+
     const hasTasks = domainState.tasks.length > 0;
 
     this.$root.html(
@@ -176,7 +184,7 @@ export default class TaskView {
             ${this.#templateClearAllTasksButton(hasTasks)}
             <br />
             ${this.#templateToolbar(filter)}
-            ${this.#templateTaskList(domainState.tasks, filter)}
+            ${this.#templateTaskList(tasks, filter)}
         </div>
       `,
     );
