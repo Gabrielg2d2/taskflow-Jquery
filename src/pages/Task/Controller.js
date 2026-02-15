@@ -66,6 +66,8 @@ export default class TaskController {
       this.#sync();
     });
 
+    this.view.filterChange();
+
     this.#changeBusListener();
 
     this.#start();

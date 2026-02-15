@@ -63,9 +63,7 @@ export default class TaskView {
     `;
   }
 
-  #templateToolbar(filter) {
-    const isActive = (v) => (filter === v ? styles.buttonFilterActive : "");
-
+  #templateToolbar(filter = "all") {
     return `
       <div class="${styles.toolbar}">
         <div class="flex-1">
@@ -76,9 +74,9 @@ export default class TaskView {
           />
         </div>
 
-        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${isActive("all")}">Todas</button>
-        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${isActive("pending")}">Pendentes</button>
-        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter} ${isActive("done")}">Feitas</button>
+        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${filter === "all" ? styles.buttonFilterActive : ""}">Todas</button>
+        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${filter === "pending" ? styles.buttonFilterActive : ""}">Pendentes</button>
+        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter} ${filter === "done" ? styles.buttonFilterActive : ""}">Feitas</button>
       </div>
     `;
   }
@@ -164,6 +162,12 @@ export default class TaskView {
   }
 
   render(domainState, editingTask = null, filter = "all") {
+    const tasks =
+      filter === "all"
+        ? domainState.tasks
+        : domainState.tasks.filter((t) =>
+            filter === "done" ? t.done : !t.done,
+          );
     const hasTasks = domainState.tasks.length > 0;
 
     this.$root.html(
@@ -174,7 +178,7 @@ export default class TaskView {
             ${this.#templateClearAllTasksButton(hasTasks)}
             <br />
             ${this.#templateToolbar(filter)}
-            ${this.#templateTaskList(domainState.tasks)}
+            ${this.#templateTaskList(tasks)}
         </div>
       `,
     );
@@ -196,6 +200,19 @@ export default class TaskView {
         .prop("disabled", isButtonSubmitDisabled);
     });
   }
+
+  filterChange() {
+    this.$root.off("click.taskflow", '[data-js^="task-filter-"]');
+  
+    this.$root.on("click.taskflow", '[data-js^="task-filter-"]', (e) => {
+      e.preventDefault();   
+
+      this.$root.find('[data-js^="task-filter-"]').removeClass(styles.buttonFilterActive);
+  
+      $(e.currentTarget).addClass(styles.buttonFilterActive);
+      });
+  }
+  
 
   bindAddTask(handler) {
     this.$root.off("submit.taskflow", '[data-js="task-form"]');
