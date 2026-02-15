@@ -25,7 +25,10 @@ export default class TaskController {
   #changeBusListener() {
     this.#unsubTasksChanged?.();
     this.#unsubTasksChanged = this.bus.on("tasks:changed", (state) => {
-      this.view.render(state);
+     
+     const urlParams = new URLSearchParams(window.location.search);
+     const filter = urlParams.get("filter");
+      this.view.render(state, null, filter);
     });
   }
 

@@ -184,7 +184,7 @@ export default class TaskView {
             ${this.#templateClearAllTasksButton(hasTasks)}
             <br />
             ${this.#templateToolbar(filter)}
-            ${this.#templateTaskList(tasks, filter)}
+            ${this.#templateTaskList(tasks)}
         </div>
       `,
     );
