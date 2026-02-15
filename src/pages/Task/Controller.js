@@ -48,6 +48,7 @@ export default class TaskController {
         this.#sync();
       },
       onRemove: (id) => {
+        if (!confirm("Tem certeza que deseja remover a tarefa?")) return;
         this.model.removeTask(id);
         this.#sync();
       },
