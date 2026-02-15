@@ -160,6 +160,7 @@ export default class TaskView {
     this.$input = this.$form.find("[data-js='task-input']");
     this.$list = this.$root.find("[data-js='task-list']");
 
+    // Watch for input changes
     this.$input.off("input.taskflow");
     this.$input.on("input.taskflow", () => {
       const isButtonSaveDisabled = !this.$input.val()?.trim();
@@ -172,7 +173,6 @@ export default class TaskView {
 
   bindAddTask(handler) {
     this.$root.off("submit.taskflow", '[data-js="task-form"]');
-
     this.$root.on("submit.taskflow", '[data-js="task-form"]', (e) => {
       e.preventDefault();
       const title = this.$input.val()?.trim();
