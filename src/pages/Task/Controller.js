@@ -44,7 +44,6 @@ export default class TaskController {
 
     this.view.bindTaskActions({
       onToggle: (id) => {
-        console.log("onToggle", id);
         this.model.toggleTask(id);
         this.#sync();
       },
@@ -52,8 +51,8 @@ export default class TaskController {
         this.model.removeTask(id);
         this.#sync();
       },
-      onEdit: () => {
-        this.view.render(this.model.getState(), true);
+      onEdit: (id, title) => {
+        this.view.render(this.model.getState(), { id, title });
       },
     });
 

@@ -24,8 +24,8 @@ const styles = {
   buttonClearDisabled: "opacity-50 cursor-not-allowed",
   buttonClearText: "text-white",
   itemBtnEdit: "px-3 py-1 rounded-xl border text-blue-600",
-  buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl hidden",
-  buttonCancel: "bg-red-500 text-white px-4 py-2 rounded-xl hidden",
+  buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl",
+  buttonCancel: "bg-red-500 text-white px-4 py-2 rounded-xl",
 };
 
 export default class TaskView {
@@ -139,14 +139,14 @@ export default class TaskView {
     `;
   }
 
-  render(domainState, isEditing = false) {
+  render(domainState, editingTask = null) {
     const hasTasks = domainState.tasks.length > 0;
 
     this.$root.html(
       `
         <div class="${styles.container}">
           ${this.#templateHeader(domainState.stats)}
-          ${this.#templateForm(isEditing)}
+          ${this.#templateForm(editingTask)}
             ${this.#templateClearAllTasksButton(hasTasks)}
             ${this.#templateTaskList(domainState.tasks)}
         </div>
@@ -156,7 +156,10 @@ export default class TaskView {
     const form = this.$root.find("[data-js='task-form']");
     const input = this.$root.find("[data-js='task-input']");
 
-    // Watch for input changes
+    if (editingTask) {
+      input.val(editingTask.title).data("id", editingTask.id);
+    }
+
     input.off("input.taskflow");
     input.on("input.taskflow", () => {
       const isButtonSubmitDisabled = !input.val()?.trim();
@@ -185,25 +188,29 @@ export default class TaskView {
     });
   }
 
-  bindTaskActions(
-    { onToggle, onRemove, onEdit }
-  ) {
-    this.$root.off("click.taskflow", '[data-js="task-toggle"]');
-    this.$root.on("click.taskflow", '[data-js="task-toggle"]', (e) => {
+  bindTaskActions({ onToggle, onRemove, onEdit }) {
+    this.$root.off("click.taskflow", "[data-js='task-toggle']");
+    this.$root.on("click.taskflow", "[data-js='task-toggle']", (e) => {
       e.preventDefault();
-      onToggle($(e.target).data("id"));
+      const id = $(e.currentTarget).data("id");
+      if (id) onToggle(id);
     });
 
-    this.$root.off("click.taskflow", '[data-js="task-remove"]');
-    this.$root.on("click.taskflow", '[data-js="task-remove"]', (e) => {
+    this.$root.off("click.taskflow", "[data-js='task-remove']");
+    this.$root.on("click.taskflow", "[data-js='task-remove']", (e) => {
       e.preventDefault();
-      onRemove(e.target.dataset.id);
+      const id = $(e.currentTarget).data("id");
+      if (id) onRemove(id);
     });
 
-    this.$root.off("click.taskflow", '[data-js="task-edit"]');
-    this.$root.on("click.taskflow", '[data-js="task-edit"]', (e) => {
+    this.$root.off("click.taskflow", "[data-js='task-edit']");
+    this.$root.on("click.taskflow", "[data-js='task-edit']", (e) => {
       e.preventDefault();
-      onEdit();
+      const id = $(e.currentTarget).data("id");
+      const title = $(e.currentTarget).data("title");
+      if (!id) return;
+      this.$root.find("[data-js='task-input']").val(title ?? "").data("id", id);
+      onEdit(id, title);
     });
   }
 }
