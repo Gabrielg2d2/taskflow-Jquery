@@ -201,6 +201,21 @@ export default class TaskView {
     });
   }
 
+  filterUrl(filter = "") {
+    const listFilters = ["all", "pending", "done"];
+    const filterUrl = filter && listFilters.includes(filter) ? filter : "all";
+
+    this.$root
+      .find('[data-js^="task-filter-"]')
+      .removeClass(styles.buttonFilterActive);
+
+    this.$root
+      .find(`[data-js="task-filter-${filterUrl}"]`)
+      .addClass(styles.buttonFilterActive);
+      
+    window.history.pushState({ filter: filterUrl }, "", `?filter=${filterUrl}`);
+  }
+
   filterChange() {
     this.$root.off("click.taskflow", '[data-js^="task-filter-"]');
 

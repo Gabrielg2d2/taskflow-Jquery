@@ -68,8 +68,12 @@ export default class TaskController {
 
     this.view.filterChange();
 
+
     this.#changeBusListener();
 
     this.#start();
+    const urlParams = new URLSearchParams(window.location.search);
+    const filter = urlParams.get("filter");
+    this.view.filterUrl(filter);
   }
 }
