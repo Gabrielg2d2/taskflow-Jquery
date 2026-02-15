@@ -151,23 +151,21 @@ export default class TaskView {
     `;
   }
 
-  #templateTaskList(tasks) {
+  #templateTaskList(tasks, filter) {
     if (tasks.length === 0) return this.#templateEmpty();
+
+    const dataTasks = filter === "all" ? tasks : tasks.filter((item) =>
+      filter === "done" ? item.done : !item.done,
+    );
 
     return `
       <ul data-js="task-list" class="${styles.list}">
-        ${tasks.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
+        ${dataTasks.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
       </ul>
     `;
   }
 
   render(domainState, editingTask = null, filter = "all") {
-    const tasks =
-      filter === "all"
-        ? domainState.tasks
-        : domainState.tasks.filter((t) =>
-            filter === "done" ? t.done : !t.done,
-          );
     const hasTasks = domainState.tasks.length > 0;
 
     this.$root.html(
@@ -178,7 +176,7 @@ export default class TaskView {
             ${this.#templateClearAllTasksButton(hasTasks)}
             <br />
             ${this.#templateToolbar(filter)}
-            ${this.#templateTaskList(tasks)}
+            ${this.#templateTaskList(domainState.tasks, filter)}
         </div>
       `,
     );
@@ -201,22 +199,7 @@ export default class TaskView {
     });
   }
 
-  filterUrl(filter = "") {
-    const listFilters = ["all", "pending", "done"];
-    const filterUrl = filter && listFilters.includes(filter) ? filter : "all";
-
-    this.$root
-      .find('[data-js^="task-filter-"]')
-      .removeClass(styles.buttonFilterActive);
-
-    this.$root
-      .find(`[data-js="task-filter-${filterUrl}"]`)
-      .addClass(styles.buttonFilterActive);
-      
-    window.history.pushState({ filter: filterUrl }, "", `?filter=${filterUrl}`);
-  }
-
-  filterChange() {
+  filterChange(handler) {
     this.$root.off("click.taskflow", '[data-js^="task-filter-"]');
 
     this.$root.on("click.taskflow", '[data-js^="task-filter-"]', (e) => {
@@ -231,6 +214,8 @@ export default class TaskView {
       // Definir url com o filtro
       const filter = $(e.currentTarget).data("js").replace("task-filter-", "");
       window.history.pushState({ filter }, "", `?filter=${filter}`);
+
+      handler(filter);
     });
   }
 

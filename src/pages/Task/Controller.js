@@ -66,14 +66,12 @@ export default class TaskController {
       this.#sync();
     });
 
-    this.view.filterChange();
-
+    this.view.filterChange((filter) => {
+      this.view.render(this.model.getState(), null, filter);
+    });
 
     this.#changeBusListener();
 
     this.#start();
-    const urlParams = new URLSearchParams(window.location.search);
-    const filter = urlParams.get("filter");
-    this.view.filterUrl(filter);
   }
 }
