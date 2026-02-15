@@ -11,7 +11,6 @@ export default class TaskController {
   #sync() {
     const state = this.model.getState();
     this.storage.save(state.tasks);
-    this.view.resetTaskForm();
     this.bus.emit("tasks:changed", state);
   }
 
@@ -34,10 +33,11 @@ export default class TaskController {
     this.view.bindAddTask((title) => {
       if (!title.trim()) return;
       this.model.addTask(title);
-
       this.#sync();
     });
 
+
+/*
     this.view.bindTaskActions({
       onToggle: (id) => {
         this.model.toggleTask(id);
@@ -47,24 +47,11 @@ export default class TaskController {
         this.model.removeTask(id);
         this.#sync();
       },
-      onEdit: (id, title) => {
-        this.view.enterEditMode(id, title);
+      onEdit: () => {
+        this.view.render(this.model.getState(), true);
       },
     });
-
-    this.view.bindSaveTask((id, title) => {
-      this.model.editTask(id, title);
-      this.#sync();
-    });
-
-    this.view.cancelEditTask();
-
-    this.view.bindClearAllTasks(() => {
-      this.model.clearAll();
-      this.storage.clear();
-      this.#sync();
-    });
-
+*/
     this.#changeBusListener();
 
     this.#start();
