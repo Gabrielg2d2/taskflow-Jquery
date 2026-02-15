@@ -56,6 +56,15 @@ export default class TaskController {
       },
     });
 
+    this.view.bindSaveTask((id, title) => {
+      this.model.editTask(id, title);
+      this.#sync();
+    });
+
+    this.view.bindCancelTask(() => {
+      this.#sync();
+    });
+
     this.#changeBusListener();
 
     this.#start();

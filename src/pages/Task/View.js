@@ -71,10 +71,10 @@ export default class TaskView {
           ${
             isEditing
               ? `
-            <button data-js="task-save" class="${styles.buttonSave}" type="button">
+            <button data-js='task-save' class="${styles.buttonSave}" type="button">
               Salvar
             </button>
-            <button data-js="task-cancel" class="${styles.buttonCancel}" type="button">
+            <button data-js='task-cancel' class="${styles.buttonCancel}" type="button">
               Cancelar
             </button>
           `
@@ -211,6 +211,26 @@ export default class TaskView {
       if (!id) return;
       this.$root.find("[data-js='task-input']").val(title ?? "").data("id", id);
       onEdit(id, title);
+    });
+  }
+
+  bindSaveTask(handler) {
+    this.$root.off("click.taskflow", "[data-js='task-save']");
+    this.$root.on("click.taskflow", "[data-js='task-save']", (e) => {
+      e.preventDefault();
+      const input = this.$root.find("[data-js='task-input']");
+      const id = input.data("id");
+      const title = input.val()?.trim();
+      if (!id || !title) return;
+      handler(id, title);   
+    });
+  }
+
+  bindCancelTask(handler) {
+    this.$root.off("click.taskflow", "[data-js='task-cancel']");
+    this.$root.on("click.taskflow", "[data-js='task-cancel']", (e) => {
+      e.preventDefault();
+      handler();
     });
   }
 }
