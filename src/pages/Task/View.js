@@ -109,15 +109,15 @@ export default class TaskView {
         <span class="${doneClass}">${safeTitle}</span>
   
         <div class="${styles.itemBtns}">
-          <button type="button" data-action="toggle" class="${styles.itemBtnToggle}">
+          <button type="button" data-js="task-toggle" data-id="${id}" class="${styles.itemBtnToggle}">
             ${btnText}
           </button>
-          <button type="button" data-action="remove" class="${styles.itemBtnRemove}">
+          <button type="button" data-js="task-remove" data-id="${id}" class="${styles.itemBtnRemove}">
             Remover
           </button>
           <button
             type="button"
-            data-action="edit"
+            data-js="task-edit"
             data-id="${id}"
             data-title="${safeTitle}"
             class="${styles.itemBtnEdit}"
@@ -182,6 +182,28 @@ export default class TaskView {
     this.$root.on("click.taskflow", '[data-js="task-clear"]', (e) => {
       e.preventDefault();
       handler();
+    });
+  }
+
+  bindTaskActions(
+    { onToggle, onRemove, onEdit }
+  ) {
+    this.$root.off("click.taskflow", '[data-js="task-toggle"]');
+    this.$root.on("click.taskflow", '[data-js="task-toggle"]', (e) => {
+      e.preventDefault();
+      onToggle($(e.target).data("id"));
+    });
+
+    this.$root.off("click.taskflow", '[data-js="task-remove"]');
+    this.$root.on("click.taskflow", '[data-js="task-remove"]', (e) => {
+      e.preventDefault();
+      onRemove(e.target.dataset.id);
+    });
+
+    this.$root.off("click.taskflow", '[data-js="task-edit"]');
+    this.$root.on("click.taskflow", '[data-js="task-edit"]', (e) => {
+      e.preventDefault();
+      onEdit();
     });
   }
 }

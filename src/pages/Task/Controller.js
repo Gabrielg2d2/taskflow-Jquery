@@ -42,10 +42,9 @@ export default class TaskController {
       this.#sync();
     });
 
-
-/*
     this.view.bindTaskActions({
       onToggle: (id) => {
+        console.log("onToggle", id);
         this.model.toggleTask(id);
         this.#sync();
       },
@@ -57,7 +56,7 @@ export default class TaskController {
         this.view.render(this.model.getState(), true);
       },
     });
-*/
+
     this.#changeBusListener();
 
     this.#start();
