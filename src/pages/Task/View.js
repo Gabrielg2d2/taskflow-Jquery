@@ -160,6 +160,7 @@ export default class TaskView {
       input.val(editingTask.title).data("id", editingTask.id);
     }
 
+    // watch input changes
     input.off("input.taskflow");
     input.on("input.taskflow", () => {
       const isButtonSubmitDisabled = !input.val()?.trim();
@@ -209,7 +210,10 @@ export default class TaskView {
       const id = $(e.currentTarget).data("id");
       const title = $(e.currentTarget).data("title");
       if (!id) return;
-      this.$root.find("[data-js='task-input']").val(title ?? "").data("id", id);
+      this.$root
+        .find("[data-js='task-input']")
+        .val(title ?? "")
+        .data("id", id);
       onEdit(id, title);
     });
   }
@@ -222,7 +226,7 @@ export default class TaskView {
       const id = input.data("id");
       const title = input.val()?.trim();
       if (!id || !title) return;
-      handler(id, title);   
+      handler(id, title);
     });
   }
 
