@@ -36,6 +36,12 @@ export default class TaskController {
       this.#sync();
     });
 
+    this.view.bindRemoveAllTasks(() => {
+      if (!confirm("Tem certeza que deseja limpar todas as tarefas?")) return;
+      this.model.clearAll();
+      this.#sync();
+    });
+
 
 /*
     this.view.bindTaskActions({
