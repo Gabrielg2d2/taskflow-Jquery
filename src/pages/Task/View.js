@@ -29,6 +29,7 @@ const styles = {
   toolbar: "flex gap-2 mb-4",
   search: "flex-1 border rounded-xl px-3 py-2",
   buttonFilter: "px-2 py-1 rounded-xl border",
+  buttonFilterActive: "bg-blue-500 text-white",
 };
 
 export default class TaskView {
@@ -62,19 +63,22 @@ export default class TaskView {
     `;
   }
 
-  #templateToolbar() {
+  #templateToolbar(filter) {
+    const isActive = (v) => (filter === v ? styles.buttonFilterActive : "");
+
     return `
       <div class="${styles.toolbar}">
-      <div class="flex-1">
-        <input
-          data-js="task-search"
-          class="${styles.search}"
-          placeholder="Buscar..."
-        />
-      </div>
-        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter}">Todas</button>
-        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter}">Pendentes</button>
-        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter}">Feitas</button>
+        <div class="flex-1">
+          <input
+            data-js="task-search"
+            class="${styles.search}"
+            placeholder="Buscar..."
+          />
+        </div>
+
+        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${isActive("all")}">Todas</button>
+        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${isActive("pending")}">Pendentes</button>
+        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter} ${isActive("done")}">Feitas</button>
       </div>
     `;
   }
@@ -159,7 +163,7 @@ export default class TaskView {
     `;
   }
 
-  render(domainState, editingTask = null) {
+  render(domainState, editingTask = null, filter = "all") {
     const hasTasks = domainState.tasks.length > 0;
 
     this.$root.html(
@@ -169,7 +173,7 @@ export default class TaskView {
           ${this.#templateForm(editingTask)}
             ${this.#templateClearAllTasksButton(hasTasks)}
             <br />
-            ${this.#templateToolbar()}
+            ${this.#templateToolbar(filter)}
             ${this.#templateTaskList(domainState.tasks)}
         </div>
       `,
