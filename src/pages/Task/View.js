@@ -168,14 +168,13 @@ export default class TaskView {
   }
 
   bindAddTask(handler) {
-
     this.$root.off("submit.taskflow", '[data-js="task-form"]');
     this.$root.on("submit.taskflow", '[data-js="task-form"]', (e) => {
       e.preventDefault();
       const title = this.$root.find("[data-js='task-input']").val()?.trim();
       if (!title) return;
       handler(title);
-    }); 
+    });
   }
 
   bindRemoveAllTasks(handler) {
