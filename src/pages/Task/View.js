@@ -64,10 +64,12 @@ export default class TaskView {
   }
 
   #templateToolbar(filter) {
-    const classIsActive = filter === "all" ? styles.buttonFilterActive : "";
-    const classIsPending =
-      filter === "pending" ? styles.buttonFilterActive : "";
-    const classIsDone = filter === "done" ? styles.buttonFilterActive : "";
+    const classIsNotActive = styles.buttonFilter;
+    const styleIsActive = styles.buttonFilterActive;
+
+    const classIsActive = filter === "all" ? styleIsActive : "";
+    const classIsPending = filter === "pending" ? styleIsActive : "";
+    const classIsDone = filter === "done" ? styleIsActive : "";
 
     return `
       <div class="${styles.toolbar}">
@@ -79,9 +81,9 @@ export default class TaskView {
           />
         </div>
 
-        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${classIsActive}">Todas</button>
-        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${classIsPending}">Pendentes</button>
-        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter} ${classIsDone}">Feitas</button>
+        <button type="button" data-js="task-filter-all" class="${classIsNotActive} ${classIsActive}">Todas</button>
+        <button type="button" data-js="task-filter-pending" class="${classIsNotActive} ${classIsPending}">Pendentes</button>
+        <button type="button" data-js="task-filter-done" class="${classIsNotActive} ${classIsDone}">Feitas</button>
       </div>
     `;
   }
