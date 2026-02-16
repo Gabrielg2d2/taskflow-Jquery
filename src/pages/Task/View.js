@@ -260,7 +260,7 @@ export default class TaskView {
     });
   }
 
-  bindSearchChange(handler) {
+  searchChange(handler) {
     this.$root.off("input.taskflow", "[data-js='task-search']");
     this.$root.on("input.taskflow", "[data-js='task-search']", (e) => {
       e.preventDefault();

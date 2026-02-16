@@ -135,7 +135,9 @@ export default class TaskController {
       this.view.render(this.model.getState(), null, filter);
     });
 
-    this.view.bindSearchChange((search) => {
+
+
+    this.view.searchChange((search) => {
       this.#debouncedSearch(search);
     });
 
