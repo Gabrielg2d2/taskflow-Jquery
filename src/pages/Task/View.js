@@ -254,7 +254,9 @@ export default class TaskView {
 
       $(e.currentTarget).addClass(styles.buttonFilterActive);
 
-      const filter = $(e.currentTarget).data("js").replace("task-filter-", "");
+      const filter = $(e.currentTarget)
+        .attr("data-js")
+        .replace("task-filter-", "");
 
       handler(filter);
     });
