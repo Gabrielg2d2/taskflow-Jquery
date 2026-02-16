@@ -92,7 +92,7 @@ export default class TaskView {
     `;
   }
 
-  #templateToolbar(filter) {
+  #templateToolbar(filter, search) {
     const classIsNotActive = styles.buttonFilter;
     const styleIsActive = styles.buttonFilterActive;
 
@@ -107,6 +107,10 @@ export default class TaskView {
             data-js="task-search"
             class="${styles.search}"
             placeholder="Buscar..."
+            value="${search}"
+            autocomplete="off"
+            type="search"
+            name="search"
           />
         </div>
 
@@ -204,7 +208,7 @@ export default class TaskView {
     `;
   }
 
-  render(domainState, editingTask = null, filter = "all") {
+  render(domainState, editingTask = null, filter = "all", search = "") {
     const disabledClearAllTasksButton = domainState.tasks.length > 0;
 
     this.$root.html(
@@ -214,7 +218,7 @@ export default class TaskView {
           ${this.#templateForm(editingTask)}
             ${this.#templateClearAllTasksButton(disabledClearAllTasksButton)}
             <br />
-            ${this.#templateToolbar(filter)}
+            ${this.#templateToolbar(filter, search)}
             ${this.#templateTaskList(domainState.tasks, filter)}
         </div>
       `,
@@ -255,6 +259,15 @@ export default class TaskView {
       window.history.pushState({ filter }, "", `?filter=${filter}`);
 
       handler(filter);
+    });
+  }
+
+  bindSearchChange(handler) {
+    this.$root.off("input.taskflow", "[data-js='task-search']");
+    this.$root.on("input.taskflow", "[data-js='task-search']", (e) => {
+      e.preventDefault();
+      const search = $(e.currentTarget).val()?.trim();
+      handler(search);
     });
   }
 

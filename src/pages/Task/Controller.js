@@ -42,6 +42,15 @@ export default class TaskController {
     });
   }
 
+  #debounce(fn, delay = 500) {
+    let timerId;
+
+    return function (...args) {
+      clearTimeout(timerId);
+      timerId = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
   init() {
     this.view.bindAddTask((title) => {
       if (!title.trim()) return;
@@ -81,6 +90,43 @@ export default class TaskController {
 
     this.view.filterChange((filter) => {
       this.view.render(this.model.getState(), null, filter);
+    });
+
+    const debouncedSearch = this.#debounce((search) => {
+      const trimmedSearch = search.trim().toLowerCase();
+      
+      if (!trimmedSearch) {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete("search");
+
+        let filter = urlParams.get("filter");
+        filter = this.#verifyFilter(filter);
+        window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
+
+        this.view.render(this.model.getState(), null, filter);
+        return;
+      }
+      
+      const tasks = this.model.getState().tasks.filter((task) => task.title.toLowerCase().includes(trimmedSearch));
+
+      const state = {
+        ...this.model.getState(),
+        tasks,
+      };
+
+      const urlParams = new URLSearchParams(window.location.search);
+      let filter = urlParams.get("filter");
+      filter = this.#verifyFilter(filter);  
+
+      urlParams.set("filter", filter);
+      urlParams.set("search", trimmedSearch);
+      window.history.pushState({ filter, search }, "", `?${urlParams.toString()}`);
+      
+      this.view.render(state, null, filter, trimmedSearch);
+    });
+
+    this.view.bindSearchChange((search) => {
+      debouncedSearch(search);
     });
 
     this.#changeBusListener();
