@@ -22,12 +22,22 @@ export default class TaskController {
     this.#sync();
   }
 
+  #verifyFilter(filter) {
+    const verifyFilter = ["all", "pending", "done"];
+    if (!verifyFilter.includes(filter)) {
+      filter = "all";
+    }
+    return filter;
+  }
+
   #changeBusListener() {
     this.#unsubTasksChanged?.();
     this.#unsubTasksChanged = this.bus.on("tasks:changed", (state) => {
-     
-     const urlParams = new URLSearchParams(window.location.search);
-     const filter = urlParams.get("filter");
+      const urlParams = new URLSearchParams(window.location.search);
+      let filter = urlParams.get("filter");
+
+      filter = this.#verifyFilter(filter);
+
       this.view.render(state, null, filter);
     });
   }

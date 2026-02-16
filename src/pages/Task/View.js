@@ -192,11 +192,6 @@ export default class TaskView {
     if (tasks.length > 0 && filter !== "all")
       return this.#templateEmpty(tasks, filter);
 
-    const dataFilter = ["all", "pending", "done"];
-    if (!dataFilter.includes(filter)) {
-      filter = "all";
-    }
-
     const dataTasks =
       filter === "all"
         ? tasks
