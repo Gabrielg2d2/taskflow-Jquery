@@ -254,9 +254,7 @@ export default class TaskView {
 
       $(e.currentTarget).addClass(styles.buttonFilterActive);
 
-      // Definir url com o filtro
       const filter = $(e.currentTarget).data("js").replace("task-filter-", "");
-      window.history.pushState({ filter }, "", `?filter=${filter}`);
 
       handler(filter);
     });

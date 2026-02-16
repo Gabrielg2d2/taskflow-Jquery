@@ -128,6 +128,10 @@ export default class TaskController {
     });
 
     this.view.filterChange((filter) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set("filter", filter);
+      window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
+
       this.view.render(this.model.getState(), null, filter);
     });
 
