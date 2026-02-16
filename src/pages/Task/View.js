@@ -158,8 +158,41 @@ export default class TaskView {
     `;
   }
 
-  #templateTaskList(tasks, filter) {
+  #templateTaskList(tasks = [], filter = "all") {
+    console.log('tasks_length => ', tasks.length);
+    console.log('filter => ', filter);
+    console.log('tasks => ', tasks);
+
     if (tasks.length === 0) return this.#templateEmpty();
+
+    if (filter !== "all") {
+      const tasksPending = tasks.filter((item) => !item.done);
+      const tasksDone = tasks.filter((item) => item.done);
+
+      if (filter === "pending" && tasksPending.length > 0) {
+        return `
+          <ul data-js="task-list" class="${styles.list}">
+            ${tasksPending.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
+          </ul>
+        `;
+      }
+
+      if (filter === "done" && tasksDone.length > 0) {
+        return `
+          <ul data-js="task-list" class="${styles.list}">
+            ${tasksDone.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
+          </ul>
+        `;
+      }
+
+      return `
+        <ul data-js="task-list" class="${styles.list}">
+          <li class="${styles.item} text-gray-500">
+            Nenhuma tarefa ${filter === "pending" ? "pendente" : "feita"} encontrada.
+          </li>
+        </ul>
+      `;
+    }
 
     const dataFilter = ["all", "pending", "done"];
     if (!dataFilter.includes(filter)) {
