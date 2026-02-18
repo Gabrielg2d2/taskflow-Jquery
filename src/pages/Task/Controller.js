@@ -94,10 +94,12 @@ export default class TaskController {
 
     this.#updateUrlParamsWithFilterAndSearch(filter, "");
 
-    return {
+    const domainState = {
       ...this.model.getState(),
       tasks: tasks,
     };
+
+    this.view.render(domainState, null, this.#ui.filter, this.#ui.search);
   }
 
   #changeBusListener() {
@@ -194,10 +196,9 @@ export default class TaskController {
       this.#sync();
     });
 
-    this.view.filterChange((filter) => {
-      const domainState = this.#filterTasks(filter);
-      this.view.render(domainState, null, filter, this.#ui.search);
-    });
+    this.view.filterChange(
+      (filter) => this.#filterTasks(filter),
+    );
 
     this.view.searchChange((search) => {
       this.#debouncedSearchTasks(search);
