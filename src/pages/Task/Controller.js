@@ -1,5 +1,9 @@
 export default class TaskController {
   #unsubTasksChanged;
+  #ui = {
+    filter: "all",
+    search: "",
+  };
 
   constructor({ bus, model, view, storage }) {
     this.bus = bus;
@@ -30,15 +34,76 @@ export default class TaskController {
     return filter;
   }
 
+  #updateUrlParams(newFilter) {
+    if (!newFilter.trim()) {
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.delete("filter");
+      window.history.pushState(
+        { filter: "all" },
+        "",
+        `?${urlParams.toString()}`,
+      );
+      return;
+    }
+
+    const filter = this.#verifyFilter(newFilter);
+    this.#ui.filter = filter;
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("filter", filter);
+    window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
+  }
+
+  #updateUrlParamsWithSearch(newSearch) {
+    if (!newSearch.trim()) {
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.delete("search");
+      window.history.pushState({ search: "" }, "", `?${urlParams.toString()}`);
+      return;
+    }
+    this.#ui.search = newSearch;
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("search", newSearch);
+    window.history.pushState(
+      { search: newSearch },
+      "",
+      `?${urlParams.toString()}`,
+    );
+  }
+
+  #updateUrlParamsWithFilterAndSearch(filter, search) {
+    this.#updateUrlParams(filter);
+    this.#updateUrlParamsWithSearch(search);
+  }
+
+  #filterTasks(filter) {
+    let tasks = this.model.getState().tasks.slice();
+
+    switch (filter) {
+      case "done":
+        tasks = tasks.filter((task) => task.done);
+        break;
+      case "pending":
+        tasks = tasks.filter((task) => !task.done);
+        break;
+      default:
+        tasks = tasks;
+        break;
+    }
+
+    this.#updateUrlParamsWithFilterAndSearch(filter, this.#ui.search);
+
+    return {
+      ...this.model.getState(),
+      tasks: tasks,
+    };
+  }
+
   #changeBusListener() {
     this.#unsubTasksChanged?.();
     this.#unsubTasksChanged = this.bus.on("tasks:changed", (state) => {
-      const urlParams = new URLSearchParams(window.location.search);
-      let filter = urlParams.get("filter");
-
-      filter = this.#verifyFilter(filter);
-
-      this.view.render(state, null, filter);
+      const filter = this.#ui.filter;
+      const search = this.#ui.search;
+      this.view.render(state, null, filter, search);
     });
   }
 
@@ -128,11 +193,8 @@ export default class TaskController {
     });
 
     this.view.filterChange((filter) => {
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.set("filter", filter);
-      window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
-
-      this.view.render(this.model.getState(), null, filter);
+      const domainState = this.#filterTasks(filter);
+      this.view.render(domainState, null, filter, this.#ui.search);
     });
 
     this.view.searchChange((search) => {
