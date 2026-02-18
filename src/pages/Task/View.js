@@ -131,7 +131,7 @@ export default class TaskView {
             autocomplete="off"
           />
           ${
-            isEditing
+            !!isEditing
               ? `
             <button data-js='task-save' class="${styles.buttonSave}" type="button">
               Salvar
@@ -227,7 +227,7 @@ export default class TaskView {
     const form = this.$root.find("[data-js='task-form']");
     const input = this.$root.find("[data-js='task-input']");
 
-    if (editingTask) {
+    if (!!editingTask) {
       input.val(editingTask.title).data("id", editingTask.id);
     }
 

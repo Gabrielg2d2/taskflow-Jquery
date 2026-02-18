@@ -188,7 +188,7 @@ export default class TaskController {
         this.#sync();
       },
       onEdit: (id, title) => {
-        this.view.render(this.model.getState(), { id, title });
+        this.view.render(this.model.getState(), { id, title }, this.#ui.filter, this.#ui.search);
       },
     });
 
