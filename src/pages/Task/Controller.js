@@ -107,6 +107,11 @@ export default class TaskController {
 
       this.#updateUrlParamsWithFilterAndSearch(filter, search);
 
+      if (search) {
+        this.#debouncedSearch(search);
+        return;
+      }
+
       this.view.render(state, null, this.#ui.filter, this.#ui.search);
     });
   }
@@ -182,7 +187,7 @@ export default class TaskController {
 
     this.view.filterChange((filter) => {
       const domainState = this.#filterTasks(filter);
-      this.view.render(domainState, null, filter, this.#ui.search);
+      this.view.render(domainState, null, filter, "");
     });
 
     this.view.searchChange((search) => {
