@@ -157,6 +157,7 @@ export default class TaskController {
     this.view.bindRemoveAllTasks(() => {
       if (!confirm("Tem certeza que deseja limpar todas as tarefas?")) return;
       this.model.clearAll();
+      this.#updateUrlParamsWithFilterAndSearch("all", "");
       this.#sync();
     });
 
