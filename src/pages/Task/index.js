@@ -1,5 +1,5 @@
 import createEventBus from "../../@utils/EventBus.js";
-import TaskController from "./Controller.js";
+import TaskController from "./ControllerV2.js";
 import TaskModel from "./Model.js";
 import TaskView from "./View.js";
 import StorageService from "../../@services/StorageService,js";

@@ -221,7 +221,14 @@ export default class TaskView {
     });
   }
 
-  render(domainState, editingTask = null, filter = "all", search = "") {
+  render(domainState = {
+    tasks: [],
+    stats: {
+      done: 0,
+      pending: 0,
+      total: 0,
+    },
+  }, editingTask = null, filter = "all", search = "") {
     this.$root.html(
       `
         <div class="${styles.container}">

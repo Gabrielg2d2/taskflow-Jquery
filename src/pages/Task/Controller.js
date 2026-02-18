@@ -1,5 +1,4 @@
 export default class TaskController {
-  #urlParams = new URLSearchParams(window.location.search);
   #unsubTasksChanged;
   #ui = {
     filter: "all",
@@ -38,32 +37,39 @@ export default class TaskController {
   #updateUrlParams(newFilter) {
     if (!newFilter?.trim()) {
       this.#ui.filter = "all";
-      
-      this.#urlParams.delete("filter");
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.delete("filter");
       window.history.pushState(
         { filter: "all" },
         "",
-        `?${this.#urlParams.toString()}`,
+        `?${urlParams.toString()}`,
       );
       return;
     }
 
     const filter = this.#verifyFilter(newFilter);
     this.#ui.filter = filter;
-    this.#urlParams.set("filter", filter);
-    window.history.pushState({ filter }, "", `?${this.#urlParams.toString()}`);
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("filter", filter);
+    window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
   }
 
   #updateUrlParamsWithSearch(newSearch) {
     if (!newSearch?.trim()) {
       this.#ui.search = "";
-      this.#urlParams.delete("search");
-      window.history.pushState({ search: "" }, "", `?${this.#urlParams.toString()}`);
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.delete("search");
+      window.history.pushState({ search: "" }, "", `?${urlParams.toString()}`);
       return;
     }
     this.#ui.search = newSearch;
-    this.#urlParams.set("search", newSearch);
-    window.history.pushState({ search: newSearch }, "", `?${this.#urlParams.toString()}`);
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("search", newSearch);
+    window.history.pushState(
+      { search: newSearch },
+      "",
+      `?${urlParams.toString()}`,
+    );
   }
 
   #updateUrlParamsWithFilterAndSearch(filter, search) {
@@ -88,24 +94,24 @@ export default class TaskController {
 
     this.#updateUrlParamsWithFilterAndSearch(filter, "");
 
-    const domainState = {
+    return {
       ...this.model.getState(),
       tasks: tasks,
     };
-
-    this.view.render(domainState, null, this.#ui.filter, this.#ui.search);
   }
 
   #changeBusListener() {
     this.#unsubTasksChanged?.();
     this.#unsubTasksChanged = this.bus.on("tasks:changed", (state) => {
-      const filter = this.#urlParams.get("filter");
-      const search = this.#urlParams.get("search");
+      const urlParams = new URLSearchParams(window.location.search);
+      const filter = urlParams.get("filter");
+      const search = urlParams.get("search");
 
       this.#updateUrlParamsWithFilterAndSearch(filter, search);
 
       if (search) {
-        this.#searchTasks(search);
+        const domainState = this.#searchTasks(search);
+        this.view.render(domainState, null, this.#ui.filter, this.#ui.search);
         return;
       }
 
@@ -135,21 +141,19 @@ export default class TaskController {
       .getState()
       .tasks.filter((task) => task.title.toLowerCase().includes(trimmedSearch));
 
-    const state = {
+    const domainState = {
       ...this.model.getState(),
       tasks,
     };
 
     this.#updateUrlParamsWithFilterAndSearch(this.#ui.filter, trimmedSearch);
 
-    this.view.render(state, null, this.#ui.filter, this.#ui.search);
+    return domainState;
   }
-
-  #debouncedSearchTasks = this.#debounce(this.#searchTasks);
 
   init() {
     this.view.bindAddTask((title) => {
-      if (!title.trim()) return;
+      if (!title?.trim()) return;
       this.model.addTask(title);
       this.#sync();
     });
@@ -157,7 +161,6 @@ export default class TaskController {
     this.view.bindRemoveAllTasks(() => {
       if (!confirm("Tem certeza que deseja limpar todas as tarefas?")) return;
       this.model.clearAll();
-      this.#updateUrlParamsWithFilterAndSearch("all", "");
       this.#sync();
     });
 
@@ -190,12 +193,14 @@ export default class TaskController {
       this.#sync();
     });
 
-    this.view.filterChange(
-      (filter) => this.#filterTasks(filter),
-    );
+    this.view.filterChange((filter) => {
+      const domainState = this.#filterTasks(filter);
+      this.view.render(domainState, null, filter, this.#ui.search);
+    });
 
     this.view.searchChange((search) => {
-      this.#debouncedSearchTasks(search);
+      const domainState = this.#searchTasks(search);
+      this.view.render(domainState, null, this.#ui.filter, search);
     });
 
     this.#changeBusListener();
