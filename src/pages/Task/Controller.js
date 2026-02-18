@@ -121,19 +121,13 @@ export default class TaskController {
   }
 
   #debouncedSearch = this.#debounce((search) => {
-    const trimmedSearch = search.trim().toLowerCase();
-
-    if (!trimmedSearch) {
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.delete("search");
-
-      let filter = urlParams.get("filter");
-      filter = this.#verifyFilter(filter);
-      window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
-
-      this.view.render(this.model.getState(), null, filter);
+    if (!search?.trim()) {
+      this.#ui.search = "";
+      this.view.render(this.model.getState(), null, this.#ui.filter, "");
       return;
     }
+
+    const trimmedSearch = search.trim().toLowerCase();
 
     const tasks = this.model
       .getState()
@@ -144,19 +138,9 @@ export default class TaskController {
       tasks,
     };
 
-    const urlParams = new URLSearchParams(window.location.search);
-    let filter = urlParams.get("filter");
-    filter = this.#verifyFilter(filter);
+    this.#updateUrlParamsWithFilterAndSearch(this.#ui.filter, trimmedSearch);
 
-    urlParams.set("filter", filter);
-    urlParams.set("search", trimmedSearch);
-    window.history.pushState(
-      { filter, search },
-      "",
-      `?${urlParams.toString()}`,
-    );
-
-    this.view.render(state, null, filter, trimmedSearch);
+    this.view.render(state, null, this.#ui.filter, this.#ui.search);
   });
 
   init() {
