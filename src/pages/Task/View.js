@@ -261,8 +261,7 @@ export default class TaskView {
   searchChange(handler) {
     this.$root.off("input.taskflow", "[data-js='task-search']");
     this.$root.on("input.taskflow", "[data-js='task-search']", (e) => {
-      e.preventDefault();
-      const search = $(e.currentTarget).val()?.trim();
+      const search = String($(e.currentTarget).val() ?? "").trim();
       handler(search);
     });
   }
