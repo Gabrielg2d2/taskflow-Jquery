@@ -101,8 +101,17 @@ export default class TaskController {
   #changeBusListener() {
     this.#unsubTasksChanged?.();
     this.#unsubTasksChanged = this.bus.on("tasks:changed", (state) => {
-      const filter = this.#ui.filter;
-      const search = this.#ui.search;
+      const urlParams = new URLSearchParams(window.location.search);
+      const getFilter = urlParams.get("filter");
+      const getSearch = urlParams.get("search");
+
+      const filter = this.#verifyFilter(getFilter);
+      const search = getSearch?.trim().toLowerCase() || "";
+
+      this.#ui.filter = filter;
+      this.#ui.search = search;
+      this.#updateUrlParamsWithFilterAndSearch(filter, search);
+
       this.view.render(state, null, filter, search);
     });
   }
