@@ -35,7 +35,7 @@ export default class TaskController {
   }
 
   #updateUrlParams(newFilter) {
-    if (!newFilter.trim()) {
+    if (!newFilter?.trim()) {
       const urlParams = new URLSearchParams(window.location.search);
       urlParams.delete("filter");
       window.history.pushState(
@@ -54,7 +54,7 @@ export default class TaskController {
   }
 
   #updateUrlParamsWithSearch(newSearch) {
-    if (!newSearch.trim()) {
+    if (!newSearch?.trim()) {
       const urlParams = new URLSearchParams(window.location.search);
       urlParams.delete("search");
       window.history.pushState({ search: "" }, "", `?${urlParams.toString()}`);
@@ -102,17 +102,12 @@ export default class TaskController {
     this.#unsubTasksChanged?.();
     this.#unsubTasksChanged = this.bus.on("tasks:changed", (state) => {
       const urlParams = new URLSearchParams(window.location.search);
-      const getFilter = urlParams.get("filter");
-      const getSearch = urlParams.get("search");
+      const filter = urlParams.get("filter");
+      const search = urlParams.get("search");
 
-      const filter = this.#verifyFilter(getFilter);
-      const search = getSearch?.trim().toLowerCase() || "";
-
-      this.#ui.filter = filter;
-      this.#ui.search = search;
       this.#updateUrlParamsWithFilterAndSearch(filter, search);
 
-      this.view.render(state, null, filter, search);
+      this.view.render(state, null, this.#ui.filter, this.#ui.search);
     });
   }
 
