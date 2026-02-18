@@ -1,4 +1,5 @@
 export default class TaskController {
+  #urlParams = new URLSearchParams(window.location.search);
   #unsubTasksChanged;
   #ui = {
     filter: "all",
@@ -37,39 +38,32 @@ export default class TaskController {
   #updateUrlParams(newFilter) {
     if (!newFilter?.trim()) {
       this.#ui.filter = "all";
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.delete("filter");
+      
+      this.#urlParams.delete("filter");
       window.history.pushState(
         { filter: "all" },
         "",
-        `?${urlParams.toString()}`,
+        `?${this.#urlParams.toString()}`,
       );
       return;
     }
 
     const filter = this.#verifyFilter(newFilter);
     this.#ui.filter = filter;
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("filter", filter);
-    window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
+    this.#urlParams.set("filter", filter);
+    window.history.pushState({ filter }, "", `?${this.#urlParams.toString()}`);
   }
 
   #updateUrlParamsWithSearch(newSearch) {
     if (!newSearch?.trim()) {
       this.#ui.search = "";
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.delete("search");
-      window.history.pushState({ search: "" }, "", `?${urlParams.toString()}`);
+      this.#urlParams.delete("search");
+      window.history.pushState({ search: "" }, "", `?${this.#urlParams.toString()}`);
       return;
     }
     this.#ui.search = newSearch;
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("search", newSearch);
-    window.history.pushState(
-      { search: newSearch },
-      "",
-      `?${urlParams.toString()}`,
-    );
+    this.#urlParams.set("search", newSearch);
+    window.history.pushState({ search: newSearch }, "", `?${this.#urlParams.toString()}`);
   }
 
   #updateUrlParamsWithFilterAndSearch(filter, search) {
@@ -105,9 +99,8 @@ export default class TaskController {
   #changeBusListener() {
     this.#unsubTasksChanged?.();
     this.#unsubTasksChanged = this.bus.on("tasks:changed", (state) => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const filter = urlParams.get("filter");
-      const search = urlParams.get("search");
+      const filter = this.#urlParams.get("filter");
+      const search = this.#urlParams.get("search");
 
       this.#updateUrlParamsWithFilterAndSearch(filter, search);
 
