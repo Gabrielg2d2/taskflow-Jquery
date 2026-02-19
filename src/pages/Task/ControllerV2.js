@@ -20,8 +20,8 @@ export default class TaskController {
   }
 
   #verifySearch(search) {
-    const trimmed = String(search).trim().toLowerCase();
-    return trimmed === "null" ? "" : trimmed;
+    if (search == null) return "";
+    return String(search).trim().toLowerCase();
   }
 
   #updateUrlParamsFilterAndSearch(filter, search) {
