@@ -48,6 +48,14 @@ export default class TaskController {
     }
   }
 
+  #getUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return {
+      filter: this.#verifyFilter(urlParams.get("filter")),
+      search: this.#verifySearch(urlParams.get("search")),
+    };
+  }
+
   #filterTasks(filter, tasks) {
     const verifiedFilter = this.#verifyFilter(filter);
 
@@ -98,12 +106,9 @@ export default class TaskController {
     if (data) {
       this.model.hydrate(data.tasks);
     }
-    const urlParams = new URLSearchParams(window.location.search);
-    const getFilter = urlParams.get("filter");
-    const getSearch = urlParams.get("search");
-
-    this.#ui.filter = this.#verifyFilter(getFilter);
-    this.#ui.search = this.#verifySearch(getSearch);
+    const { filter, search } = this.#getUrlParams();
+    this.#ui.filter = filter;
+    this.#ui.search = search;
     this.#ui.editingTask = null;
 
     this.#sync({ updateUrlParams: true, updateStorage: true });
