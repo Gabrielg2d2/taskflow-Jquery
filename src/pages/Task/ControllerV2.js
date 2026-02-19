@@ -14,14 +14,32 @@ export default class TaskController {
     this.storage = storage;
   }
 
+  
+
   #verifyFilter(filter) {
     const allowed = ["all", "pending", "done"];
     return allowed.includes(filter) ? filter : "all";
   }
 
   #verifySearch(search) {
-    const trimmed = String(search).trim().toLowerCase();
-    return trimmed
+    const trimmed = String(search).trim().toLowerCase()
+    return trimmed === "null" ? "" : trimmed;
+  }
+
+  #updateUrlParamsFilterAndSearch(filter, search) {
+    const verifiedFilter = this.#verifyFilter(filter);
+    const verifiedSearch = this.#verifySearch(search);
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("filter", verifiedFilter);
+    
+    if (!verifiedSearch) {
+      urlParams.delete("search");
+      window.history.pushState({ filter: verifiedFilter }, "", `?${urlParams.toString()}`);
+    } else {
+      urlParams.set("search", verifiedSearch);
+      window.history.pushState({ filter: verifiedFilter, search: verifiedSearch }, "", `?${urlParams.toString()}`);
+    }
   }
 
   #filterTasks(filter, tasks) {
@@ -43,6 +61,9 @@ export default class TaskController {
   }
 
   #sync() {
+
+    this.#updateUrlParamsFilterAndSearch(this.#ui.filter, this.#ui.search);
+
     const currentState = this.model.getState();
 
     const filteredTasks = this.#filterTasks(
@@ -55,6 +76,7 @@ export default class TaskController {
       ...currentState,
       tasks: searchedTasks,
     };
+
 
     this.storage.save(currentState.tasks);
     this.bus.emit("tasks:changed", state);
