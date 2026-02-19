@@ -121,14 +121,17 @@ export default class TaskView {
     `;
   }
 
-  #templateForm(isEditing = false) {
+  #templateForm(isEditing = null) {
     return `
       <form data-js="task-form" class="${styles.form}">
           <input
             data-js="task-input"
             class="${styles.input}"
-            placeholder="Nova tarefa..."
             autocomplete="off"
+            ${isEditing ? `placeholder="Editar tarefa..."` : "placeholder='Nova tarefa...'"}
+            ${isEditing ? `value="${isEditing.title}"` : ""}
+            ${isEditing ? `data-id="${isEditing.id}"` : ""}
+            ${isEditing ? `data-title="${isEditing.title}"` : ""}
           />
           ${
             !!isEditing
@@ -191,19 +194,10 @@ export default class TaskView {
     `;
   }
 
-  #templateTaskList(tasks = [], filter = "all") {
-    if (tasks.length === 0) return this.#templateEmpty();
-    if (tasks.length > 0 && filter !== "all")
-      return this.#templateEmpty(tasks, filter);
-
-    const dataTasks =
-      filter === "all"
-        ? tasks
-        : tasks.filter((item) => (filter === "done" ? item.done : !item.done));
-
+  #templateTaskList(tasks = []) {
     return `
       <ul data-js="task-list" class="${styles.list}">
-        ${dataTasks.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
+        ${tasks.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
       </ul>
     `;
   }
@@ -213,22 +207,16 @@ export default class TaskView {
     this.$root.on("input.taskflow", "[data-js='task-input']", (e) => {
       const value = String($(e.currentTarget).val() ?? "").trim();
       const disabled = value.length === 0;
-  
+
       const $form = $(e.currentTarget).closest("[data-js='task-form']");
-      $form.find("[data-js='task-submit']")
+      $form
+        .find("[data-js='task-submit']")
         .toggleClass(styles.buttonDisabled, disabled)
         .prop("disabled", disabled);
     });
   }
 
-  render(domainState = {
-    tasks: [],
-    stats: {
-      done: 0,
-      pending: 0,
-      total: 0,
-    },
-  }, editingTask = null, filter = "all", search = "") {
+  render(domainState, editingTask = null, filter = "all", search = "") {
     this.$root.html(
       `
         <div class="${styles.container}">
@@ -237,7 +225,7 @@ export default class TaskView {
             ${this.#templateClearAllTasksButton(domainState.tasks.length)}
             <br />
             ${this.#templateToolbar(filter, search)}
-            ${this.#templateTaskList(domainState.tasks, filter)}
+            ${this.#templateTaskList(domainState.tasks)}
         </div>
       `,
     );

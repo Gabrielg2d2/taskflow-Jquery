@@ -135,10 +135,12 @@ export default class TaskController {
 
     this.view.bindSaveTask((id, title) => {
       this.model.editTask(id, title);
+      this.#ui.editingTask = null;
       this.#sync();
     });
 
     this.view.bindCancelTask(() => {
+      this.#ui.editingTask = null;
       this.#sync();
     });
 
