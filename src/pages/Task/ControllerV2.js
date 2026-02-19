@@ -117,11 +117,7 @@ export default class TaskController {
     this.#ui.search = search;
     this.#ui.editingTask = null;
 
-    this.#sync({
-      updateUrlParamFilter: false,
-      updateUrlParamSearch: false,
-      updateStorage: false,
-    });
+    this.#sync();
   }
 
   #start() {
