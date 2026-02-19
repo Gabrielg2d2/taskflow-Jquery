@@ -62,18 +62,20 @@ export default class TaskController {
   }
 
   #sync() {
+    const currentState = this.model.getState();
+
     const filteredTasks = this.#filterTasks(
       this.#ui.filter,
-      this.model.getState().tasks,
+      currentState.tasks,
     );
     const searchedTasks = this.#searchTasks(this.#ui.search, filteredTasks);
 
     const state = {
-      ...this.model.getState(),
+      ...currentState,
       tasks: searchedTasks,
     };
 
-    this.storage.save(this.model.getState().tasks);
+    this.storage.save(currentState.tasks);
     this.bus.emit("tasks:changed", state);
   }
 
