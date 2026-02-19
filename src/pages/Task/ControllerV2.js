@@ -102,6 +102,11 @@ export default class TaskController {
     };
   }
 
+  #debouncedSearch = this.#debounce((search) => {
+    this.#ui.search = search;
+    this.#sync();
+  }, 500);
+
   init() {
     this.view.bindAddTask((title) => {
       if (!title?.trim()) return;
@@ -152,9 +157,7 @@ export default class TaskController {
     });
 
     this.view.searchChange((search) => {
-      // TODO: vai dar erro, usar debounce para sanitizar o search
-      this.#ui.search = search;
-      this.#sync();
+      this.#debouncedSearch(search);
     });
 
     this.bus.on("tasks:changed", (state) => {
