@@ -106,7 +106,7 @@ export default class TaskController {
     this.#ui.search = this.#verifySearch(getSearch);
     this.#ui.editingTask = null;
 
-    this.#sync({ updateUrlParams: false, updateStorage: true });
+    this.#sync({ updateUrlParams: true, updateStorage: true });
   }
 
   #debouncedSearch = debounce((search) => {
