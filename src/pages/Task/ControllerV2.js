@@ -15,50 +15,31 @@ export default class TaskController {
   }
 
   #verifyFilter(filter) {
-    const verifyFilter = ["all", "pending", "done"];
-    if (!verifyFilter.includes(filter)) {
-      filter = "all";
-    }
-
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("filter", filter);
-    window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
-
-    return filter;
+    const allowed = ["all", "pending", "done"];
+    return allowed.includes(filter) ? filter : "all";
   }
 
   #verifySearch(search) {
-    search = search?.trim()?.toLowerCase();
-    const urlParams = new URLSearchParams(window.location.search);
-
-    if (!search) {
-      urlParams.delete("search");
-      window.history.pushState({ search: "" }, "", `?${urlParams.toString()}`);
-      return "";
-    }
-
-    urlParams.set("search", search);
-    window.history.pushState({ search }, "", `?${urlParams.toString()}`);
-
-    return search;
+    const trimmed = String(search).trim().toLowerCase();
+    return trimmed
   }
 
   #filterTasks(filter, tasks) {
-    filter = this.#verifyFilter(filter);
+    const verifiedFilter = this.#verifyFilter(filter);
 
-    if (filter === "done") return tasks.filter((task) => task.done);
+    if (verifiedFilter === "done") return tasks.filter((task) => task.done);
 
-    if (filter === "pending") return tasks.filter((task) => !task.done);
+    if (verifiedFilter === "pending") return tasks.filter((task) => !task.done);
 
     return tasks;
   }
-
+    
   #searchTasks(search, tasks) {
-    search = this.#verifySearch(search);
+    const verifiedSearch = this.#verifySearch(search);
 
-    if (!search) return tasks;
+    if (!verifiedSearch) return tasks;
 
-    return tasks.filter((task) => task.title.toLowerCase().includes(search));
+    return tasks.filter((task) => task.title.toLowerCase().includes(verifiedSearch));
   }
 
   #sync() {
