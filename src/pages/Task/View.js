@@ -37,39 +37,10 @@ export default class TaskView {
     this.$root = $(rootSelector);
   }
 
-  #templateEmpty(tasks = [], filter = "all") {
-    if (filter !== "all") {
-      const tasksPending = tasks.filter((item) => !item.done);
-      const tasksDone = tasks.filter((item) => item.done);
-
-      if (filter === "pending" && tasksPending.length > 0) {
-        return `
-          <ul data-js="task-list" class="${styles.list}">
-            ${tasksPending.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
-          </ul>
-        `;
-      }
-
-      if (filter === "done" && tasksDone.length > 0) {
-        return `
-          <ul data-js="task-list" class="${styles.list}">
-            ${tasksDone.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
-          </ul>
-        `;
-      }
-
-      return `
-        <ul data-js="task-list" class="${styles.list}">
-          <li class="${styles.item} text-gray-500">
-            Nenhuma tarefa ${filter === "pending" ? "pendente" : "feita"} encontrada.
-          </li>
-        </ul>
-      `;
-    }
-
+  #templateEmpty(message = "Nenhuma tarefa ainda. Adicione a primeira acima 🙂") {
     return `
       <li class="${styles.item} text-gray-500">
-        Nenhuma tarefa ainda. Adicione a primeira acima 🙂
+        ${message}
       </li>
     `;
   }
@@ -194,7 +165,9 @@ export default class TaskView {
     `;
   }
 
-  #templateTaskList(tasks = []) {
+  #templateTaskList(tasks = [], filter = "all") {
+    if (tasks.length === 0 && filter !== "all") return this.#templateEmpty(`Nenhuma tarefa ${filter === "pending" ? "pendente" : "feita"} encontrada.`);
+    if (tasks.length === 0 && filter === "all") return this.#templateEmpty();
     return `
       <ul data-js="task-list" class="${styles.list}">
         ${tasks.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
@@ -217,6 +190,7 @@ export default class TaskView {
   }
 
   render(domainState, editingTask = null, filter = "all", search = "") {
+    
     this.$root.html(
       `
         <div class="${styles.container}">
@@ -225,7 +199,7 @@ export default class TaskView {
             ${this.#templateClearAllTasksButton(domainState.tasks.length)}
             <br />
             ${this.#templateToolbar(filter, search)}
-            ${this.#templateTaskList(domainState.tasks)}
+            ${this.#templateTaskList(domainState.tasks, filter)}
         </div>
       `,
     );
