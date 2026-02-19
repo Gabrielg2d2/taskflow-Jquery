@@ -1,4 +1,4 @@
-import escapeHtml from "../../@utils/escapeHtml";
+import { debounce } from "../../@utils/debounce";
 
 export default class TaskController {
   #ui = {
@@ -93,16 +93,7 @@ export default class TaskController {
     this.#sync();
   }
 
-  #debounce(fn, delay = 500) {
-    let timerId;
-
-    return function (...args) {
-      clearTimeout(timerId);
-      timerId = setTimeout(() => fn.apply(this, args), delay);
-    };
-  }
-
-  #debouncedSearch = this.#debounce((search) => {
+  #debouncedSearch = debounce((search) => {
     this.#ui.search = search;
     this.#sync();
   }, 500);
