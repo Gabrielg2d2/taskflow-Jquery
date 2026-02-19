@@ -35,8 +35,9 @@ export default class TaskController {
   }
 
   #updateUrlParamsSearch(search) {
+    const urlParams = new URLSearchParams(window.location.search);
+
     if (!search) {
-      const urlParams = new URLSearchParams(window.location.search);
       urlParams.delete("search");
       window.history.replaceState(
         { search: "" },
@@ -46,21 +47,12 @@ export default class TaskController {
       return;
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
     urlParams.set("search", search);
     window.history.replaceState(
       { search: search },
       "",
       `?${urlParams.toString()}`,
     );
-  }
-
-  #updateUrlParamsState(filter, search) {
-    const verifiedFilter = this.#verifyFilter(filter);
-    const verifiedSearch = this.#verifySearch(search);
-
-    this.#updateUrlParamsFilter(verifiedFilter);
-    this.#updateUrlParamsSearch(verifiedSearch);
   }
 
   #getUrlParams() {
@@ -72,28 +64,31 @@ export default class TaskController {
   }
 
   #filterTasks(filter, tasks) {
-    const verifiedFilter = this.#verifyFilter(filter);
+    if (filter === "done") return tasks.filter((task) => task.done);
 
-    if (verifiedFilter === "done") return tasks.filter((task) => task.done);
-
-    if (verifiedFilter === "pending") return tasks.filter((task) => !task.done);
+    if (filter === "pending") return tasks.filter((task) => !task.done);
 
     return tasks;
   }
 
   #searchTasks(search, tasks) {
-    const verifiedSearch = this.#verifySearch(search);
-
-    if (!verifiedSearch) return tasks;
+    if (!search) return tasks;
 
     return tasks.filter((task) =>
-      task.title.toLowerCase().includes(verifiedSearch),
+      task.title.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
-  #sync({ updateUrlParams = false, updateStorage = false }) {
-    if (updateUrlParams) {
-      this.#updateUrlParamsState(this.#ui.filter, this.#ui.search);
+  #sync({
+    updateUrlParamFilter = false,
+    updateUrlParamSearch = false,
+    updateStorage = false,
+  }) {
+    if (updateUrlParamFilter) {
+      this.#updateUrlParamsFilter(this.#ui.filter);
+    }
+    if (updateUrlParamSearch) {
+      this.#updateUrlParamsSearch(this.#ui.search);
     }
 
     const currentState = this.model.getState();
@@ -116,32 +111,40 @@ export default class TaskController {
     this.bus.emit("tasks:changed", state);
   }
 
-  #start() {
-    const data = this.storage.load();
-    if (data) {
-      this.model.hydrate(data.tasks);
-    }
+  #initializeUrlParams() {
     const { filter, search } = this.#getUrlParams();
     this.#ui.filter = filter;
     this.#ui.search = search;
     this.#ui.editingTask = null;
 
-    this.#sync({ updateUrlParams: false, updateStorage: false });
+    this.#sync({
+      updateUrlParamFilter: false,
+      updateUrlParamSearch: false,
+      updateStorage: false,
+    });
+  }
+
+  #start() {
+    const data = this.storage.load();
+    if (data) {
+      this.model.hydrate(Array.isArray(data) ? data : data.tasks);
+    }
+
+    this.#initializeUrlParams();
 
     window.addEventListener("popstate", () => {
-      const { filter, search } = this.#getUrlParams();
-      this.#ui.filter = filter;
-      this.#ui.search = search;
-      this.#ui.editingTask = null;
-      this.#sync({ updateUrlParams: false, updateStorage: false });
+      this.#initializeUrlParams();
     });
-    
   }
 
   #debouncedSearch = debounce((search) => {
     this.#ui.search = search;
-    this.#sync({ updateUrlParams: true, updateStorage: false });
-  }, 500);
+    this.#sync({
+      updateUrlParamFilter: false,
+      updateUrlParamSearch: true,
+      updateStorage: false,
+    });
+  }, 600);
 
   init() {
     this.view.bindAddTask((title) => {
@@ -150,7 +153,11 @@ export default class TaskController {
       this.#ui.editingTask = null;
       this.#ui.filter = "all";
       this.#ui.search = "";
-      this.#sync({ updateUrlParams: true, updateStorage: true });
+      this.#sync({
+        updateUrlParamFilter: true,
+        updateUrlParamSearch: false,
+        updateStorage: true,
+      });
     });
 
     this.view.bindRemoveAllTasks(() => {
@@ -159,39 +166,67 @@ export default class TaskController {
       this.#ui.editingTask = null;
       this.#ui.filter = "all";
       this.#ui.search = "";
-      this.#sync({ updateUrlParams: true, updateStorage: true });
+      this.#sync({
+        updateUrlParamFilter: true,
+        updateUrlParamSearch: true,
+        updateStorage: true,
+      });
     });
 
     this.view.bindTaskActions({
       onToggle: (id) => {
         this.model.toggleTask(id);
-        this.#sync({ updateUrlParams: false, updateStorage: true });
+        this.#sync({
+          updateUrlParamFilter: false,
+          updateUrlParamSearch: false,
+          updateStorage: true,
+        });
       },
       onRemove: (id) => {
         if (!confirm("Tem certeza que deseja remover a tarefa?")) return;
         this.model.removeTask(id);
-        this.#sync({ updateUrlParams: false, updateStorage: true });
+        this.#sync({
+          updateUrlParamFilter: false,
+          updateUrlParamSearch: false,
+          updateStorage: true,
+        });
       },
       onEdit: (id, title) => {
         this.#ui.editingTask = { id, title };
-        this.#sync({ updateUrlParams: false, updateStorage: false });
+        this.#sync({
+          updateUrlParamFilter: false,
+          updateUrlParamSearch: false,
+          updateStorage: false,
+        });
       },
     });
 
     this.view.bindSaveTask((id, title) => {
       this.model.editTask(id, title);
       this.#ui.editingTask = null;
-      this.#sync({ updateUrlParams: false, updateStorage: true });
+      this.#sync({
+        updateUrlParamFilter: false,
+        updateUrlParamSearch: false,
+        updateStorage: true,
+      });
     });
 
     this.view.bindCancelTask(() => {
       this.#ui.editingTask = null;
-      this.#sync({ updateUrlParams: false, updateStorage: false });
+      this.#sync({
+        updateUrlParamFilter: false,
+        updateUrlParamSearch: false,
+        updateStorage: false,
+      });
     });
 
     this.view.filterChange((filter) => {
       this.#ui.filter = filter;
-      this.#sync({ updateUrlParams: true, updateStorage: false });
+      this.#sync({
+        updateUrlParamFilter: true,
+        updateUrlParamSearch: false,
+        updateStorage: false,
+      });
     });
 
     this.view.searchChange((search) => {
