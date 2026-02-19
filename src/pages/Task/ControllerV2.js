@@ -16,12 +16,12 @@ export default class TaskController {
 
   #verifyFilter(filter) {
     const allowed = ["all", "pending", "done"];
-    return allowed.includes(filter) ? filter : "all";
+    return allowed.includes(filter ?? "") ? filter : "all";
   }
 
   #verifySearch(search) {
-    if (search == null) return "";
-    return String(search).trim().toLowerCase();
+    const s = String(search).trim().toLowerCase();
+    return s === "undefined" || s === "null" ? "" : s;
   }
 
   #updateUrlParamsFilter(filter) {
@@ -83,7 +83,7 @@ export default class TaskController {
     updateUrlParamFilter = false,
     updateUrlParamSearch = false,
     updateStorage = false,
-  }) {
+  } = {}) {
     if (updateUrlParamFilter) {
       this.#updateUrlParamsFilter(this.#ui.filter);
     }
@@ -139,11 +139,7 @@ export default class TaskController {
 
   #debouncedSearch = debounce((search) => {
     this.#ui.search = search;
-    this.#sync({
-      updateUrlParamFilter: false,
-      updateUrlParamSearch: true,
-      updateStorage: false,
-    });
+    this.#sync({ updateUrlParamSearch: true });
   }, 600);
 
   init() {
@@ -155,7 +151,6 @@ export default class TaskController {
       this.#ui.search = "";
       this.#sync({
         updateUrlParamFilter: true,
-        updateUrlParamSearch: false,
         updateStorage: true,
       });
     });
@@ -176,57 +171,33 @@ export default class TaskController {
     this.view.bindTaskActions({
       onToggle: (id) => {
         this.model.toggleTask(id);
-        this.#sync({
-          updateUrlParamFilter: false,
-          updateUrlParamSearch: false,
-          updateStorage: true,
-        });
+        this.#sync({ updateStorage: true });
       },
       onRemove: (id) => {
         if (!confirm("Tem certeza que deseja remover a tarefa?")) return;
         this.model.removeTask(id);
-        this.#sync({
-          updateUrlParamFilter: false,
-          updateUrlParamSearch: false,
-          updateStorage: true,
-        });
+        this.#sync({ updateStorage: true });
       },
       onEdit: (id, title) => {
         this.#ui.editingTask = { id, title };
-        this.#sync({
-          updateUrlParamFilter: false,
-          updateUrlParamSearch: false,
-          updateStorage: false,
-        });
+        this.#sync({ updateStorage: false });
       },
     });
 
     this.view.bindSaveTask((id, title) => {
       this.model.editTask(id, title);
       this.#ui.editingTask = null;
-      this.#sync({
-        updateUrlParamFilter: false,
-        updateUrlParamSearch: false,
-        updateStorage: true,
-      });
+      this.#sync({ updateStorage: true });
     });
 
     this.view.bindCancelTask(() => {
       this.#ui.editingTask = null;
-      this.#sync({
-        updateUrlParamFilter: false,
-        updateUrlParamSearch: false,
-        updateStorage: false,
-      });
+      this.#sync({ updateStorage: false });
     });
 
     this.view.filterChange((filter) => {
       this.#ui.filter = filter;
-      this.#sync({
-        updateUrlParamFilter: true,
-        updateUrlParamSearch: false,
-        updateStorage: false,
-      });
+      this.#sync({ updateUrlParamFilter: true });
     });
 
     this.view.searchChange((search) => {
