@@ -126,7 +126,16 @@ export default class TaskController {
     this.#ui.search = search;
     this.#ui.editingTask = null;
 
-    this.#sync({ updateUrlParams: true, updateStorage: true });
+    this.#sync({ updateUrlParams: false, updateStorage: false });
+
+    window.addEventListener("popstate", () => {
+      const { filter, search } = this.#getUrlParams();
+      this.#ui.filter = filter;
+      this.#ui.search = search;
+      this.#ui.editingTask = null;
+      this.#sync({ updateUrlParams: false, updateStorage: false });
+    });
+    
   }
 
   #debouncedSearch = debounce((search) => {
