@@ -24,28 +24,43 @@ export default class TaskController {
     return String(search).trim().toLowerCase();
   }
 
-  #updateUrlParamsFilterAndSearch(filter, search) {
+  #updateUrlParamsFilter(filter) {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("filter", filter);
+    window.history.pushState(
+      { filter: filter },
+      "",
+      `?${urlParams.toString()}`,
+    );
+  }
+
+  #updateUrlParamsSearch(search) {
+    if (!search) {
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.delete("search");
+      window.history.replaceState(
+        { search: "" },
+        "",
+        `?${urlParams.toString()}`,
+      );
+      return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("search", search);
+    window.history.replaceState(
+      { search: search },
+      "",
+      `?${urlParams.toString()}`,
+    );
+  }
+
+  #updateUrlParamsState(filter, search) {
     const verifiedFilter = this.#verifyFilter(filter);
     const verifiedSearch = this.#verifySearch(search);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("filter", verifiedFilter);
-
-    if (!verifiedSearch) {
-      urlParams.delete("search");
-      window.history.pushState(
-        { filter: verifiedFilter },
-        "",
-        `?${urlParams.toString()}`,
-      );
-    } else {
-      urlParams.set("search", verifiedSearch);
-      window.history.pushState(
-        { filter: verifiedFilter, search: verifiedSearch },
-        "",
-        `?${urlParams.toString()}`,
-      );
-    }
+    this.#updateUrlParamsFilter(verifiedFilter);
+    this.#updateUrlParamsSearch(verifiedSearch);
   }
 
   #getUrlParams() {
@@ -78,7 +93,7 @@ export default class TaskController {
 
   #sync({ updateUrlParams = false, updateStorage = false }) {
     if (updateUrlParams) {
-      this.#updateUrlParamsFilterAndSearch(this.#ui.filter, this.#ui.search);
+      this.#updateUrlParamsState(this.#ui.filter, this.#ui.search);
     }
 
     const currentState = this.model.getState();
