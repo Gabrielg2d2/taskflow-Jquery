@@ -33,65 +33,111 @@ const styles = {
 };
 
 export default class TaskView {
+  // keys por slot
+  #headerKey = "";
+  #formKey = "";
+  #clearKey = "";
+  #toolbarKey = "";
   #listKey = "";
+
+  #mounted = false;
 
   constructor(rootSelector) {
     this.$root = $(rootSelector);
+    this.#mount();
+    this.#bindOneTimeWatchers();
+  }
+
+  // -------------------------
+  // MOUNT (shell fixo 1x)
+  // -------------------------
+  #mount() {
+    if (this.#mounted) return;
+
+    this.$root.html(`
+      <div class="${styles.container}">
+        <div data-js="slot-header"></div>
+        <div data-js="slot-form"></div>
+        <div data-js="slot-clear"></div>
+        <br />
+        <div data-js="slot-toolbar"></div>
+        <div data-js="slot-list"></div>
+      </div>
+    `);
+
+    // caches dos slots
+    this.$slotHeader = this.$root.find('[data-js="slot-header"]');
+    this.$slotForm = this.$root.find('[data-js="slot-form"]');
+    this.$slotClear = this.$root.find('[data-js="slot-clear"]');
+    this.$slotToolbar = this.$root.find('[data-js="slot-toolbar"]');
+    this.$slotList = this.$root.find('[data-js="slot-list"]');
+
+    this.#mounted = true;
+  }
+
+  // -------------------------
+  // KEYS
+  // -------------------------
+  #makeHeaderKey(stats) {
+    return `${stats.total}|${stats.done}|${stats.pending}`;
+  }
+
+  #makeFormKey(editingTask) {
+    return editingTask ? `${editingTask.id}|${editingTask.title}` : "add";
+  }
+
+  #makeClearKey(tasksLength) {
+    return String(tasksLength);
+  }
+
+  #makeToolbarKey(filter, search) {
+    return `${filter}|${search ?? ""}`;
   }
 
   #makeListKey(tasks, filter) {
-    return (
-      `${filter}::` +
-      tasks.map((t) => `${t.id}|${t.done ? 1 : 0}|${t.title}`).join("::")
-    );
+    // inclui filtro porque a lista visível muda com ele
+    const tasksPart = (tasks ?? [])
+      .map((t) => `${t.id}|${t.done ? 1 : 0}|${t.title}`)
+      .join("::");
+    return `${filter}::${tasksPart}`;
   }
 
-  #renderTaskListPartial(tasks, filter) {
-    const newKey = this.#makeListKey(tasks, filter);
-    if (newKey === this.#listKey) return;
-
-    this.#listKey = newKey;
-
-    const html = this.#templateTaskList(tasks, filter);
-
-    this.$root.find("[data-js='task-list-slot']").html(html);
-  }
-
+  // -------------------------
+  // TEMPLATES
+  // -------------------------
   #templateEmpty(
     message = "Nenhuma tarefa ainda. Adicione a primeira acima 🙂",
   ) {
     return `
-      <li class="${styles.item} text-gray-500">
-        ${message}
-      </li>
+      <ul data-js="task-list" class="${styles.list}">
+        <li class="${styles.item} text-gray-500">${message}</li>
+      </ul>
     `;
   }
 
   #templateHeader(stats) {
     return `<div class="${styles.header}">
-          <h1 class="${styles.title}">TaskFlow</h1>
-            <div class="${styles.sectionStats}">
-              <span class="${styles.subtitle}">
-                Feitas: <strong data-js="done-tasks" class="${styles.numberTasks}">${stats.done}</strong>
-              </span>
-              <span class="${styles.subtitle}">
-                Pendentes: <strong data-js="pending-tasks" class="${styles.numberTasks}">${stats.pending}</strong>
-              </span>
-              <span class="${styles.subtitle}">
-                Total: <strong data-js="total-tasks" class="${styles.numberTasks}">${stats.total}</strong>
-              </span>
-            </div>
-        </div>
-    `;
+      <h1 class="${styles.title}">TaskFlow</h1>
+      <div class="${styles.sectionStats}">
+        <span class="${styles.subtitle}">
+          Feitas: <strong data-js="done-tasks" class="${styles.numberTasks}">${stats.done}</strong>
+        </span>
+        <span class="${styles.subtitle}">
+          Pendentes: <strong data-js="pending-tasks" class="${styles.numberTasks}">${stats.pending}</strong>
+        </span>
+        <span class="${styles.subtitle}">
+          Total: <strong data-js="total-tasks" class="${styles.numberTasks}">${stats.total}</strong>
+        </span>
+      </div>
+    </div>`;
   }
 
   #templateToolbar(filter, search) {
-    const classIsNotActive = styles.buttonFilter;
-    const styleIsActive = styles.buttonFilterActive;
+    const activeAll = filter === "all" ? styles.buttonFilterActive : "";
+    const activePending = filter === "pending" ? styles.buttonFilterActive : "";
+    const activeDone = filter === "done" ? styles.buttonFilterActive : "";
 
-    const classIsActive = filter === "all" ? styleIsActive : "";
-    const classIsPending = filter === "pending" ? styleIsActive : "";
-    const classIsDone = filter === "done" ? styleIsActive : "";
+    const safeSearch = escapeHtml(search ?? "");
 
     return `
       <div class="${styles.toolbar}">
@@ -100,60 +146,65 @@ export default class TaskView {
             data-js="task-search"
             class="${styles.search}"
             placeholder="Buscar..."
-            value="${search}"
+            value="${safeSearch}"
             autocomplete="off"
             type="search"
             name="search"
           />
         </div>
 
-        <button type="button" data-js="task-filter-all" class="${classIsNotActive} ${classIsActive}">Todas</button>
-        <button type="button" data-js="task-filter-pending" class="${classIsNotActive} ${classIsPending}">Pendentes</button>
-        <button type="button" data-js="task-filter-done" class="${classIsNotActive} ${classIsDone}">Feitas</button>
+        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${activeAll}">Todas</button>
+        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${activePending}">Pendentes</button>
+        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter} ${activeDone}">Feitas</button>
       </div>
     `;
   }
 
-  #templateForm(isEditing = null) {
+  #templateForm(editingTask = null) {
+    const isEditing = !!editingTask;
+    const safeTitle = isEditing ? escapeHtml(editingTask.title ?? "") : "";
+
     return `
       <form data-js="task-form" class="${styles.form}">
-          <input
-            data-js="task-input"
-            class="${styles.input}"
-            autocomplete="off"
-            ${isEditing ? `placeholder="Editar tarefa..."` : "placeholder='Nova tarefa...'"}
-            ${isEditing ? `value="${isEditing.title}"` : ""}
-            ${isEditing ? `data-id="${isEditing.id}"` : ""}
-            ${isEditing ? `data-title="${isEditing.title}"` : ""}
-          />
-          ${
-            !!isEditing
-              ? `
-            <button data-js='task-save' class="${styles.buttonSave}" type="button">
-              Salvar
-            </button>
-            <button data-js='task-cancel' class="${styles.buttonCancel}" type="button">
-              Cancelar
-            </button>
-          `
-              : `
-          <button data-js="task-submit" class="${styles.button} ${styles.buttonDisabled}" type="submit" disabled>
-            Adicionar
-          </button>
-          `
-          }
-        </form>
-      `;
+        <input
+          data-js="task-input"
+          class="${styles.input}"
+          autocomplete="off"
+          placeholder="${isEditing ? "Editar tarefa..." : "Nova tarefa..."}"
+          ${isEditing ? `value="${safeTitle}"` : ""}
+          ${isEditing ? `data-id="${editingTask.id}"` : ""}
+        />
+
+        ${
+          isEditing
+            ? `
+              <button data-js="task-save" class="${styles.buttonSave}" type="button">Salvar</button>
+              <button data-js="task-cancel" class="${styles.buttonCancel}" type="button">Cancelar</button>
+            `
+            : `
+              <button data-js="task-submit" class="${styles.button} ${styles.buttonDisabled}" type="submit" disabled>
+                Adicionar
+              </button>
+            `
+        }
+      </form>
+    `;
   }
 
   #templateClearAllTasksButton(tasksLength) {
+    const disabled = tasksLength === 0;
     return `
-      <button data-js="task-clear" class="${styles.buttonClear} ${tasksLength === 0 ? styles.buttonClearDisabled : ""}" ${tasksLength === 0 ? "disabled" : ""} type="button">
-          <span class="${styles.buttonClearText}">Limpar tudo</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-          </svg>
-        </button>
+      <button
+        data-js="task-clear"
+        class="${styles.buttonClear} ${disabled ? styles.buttonClearDisabled : ""}"
+        ${disabled ? "disabled" : ""}
+        type="button"
+      >
+        <span class="${styles.buttonClearText}">Limpar tudo</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+        </svg>
+      </button>
     `;
   }
 
@@ -165,7 +216,7 @@ export default class TaskView {
     return `
       <li data-id="${id}" class="${styles.item}">
         <span class="${doneClass}">${safeTitle}</span>
-  
+
         <div class="${styles.itemBtns}">
           <button type="button" data-js="task-toggle" data-id="${id}" class="${styles.itemBtnToggle}">
             ${btnText}
@@ -173,13 +224,7 @@ export default class TaskView {
           <button type="button" data-js="task-remove" data-id="${id}" class="${styles.itemBtnRemove}">
             Remover
           </button>
-          <button
-            type="button"
-            data-js="task-edit"
-            data-id="${id}"
-            data-title="${safeTitle}"
-            class="${styles.itemBtnEdit}"
-          >
+          <button type="button" data-js="task-edit" data-id="${id}" data-title="${safeTitle}" class="${styles.itemBtnEdit}">
             Editar
           </button>
         </div>
@@ -188,75 +233,114 @@ export default class TaskView {
   }
 
   #templateTaskList(tasks = [], filter = "all") {
-    if (tasks.length === 0 && filter !== "all")
+    if (tasks.length === 0 && filter !== "all") {
       return this.#templateEmpty(
         `Nenhuma tarefa ${filter === "pending" ? "pendente" : "feita"} encontrada.`,
       );
-    if (tasks.length === 0 && filter === "all") return this.#templateEmpty();
+    }
+    if (tasks.length === 0) return this.#templateEmpty();
+
     return `
       <ul data-js="task-list" class="${styles.list}">
-        ${tasks.map((item) => this.#templateTaskItem(item.id, item.title, item.done)).join("")}
+        ${tasks.map((t) => this.#templateTaskItem(t.id, t.title, t.done)).join("")}
       </ul>
     `;
   }
 
-  #watchDisabledFormSubmitButton() {
+  // -------------------------
+  // ONE-TIME WATCHERS
+  // -------------------------
+  #bindOneTimeWatchers() {
+    // botão "Adicionar" habilita/desabilita conforme digita
     this.$root.off("input.taskflow", "[data-js='task-input']");
     this.$root.on("input.taskflow", "[data-js='task-input']", (e) => {
-      const value = String($(e.currentTarget).val() ?? "").trim();
+      const $input = $(e.currentTarget);
+
+      // se estiver editando, pode ignorar submit
+      const isEditing = !!$input.data("id");
+      if (isEditing) return;
+
+      const value = String($input.val() ?? "").trim();
       const disabled = value.length === 0;
 
-      const $form = $(e.currentTarget).closest("[data-js='task-form']");
-      $form
+      $input
+        .closest("[data-js='task-form']")
         .find("[data-js='task-submit']")
         .toggleClass(styles.buttonDisabled, disabled)
         .prop("disabled", disabled);
     });
   }
 
+  // -------------------------
+  // PARTIAL RENDERS
+  // -------------------------
+  #renderHeaderPartial(stats) {
+    const key = this.#makeHeaderKey(stats);
+    if (key === this.#headerKey) return;
+    this.#headerKey = key;
+    this.$slotHeader.html(this.#templateHeader(stats));
+  }
+
+  #renderFormPartial(editingTask) {
+    const key = this.#makeFormKey(editingTask);
+    if (key === this.#formKey) return;
+    this.#formKey = key;
+
+    this.$slotForm.html(this.#templateForm(editingTask));
+
+    // foco/cursor ao entrar em edição
+    const $input = this.$slotForm.find("[data-js='task-input']");
+    $input.trigger("focus");
+    const el = $input.get(0);
+    if (el && el.setSelectionRange) {
+      const len = el.value.length;
+      el.setSelectionRange(len, len);
+    }
+  }
+
+  #renderClearPartial(tasksLength) {
+    const key = this.#makeClearKey(tasksLength);
+    if (key === this.#clearKey) return;
+    this.#clearKey = key;
+    this.$slotClear.html(this.#templateClearAllTasksButton(tasksLength));
+  }
+
+  #renderToolbarPartial(filter, search) {
+    const key = this.#makeToolbarKey(filter, search);
+    if (key === this.#toolbarKey) return;
+    this.#toolbarKey = key;
+    this.$slotToolbar.html(this.#templateToolbar(filter, search));
+  }
+
+  #renderTaskListPartial(tasks, filter) {
+    const key = this.#makeListKey(tasks, filter);
+    if (key === this.#listKey) return;
+    this.#listKey = key;
+    this.$slotList.html(this.#templateTaskList(tasks, filter));
+  }
+
+  // -------------------------
+  // PUBLIC RENDER
+  // -------------------------
   render(domainState, editingTask = null, filter = "all", search = "") {
-    this.$root.html(
-      `
-        <div class="${styles.container}">
-          ${this.#templateHeader(domainState.stats)}
-          ${this.#templateForm(editingTask)}
-            ${this.#templateClearAllTasksButton(domainState.tasks.length)}
-            <br />
-            ${this.#templateToolbar(filter, search)}
-
-            <div data-js="task-list-slot">
-              ${this.#templateTaskList(domainState.tasks, filter)}
-           </div>
-        </div>
-      `,
-    );
-
-    // define a key como "já renderizado"
-    this.#listKey = this.#makeListKey(domainState.tasks, filter);
-
-    this.#watchDisabledFormSubmitButton();
+    this.#renderHeaderPartial(domainState.stats);
+    this.#renderFormPartial(editingTask);
+    this.#renderClearPartial(domainState.tasks.length);
+    this.#renderToolbarPartial(filter, search);
+    this.#renderTaskListPartial(domainState.tasks, filter);
   }
 
-  updateTaskList(tasks, filter) {
-    this.#renderTaskListPartial(tasks, filter);
-  }
-
+  // -------------------------
+  // BINDS (mantidos do seu jeito)
+  // -------------------------
   filterChange(handler) {
     this.$root.off("click.taskflow", '[data-js^="task-filter-"]');
-
     this.$root.on("click.taskflow", '[data-js^="task-filter-"]', (e) => {
       e.preventDefault();
-
-      this.$root
-        .find('[data-js^="task-filter-"]')
-        .removeClass(styles.buttonFilterActive);
-
-      $(e.currentTarget).addClass(styles.buttonFilterActive);
 
       const filter = $(e.currentTarget)
         .attr("data-js")
         .replace("task-filter-", "");
-
       handler(filter);
     });
   }
@@ -273,9 +357,19 @@ export default class TaskView {
     this.$root.off("submit.taskflow", '[data-js="task-form"]');
     this.$root.on("submit.taskflow", '[data-js="task-form"]', (e) => {
       e.preventDefault();
-      const title = this.$root.find("[data-js='task-input']").val()?.trim();
+
+      // pega o valor do input
+      const $input = this.$root.find("[data-js='task-input']");
+      const title = String($input.val() ?? "").trim();
       if (!title) return;
+
+      // se estiver editando, não adiciona
+      const isEditing = !!$input.data("id");
+      if (isEditing) return;
+
       handler(title);
+
+      $input.val("").trigger("input");
     });
   }
 
@@ -308,10 +402,6 @@ export default class TaskView {
       const id = $(e.currentTarget).data("id");
       const title = $(e.currentTarget).data("title");
       if (!id) return;
-      this.$root
-        .find("[data-js='task-input']")
-        .val(title ?? "")
-        .data("id", id);
       onEdit(id, title);
     });
   }
@@ -322,7 +412,7 @@ export default class TaskView {
       e.preventDefault();
       const input = this.$root.find("[data-js='task-input']");
       const id = input.data("id");
-      const title = input.val()?.trim();
+      const title = String(input.val() ?? "").trim();
       if (!id || !title) return;
       handler(id, title);
     });
