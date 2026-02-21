@@ -1,8 +1,10 @@
+import { debounce } from "../../@utils/debounce";
+
 export default class TaskController {
-  #unsubTasksChanged;
   #ui = {
     filter: "all",
     search: "",
+    editingTask: null,
   };
 
   constructor({ bus, model, view, storage }) {
@@ -12,198 +14,200 @@ export default class TaskController {
     this.storage = storage;
   }
 
-  #sync() {
-    const state = this.model.getState();
-    this.storage.save(state.tasks);
-    this.bus.emit("tasks:changed", state);
-  }
-
-  #start() {
-    const data = this.storage.load();
-    if (data) {
-      this.model.hydrate(data.tasks);
-    }
-    this.#sync();
-  }
-
   #verifyFilter(filter) {
-    const verifyFilter = ["all", "pending", "done"];
-    if (!verifyFilter.includes(filter)) {
-      filter = "all";
-    }
-    return filter;
+    const allowed = ["all", "pending", "done"];
+    return allowed.includes(filter ?? "") ? filter : "all";
   }
 
-  #updateUrlParams(newFilter) {
-    if (!newFilter?.trim()) {
-      this.#ui.filter = "all";
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.delete("filter");
-      window.history.pushState(
-        { filter: "all" },
+  #verifySearch(search) {
+    const s = String(search).trim().toLowerCase();
+    return s === "undefined" || s === "null" ? "" : s;
+  }
+
+  #updateUrlParamsFilter(filter) {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("filter", filter);
+    window.history.pushState(
+      { filter: filter },
+      "",
+      `?${urlParams.toString()}`,
+    );
+  }
+
+  #updateUrlParamsSearch(search) {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (!search) {
+      urlParams.delete("search");
+      window.history.replaceState(
+        { search: "" },
         "",
         `?${urlParams.toString()}`,
       );
       return;
     }
 
-    const filter = this.#verifyFilter(newFilter);
-    this.#ui.filter = filter;
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("filter", filter);
-    window.history.pushState({ filter }, "", `?${urlParams.toString()}`);
-  }
-
-  #updateUrlParamsWithSearch(newSearch) {
-    if (!newSearch?.trim()) {
-      this.#ui.search = "";
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.delete("search");
-      window.history.pushState({ search: "" }, "", `?${urlParams.toString()}`);
-      return;
-    }
-    this.#ui.search = newSearch;
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("search", newSearch);
-    window.history.pushState(
-      { search: newSearch },
+    urlParams.set("search", search);
+    window.history.replaceState(
+      { search: search },
       "",
       `?${urlParams.toString()}`,
     );
   }
 
-  #updateUrlParamsWithFilterAndSearch(filter, search) {
-    this.#updateUrlParams(filter);
-    this.#updateUrlParamsWithSearch(search);
-  }
-
-  #filterTasks(filter) {
-    let tasks = this.model.getState().tasks.slice();
-
-    switch (filter) {
-      case "done":
-        tasks = tasks.filter((task) => task.done);
-        break;
-      case "pending":
-        tasks = tasks.filter((task) => !task.done);
-        break;
-      default:
-        tasks = tasks;
-        break;
-    }
-
-    this.#updateUrlParamsWithFilterAndSearch(filter, "");
-
+  #getUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
     return {
-      ...this.model.getState(),
-      tasks: tasks,
+      filter: this.#verifyFilter(urlParams.get("filter")),
+      search: this.#verifySearch(urlParams.get("search")),
     };
   }
 
-  #changeBusListener() {
-    this.#unsubTasksChanged?.();
-    this.#unsubTasksChanged = this.bus.on("tasks:changed", (state) => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const filter = urlParams.get("filter");
-      const search = urlParams.get("search");
+  #filterTasks(filter, tasks) {
+    if (filter === "done") return tasks.filter((task) => task.done);
 
-      this.#updateUrlParamsWithFilterAndSearch(filter, search);
+    if (filter === "pending") return tasks.filter((task) => !task.done);
 
-      if (search) {
-        const domainState = this.#searchTasks(search);
-        this.view.render(domainState, null, this.#ui.filter, this.#ui.search);
-        return;
-      }
+    return tasks;
+  }
 
-      this.view.render(state, null, this.#ui.filter, this.#ui.search);
+  #searchTasks(search, tasks) {
+    if (!search) return tasks;
+
+    return tasks.filter((task) =>
+      task.title.toLowerCase().includes(search.toLowerCase()),
+    );
+  }
+
+  #sync({
+    updateUrlParamFilter = false,
+    updateUrlParamSearch = false,
+    updateStorage = false,
+  } = {}) {
+    if (updateUrlParamFilter) {
+      this.#updateUrlParamsFilter(this.#ui.filter);
+    }
+    if (updateUrlParamSearch) {
+      this.#updateUrlParamsSearch(this.#ui.search);
+    }
+
+    const currentState = this.model.getState();
+
+    const filteredTasks = this.#filterTasks(
+      this.#ui.filter,
+      currentState.tasks,
+    );
+    const searchedTasks = this.#searchTasks(this.#ui.search, filteredTasks);
+
+    const state = {
+      ...currentState,
+      tasks: searchedTasks,
+    };
+
+    if (updateStorage) {
+      this.storage.save(currentState.tasks);
+    }
+
+    this.bus.emit("tasks:changed", state);
+  }
+
+  #initializeUrlParams() {
+    const { filter, search } = this.#getUrlParams();
+    this.#ui.filter = filter;
+    this.#ui.search = search;
+    this.#ui.editingTask = null;
+
+    this.#sync();
+  }
+
+  #start() {
+    const data = this.storage.load();
+    if (data) {
+      this.model.hydrate(Array.isArray(data) ? data : data.tasks);
+    }
+
+    this.#initializeUrlParams();
+
+    window.addEventListener("popstate", () => {
+      this.#initializeUrlParams();
     });
   }
 
-  #debounce(fn, delay = 500) {
-    let timerId;
-
-    return function (...args) {
-      clearTimeout(timerId);
-      timerId = setTimeout(() => fn.apply(this, args), delay);
-    };
-  }
-
-  #searchTasks(search) {
-    const trimmedSearch = search?.trim()?.toLowerCase(); 
-
-    if (!trimmedSearch) {
-      this.#updateUrlParamsWithFilterAndSearch(this.#ui.filter, "");
-      this.view.render(this.model.getState(), null, this.#ui.filter, "");
-      return;
-    }
-
-    const tasks = this.model
-      .getState()
-      .tasks.filter((task) => task.title.toLowerCase().includes(trimmedSearch));
-
-    const domainState = {
-      ...this.model.getState(),
-      tasks,
-    };
-
-    this.#updateUrlParamsWithFilterAndSearch(this.#ui.filter, trimmedSearch);
-
-    return domainState;
-  }
+  #debouncedSearch = debounce((search) => {
+    this.#ui.search = search;
+    this.#sync({ updateUrlParamSearch: true });
+  }, 600);
 
   init() {
     this.view.bindAddTask((title) => {
       if (!title?.trim()) return;
       this.model.addTask(title);
-      this.#sync();
+      this.#ui.editingTask = null;
+      this.#ui.filter = "all";
+      this.#ui.search = "";
+      this.#sync({
+        updateUrlParamFilter: true,
+        updateStorage: true,
+      });
     });
 
     this.view.bindRemoveAllTasks(() => {
       if (!confirm("Tem certeza que deseja limpar todas as tarefas?")) return;
       this.model.clearAll();
-      this.#sync();
+      this.#ui.editingTask = null;
+      this.#ui.filter = "all";
+      this.#ui.search = "";
+      this.#sync({
+        updateUrlParamFilter: true,
+        updateUrlParamSearch: true,
+        updateStorage: true,
+      });
     });
 
     this.view.bindTaskActions({
       onToggle: (id) => {
         this.model.toggleTask(id);
-        this.#sync();
+        this.#sync({ updateStorage: true });
       },
       onRemove: (id) => {
         if (!confirm("Tem certeza que deseja remover a tarefa?")) return;
         this.model.removeTask(id);
-        this.#sync();
+        this.#sync({ updateStorage: true });
       },
       onEdit: (id, title) => {
-        this.view.render(
-          this.model.getState(),
-          { id, title },
-          this.#ui.filter,
-          this.#ui.search,
-        );
+        this.#ui.editingTask = { id, title };
+        this.#sync({ updateStorage: false });
       },
     });
 
     this.view.bindSaveTask((id, title) => {
       this.model.editTask(id, title);
-      this.#sync();
+      this.#ui.editingTask = null;
+      this.#sync({ updateStorage: true });
     });
 
     this.view.bindCancelTask(() => {
-      this.#sync();
+      this.#ui.editingTask = null;
+      this.#sync({ updateStorage: false });
     });
 
     this.view.filterChange((filter) => {
-      const domainState = this.#filterTasks(filter);
-      this.view.render(domainState, null, filter, this.#ui.search);
+      this.#ui.filter = filter;
+      this.#sync({ updateUrlParamFilter: true });
     });
 
     this.view.searchChange((search) => {
-      const domainState = this.#searchTasks(search);
-      this.view.render(domainState, null, this.#ui.filter, search);
+      this.#debouncedSearch(search);
     });
 
-    this.#changeBusListener();
+    this.bus.on("tasks:changed", (state) => {
+      this.view.render(
+        state,
+        this.#ui.editingTask,
+        this.#ui.filter,
+        this.#ui.search,
+      );
+    });
 
     this.#start();
   }
