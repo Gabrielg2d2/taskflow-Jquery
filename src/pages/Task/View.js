@@ -33,11 +33,33 @@ const styles = {
 };
 
 export default class TaskView {
+  #listKey = "";
+
   constructor(rootSelector) {
     this.$root = $(rootSelector);
   }
 
-  #templateEmpty(message = "Nenhuma tarefa ainda. Adicione a primeira acima 🙂") {
+  #makeListKey(tasks, filter) {
+    return (
+      `${filter}::` +
+      tasks.map((t) => `${t.id}|${t.done ? 1 : 0}|${t.title}`).join("::")
+    );
+  }
+
+  #renderTaskListPartial(tasks, filter) {
+    const newKey = this.#makeListKey(tasks, filter);
+    if (newKey === this.#listKey) return;
+
+    this.#listKey = newKey;
+
+    const html = this.#templateTaskList(tasks, filter);
+
+    this.$root.find("[data-js='task-list-slot']").html(html);
+  }
+
+  #templateEmpty(
+    message = "Nenhuma tarefa ainda. Adicione a primeira acima 🙂",
+  ) {
     return `
       <li class="${styles.item} text-gray-500">
         ${message}
@@ -166,7 +188,10 @@ export default class TaskView {
   }
 
   #templateTaskList(tasks = [], filter = "all") {
-    if (tasks.length === 0 && filter !== "all") return this.#templateEmpty(`Nenhuma tarefa ${filter === "pending" ? "pendente" : "feita"} encontrada.`);
+    if (tasks.length === 0 && filter !== "all")
+      return this.#templateEmpty(
+        `Nenhuma tarefa ${filter === "pending" ? "pendente" : "feita"} encontrada.`,
+      );
     if (tasks.length === 0 && filter === "all") return this.#templateEmpty();
     return `
       <ul data-js="task-list" class="${styles.list}">
@@ -190,7 +215,6 @@ export default class TaskView {
   }
 
   render(domainState, editingTask = null, filter = "all", search = "") {
-    
     this.$root.html(
       `
         <div class="${styles.container}">
@@ -199,12 +223,22 @@ export default class TaskView {
             ${this.#templateClearAllTasksButton(domainState.tasks.length)}
             <br />
             ${this.#templateToolbar(filter, search)}
-            ${this.#templateTaskList(domainState.tasks, filter)}
+
+            <div data-js="task-list-slot">
+              ${this.#templateTaskList(domainState.tasks, filter)}
+           </div>
         </div>
       `,
     );
 
+    // define a key como "já renderizado"
+    this.#listKey = this.#makeListKey(domainState.tasks, filter);
+
     this.#watchDisabledFormSubmitButton();
+  }
+
+  updateTaskList(tasks, filter) {
+    this.#renderTaskListPartial(tasks, filter);
   }
 
   filterChange(handler) {
