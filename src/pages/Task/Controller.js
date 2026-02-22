@@ -136,6 +136,8 @@ export default class TaskController {
         this.#ui.search = "";
 
         this.#sync({ updateUrlParamFilter: true, updateUrlParamSearch: true, updateStorage: true });
+
+        this.view.showToast("Tarefa adicionada com sucesso!", { type: "success" });
       },
 
       onClearAll: () => {
@@ -159,6 +161,8 @@ export default class TaskController {
 
         this.model.removeTask(id);
         this.#sync({ updateStorage: true });
+
+        this.view.showToast("Tarefa removida com sucesso!", { type: "success" });
       },
 
       onEdit: (id, title) => {
@@ -173,6 +177,8 @@ export default class TaskController {
         this.model.editTask(id, safe);
         this.#ui.editingTask = null;
         this.#sync({ updateStorage: true });
+
+        this.view.showToast("Tarefa editada com sucesso!", { type: "success" });
       },
 
       onCancelEdit: () => {
