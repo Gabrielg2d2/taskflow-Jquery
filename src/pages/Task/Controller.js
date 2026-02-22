@@ -98,7 +98,10 @@ export default class TaskController {
       }
     }
 
-    if (toast.message) this.view.showToast(toast.message, { type: toast.type, actionLabel: toast.actionLabel });
+    if (toast.message) {
+      this.view.clearToast();
+      this.view.showToast(toast.message, { type: toast.type, actionLabel: toast.actionLabel });
+    }
 
     this.bus.emit("tasks:changed", state);
   }
@@ -139,17 +142,15 @@ export default class TaskController {
     // 2) View -> Controller (bind único)
     this.view.bindHandlers({
       onAdd: (title) => {
-        const safe = String(title ?? "").trim();
-        if (!safe) return;
 
-        this.model.addTask(safe);
+        const result = this.model.addTask(title);
+        if (!result.ok) return this.view.showToast('Erro ao adicionar tarefa', { type: 'error' });
+
         this.#ui.editingTask = null;
-
-        // comportamento que você já tinha: resetar UI ao adicionar
         this.#ui.filter = "all";
         this.#ui.search = "";
 
-        this.#sync({ updateUrlParamFilter: true, updateUrlParamSearch: true, updateStorage: true, toast: { message: "Tarefa adicionada com sucesso!", type: "success" } });
+       this.#sync({ updateUrlParamFilter: true, updateUrlParamSearch: true, updateStorage: true, toast: { message: "Tarefa adicionada com sucesso!", type: "success" } });
       },
 
       onClearAll: () => {

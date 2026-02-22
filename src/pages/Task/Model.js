@@ -1,6 +1,30 @@
 export default class TaskModel {
   #tasks = [];
 
+  #codes = {
+    UNKNOWN: "UNKNOWN",
+    TASK_EMPTY: "TASK_EMPTY",
+    TASK_DUPLICATE: "TASK_DUPLICATE",
+    TASK_NOT_FOUND: "TASK_NOT_FOUND",
+    TASK_NOT_UPDATABLE: "TASK_NOT_UPDATABLE",
+    TASK_NOT_DELETABLE: "TASK_NOT_DELETABLE",
+    TASK_NOT_TOGGLEABLE: "TASK_NOT_TOGGLEABLE",
+  };
+
+  #getError(code) {
+    return {
+      ok: false,
+      code,
+    };
+  }
+
+  #success() {
+    return {
+      ok: true,
+      code: null,
+    };
+  }
+
   #normalizeTitle(title) {
     return String(title ?? "")
       .trim()
@@ -22,16 +46,21 @@ export default class TaskModel {
   }
 
   addTask(newTitle) {
-    const normalizedTitle = this.#normalizeTitle(newTitle);
-    if (!normalizedTitle) return;
+    try {
+      const normalizedTitle = this.#normalizeTitle(newTitle);
+      if (!normalizedTitle) return this.#getError(this.#codes.TASK_EMPTY);
 
-    const task = {
-      id: crypto.randomUUID(),
-      title: normalizedTitle,
-      done: false,
-      createdAt: Date.now(),
-    };
-    this.#tasks = [task, ...this.#tasks];
+      const task = {
+        id: crypto.randomUUID(),
+        title: normalizedTitle,
+        done: false,
+        createdAt: Date.now(),
+      };
+      this.#tasks = [task, ...this.#tasks];
+      return this.#success();
+    } catch (error) {
+      return this.#getError(this.#codes.UNKNOWN);
+    }
   }
 
   toggleTask(id) {
