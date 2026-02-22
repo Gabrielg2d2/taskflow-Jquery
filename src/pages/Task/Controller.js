@@ -73,7 +73,13 @@ export default class TaskController {
     return tasks.filter((task) => task.title.toLowerCase().includes(q));
   }
 
-  #sync({ updateUrlParamFilter = false, updateUrlParamSearch = false, updateStorage = false } = {}) {
+  #sync({ 
+    updateUrlParamFilter = false,
+    updateUrlParamSearch = false,
+    updateStorage = false,
+    toast = { message: null, type: "info", actionLabel: null } 
+    } = {})
+    {
     if (updateUrlParamFilter) this.#updateUrlParamsFilter(this.#ui.filter);
     if (updateUrlParamSearch) this.#updateUrlParamsSearch(this.#ui.search);
 
@@ -85,6 +91,8 @@ export default class TaskController {
     const state = { ...currentState, tasks: searchedTasks };
 
     if (updateStorage) this.storage.save(currentState.tasks);
+
+    if (toast.message) this.view.showToast(toast.message, { type: toast.type, actionLabel: toast.actionLabel });
 
     this.bus.emit("tasks:changed", state);
   }
@@ -135,9 +143,7 @@ export default class TaskController {
         this.#ui.filter = "all";
         this.#ui.search = "";
 
-        this.#sync({ updateUrlParamFilter: true, updateUrlParamSearch: true, updateStorage: true });
-
-        this.view.showToast("Tarefa adicionada com sucesso!", { type: "success" });
+        this.#sync({ updateUrlParamFilter: true, updateUrlParamSearch: true, updateStorage: true, toast: { message: "Tarefa adicionada com sucesso!", type: "success" } });
       },
 
       onClearAll: () => {
@@ -160,9 +166,7 @@ export default class TaskController {
         if (!confirm("Tem certeza que deseja remover a tarefa?")) return;
 
         this.model.removeTask(id);
-        this.#sync({ updateStorage: true });
-
-        this.view.showToast("Tarefa removida com sucesso!", { type: "success" });
+        this.#sync({ updateStorage: true, toast: { message: "Tarefa removida com sucesso!", type: "success" } });
       },
 
       onEdit: (id, title) => {
@@ -176,9 +180,7 @@ export default class TaskController {
 
         this.model.editTask(id, safe);
         this.#ui.editingTask = null;
-        this.#sync({ updateStorage: true });
-
-        this.view.showToast("Tarefa editada com sucesso!", { type: "success" });
+        this.#sync({ updateStorage: true, toast: { message: "Tarefa editada com sucesso!", type: "success" } });
       },
 
       onCancelEdit: () => {
