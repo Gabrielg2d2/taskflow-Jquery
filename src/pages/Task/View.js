@@ -22,12 +22,14 @@ export default class TaskView {
     onCancelEdit: null,
     onFilter: null,
     onSearch: null,
+    onToastAction: null,
   };
 
   constructor(rootSelector) {
     this.$root = $(rootSelector);
     this.#mount();
     this.#bindOneTimeWatchers();
+
   }
 
   bindHandlers(partial) {
@@ -52,6 +54,7 @@ export default class TaskView {
 
     this.$root.html(`
       <div class="${styles.container}">
+        <div data-js="slot-toast"></div>
         <div data-js="slot-header"></div>
         <div data-js="slot-form"></div>
         <div data-js="slot-clear"></div>
@@ -62,6 +65,7 @@ export default class TaskView {
     `);
 
     // caches dos slots
+    this.$slotToast = this.$root.find('[data-js="slot-toast"]');
     this.$slotHeader = this.$root.find('[data-js="slot-header"]');
     this.$slotForm = this.$root.find('[data-js="slot-form"]');
     this.$slotClear = this.$root.find('[data-js="slot-clear"]');
@@ -108,6 +112,57 @@ export default class TaskView {
     return `${filter}::${tasksPart}`;
   }
 
+  #toastTimer = null;
+
+  showToast(message, { type = "info", actionLabel = null } = {}) {
+    const timerDuration = 6000;
+
+    const colors = {
+      info: "bg-zinc-900 text-white",
+      success: "bg-green-600 text-white",
+      warning: "bg-amber-500 text-black",
+      error: "bg-red-600 text-white",
+    };
+
+    const cls = colors[type] ?? colors.info;
+
+    // limpa timer anterior
+    if (this.#toastTimer) clearTimeout(this.#toastTimer);
+
+    const styleDark = {};
+    const styleLight = {
+      toast:"mb-3 rounded-2xl px-4 py-3 flex items-center justify-between shadow",
+      toastText: "text-sm",
+      toastAction: "ml-4 underline text-sm font-semibold",
+      toastClose: "ml-4 text-sm opacity-80 hover:opacity-100",
+    };
+    const styles = this.#getTheme(styleLight, styleDark);
+
+    this.$slotToast.html(`
+    <div class="${styles.toast} ${cls}">
+      <span class="${styles.toastText}">${escapeHtml(message)}</span>
+
+      ${
+        actionLabel
+          ? `<button data-js="toast-action" type="button" class="${styles.toastAction}">
+              ${escapeHtml(actionLabel)}
+            </button>`
+          : `<button data-js="toast-close" type="button" class="${styles.toastClose}">
+              ✕
+            </button>`
+      }
+    </div>
+  `);
+
+    // fecha automaticamente
+    this.#toastTimer = setTimeout(() => this.clearToast(), timerDuration);
+  }
+
+  clearToast() {
+    if (this.#toastTimer) clearTimeout(this.#toastTimer);
+    this.#toastTimer = null;
+    this.$slotToast.empty();
+  }
   // -------------------------
   // TEMPLATES
   // -------------------------
@@ -272,7 +327,6 @@ export default class TaskView {
   }
 
   #templateTaskItem(id, title, done) {
-
     const styleDark = {};
 
     const styleLight = {
@@ -318,7 +372,6 @@ export default class TaskView {
     }
     if (tasks.length === 0) return this.#templateEmpty();
 
-
     const styleLight = {
       list: "space-y-2",
     };
@@ -354,7 +407,6 @@ export default class TaskView {
       this.handlers.onAdd?.(title);
 
       $input.val("").trigger("input").trigger("focus");
-
     });
 
     // Habilitar/desabilitar submit ao digitar (somente em add mode)
@@ -372,7 +424,6 @@ export default class TaskView {
         .find('[data-js="task-submit"]')
         .toggleClass("opacity-50 cursor-not-allowed", disabled)
         .prop("disabled", disabled);
-        
     });
 
     // LIST: toggle/remove/edit
@@ -433,6 +484,19 @@ export default class TaskView {
     this.$root.on("input.taskflow", '[data-js="task-search"]', (e) => {
       const search = String($(e.currentTarget).val() ?? "");
       this.handlers.onSearch?.(search);
+    });
+
+    // TOAST ACTION
+    this.$root.on("click.taskflow", '[data-js="toast-action"]', (e) => {
+      e.preventDefault();
+      this.handlers.onToastAction?.();
+      this.clearToast();
+    });
+
+    // TOAST CLOSE
+    this.$root.on("click.taskflow", '[data-js="toast-close"]', (e) => {
+      e.preventDefault();
+      this.clearToast();
     });
 
     // Keyboard shortcuts in edit mode: Esc cancels / Enter saves
