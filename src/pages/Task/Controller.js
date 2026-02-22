@@ -90,7 +90,13 @@ export default class TaskController {
 
     const state = { ...currentState, tasks: searchedTasks };
 
-    if (updateStorage) this.storage.save(currentState.tasks);
+    if (updateStorage) {
+      try {
+        this.storage.save(currentState.tasks);
+      } catch (error) {
+        this.view.showToast("Erro ao salvar tarefas! Tente novamente mais tarde.", { type: "warning" });
+      }
+    }
 
     if (toast.message) this.view.showToast(toast.message, { type: toast.type, actionLabel: toast.actionLabel });
 
