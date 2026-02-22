@@ -1,6 +1,12 @@
 export default class TaskModel {
   #tasks = [];
 
+  #normalizeTitle(title) {
+    return String(title ?? "")
+      .trim()
+      .replace(/\s+/g, " ");
+  }
+
   getState() {
     const total = this.#tasks.length;
     const done = this.#tasks.filter((t) => t.done).length;
@@ -15,13 +21,13 @@ export default class TaskModel {
     };
   }
 
-  addTask(title) {
-    const trimmedTitle = title.trim();
-    if (!trimmedTitle) return;
+  addTask(newTitle) {
+    const normalizedTitle = this.#normalizeTitle(newTitle);
+    if (!normalizedTitle) return;
 
     const task = {
       id: crypto.randomUUID(),
-      title: trimmedTitle,
+      title: normalizedTitle,
       done: false,
       createdAt: Date.now(),
     };
@@ -40,13 +46,14 @@ export default class TaskModel {
 
   editTask(id, newTitle) {
     const currentTitle = this.#tasks.find((item) => item.id === id)?.title;
-    const trimmedNewTitle = newTitle.trim();
-    
-    if (!trimmedNewTitle) return;
-    if (trimmedNewTitle === currentTitle) return;
+
+    const normalizedNewTitle = this.#normalizeTitle(newTitle);
+
+    if (!normalizedNewTitle) return;
+    if (normalizedNewTitle === currentTitle) return;
 
     this.#tasks = this.#tasks.map((item) =>
-      item.id === id ? { ...item, title: trimmedNewTitle } : item,
+      item.id === id ? { ...item, title: normalizedNewTitle } : item,
     );
   }
 
