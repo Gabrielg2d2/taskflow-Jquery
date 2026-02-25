@@ -1,3 +1,11 @@
+class TaskModelValidationError extends Error {
+  constructor(result) {
+    super(result?.error ?? "Validation failed");
+    this.name = "TaskModelValidationError";
+    this.result = result;
+  }
+}
+
 export default class TaskModel {
   #tasks = [];
 
@@ -9,12 +17,17 @@ export default class TaskModel {
     TASK_NOT_UPDATABLE: "TASK_NOT_UPDATABLE",
     TASK_NOT_DELETABLE: "TASK_NOT_DELETABLE",
     TASK_NOT_TOGGLEABLE: "TASK_NOT_TOGGLEABLE",
+    TASK_NOT_EDITABLE: "TASK_NOT_EDITABLE",
+    TASK_NOT_HYDRATABLE: "TASK_NOT_HYDRATABLE",
+    TASK_NOT_CLEARABLE: "TASK_NOT_CLEARABLE",
+    TASK_NOT_ADDABLE: "TASK_NOT_ADDABLE",
   };
 
-  #getError(code) {
+  #getError(code, error) {
     return {
       ok: false,
-      code,
+      code: this.#codes[code] ?? this.#codes.UNKNOWN,
+      error: error?.message ?? null,
     };
   }
 
@@ -22,6 +35,7 @@ export default class TaskModel {
     return {
       ok: true,
       code: null,
+      error: null,
     };
   }
 
@@ -31,9 +45,41 @@ export default class TaskModel {
       .replace(/\s+/g, " ");
   }
 
+  #customError(error, code) {
+    if (error?.result) return error.result;
+    return this.#getError(code ?? this.#codes.UNKNOWN, error);
+  }
+
+  #assertNoEmptyTitle(title) {
+    if (!title)
+      throw new TaskModelValidationError(
+        this.#getError(this.#codes.TASK_EMPTY),
+      );
+  }
+
+  #assertTaskExists(id) {
+    const exists = this.#tasks.some((task) => task.id === id);
+    if (!exists)
+      throw new TaskModelValidationError(
+        this.#getError(this.#codes.TASK_NOT_FOUND),
+      );
+  }
+
+  #assertNoDuplicateTitle(normalizedTitle, excludeId = null) {
+    const duplicate = this.#tasks.some(
+      (task) =>
+        (excludeId == null || task.id !== excludeId) &&
+        task.title === normalizedTitle,
+    );
+    if (duplicate)
+      throw new TaskModelValidationError(
+        this.#getError(this.#codes.TASK_DUPLICATE),
+      );
+  }
+
   getState() {
     const total = this.#tasks.length;
-    const done = this.#tasks.filter((t) => t.done).length;
+    const done = this.#tasks.filter((task) => task.done).length;
 
     return {
       tasks: this.#tasks.slice(),
@@ -48,7 +94,10 @@ export default class TaskModel {
   addTask(newTitle) {
     try {
       const normalizedTitle = this.#normalizeTitle(newTitle);
-      if (!normalizedTitle) return this.#getError(this.#codes.TASK_EMPTY);
+
+      this.#assertNoEmptyTitle(normalizedTitle);
+
+      this.#assertNoDuplicateTitle(normalizedTitle);
 
       const task = {
         id: crypto.randomUUID(),
@@ -59,38 +108,74 @@ export default class TaskModel {
       this.#tasks = [task, ...this.#tasks];
       return this.#success();
     } catch (error) {
-      return this.#getError(this.#codes.UNKNOWN);
+      return this.#customError(error, this.#codes.TASK_NOT_ADDABLE);
     }
   }
 
   toggleTask(id) {
-    this.#tasks = this.#tasks.map((item) =>
-      item.id === id ? { ...item, done: !item.done } : item,
-    );
+    try {
+      this.#assertTaskExists(id);
+
+      this.#tasks = this.#tasks.map((item) =>
+        item.id === id ? { ...item, done: !item.done } : item,
+      );
+
+      return this.#success();
+    } catch (error) {
+      return this.#customError(error, this.#codes.TASK_NOT_TOGGLEABLE);
+    }
   }
 
   removeTask(id) {
-    this.#tasks = this.#tasks.filter((item) => item.id !== id);
+    try {
+      this.#assertTaskExists(id);
+
+      this.#tasks = this.#tasks.filter((item) => item.id !== id);
+
+      return this.#success();
+    } catch (error) {
+      return this.#customError(error, this.#codes.TASK_NOT_DELETABLE);
+    }
   }
 
   editTask(id, newTitle) {
-    const currentTitle = this.#tasks.find((item) => item.id === id)?.title;
+    try {
+      this.#assertTaskExists(id);
 
-    const normalizedNewTitle = this.#normalizeTitle(newTitle);
+      const normalizedNewTitle = this.#normalizeTitle(newTitle);
 
-    if (!normalizedNewTitle) return;
-    if (normalizedNewTitle === currentTitle) return;
+      this.#assertNoEmptyTitle(normalizedNewTitle);
 
-    this.#tasks = this.#tasks.map((item) =>
-      item.id === id ? { ...item, title: normalizedNewTitle } : item,
-    );
+      const task = this.#tasks.find((task) => task.id === id);
+      if (normalizedNewTitle === task.title) return this.#success();
+
+      this.#assertNoDuplicateTitle(normalizedNewTitle, id);
+
+      this.#tasks = this.#tasks.map((item) =>
+        item.id === id ? { ...item, title: normalizedNewTitle } : item,
+      );
+
+      return this.#success();
+    } catch (error) {
+      return this.#customError(error, this.#codes.TASK_NOT_EDITABLE);
+    }
   }
 
   hydrate(tasks) {
-    this.#tasks = Array.isArray(tasks) ? tasks : [];
+    try {
+      this.#tasks = Array.isArray(tasks) ? tasks : [];
+      return this.#success();
+    } catch (error) {
+      return this.#customError(error, this.#codes.TASK_NOT_HYDRATABLE);
+    }
   }
 
   clearAll() {
-    this.#tasks = [];
+    try {
+      this.#tasks = [];
+      return this.#success();
+    } catch (error) {
+      return this.#customError(error, this.#codes.TASK_NOT_CLEARABLE);
+    }
   }
 }
