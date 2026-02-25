@@ -69,7 +69,7 @@ export default class TaskModel {
     const duplicate = this.#tasks.some(
       (task) =>
         (excludeId == null || task.id !== excludeId) &&
-        task.title === normalizedTitle,
+        task.title.toLowerCase() === normalizedTitle.toLowerCase(),
     );
     if (duplicate)
       throw new TaskModelValidationError(
