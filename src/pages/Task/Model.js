@@ -50,11 +50,13 @@ export default class TaskModel {
     return this.#getError(code ?? this.#codes.UNKNOWN, error);
   }
 
-  #assertNoEmptyTitle(title) {
-    if (!title)
+  #assertNoEmptyTitleAndNormalize(title) {
+    const normalizedTitle = this.#normalizeTitle(title);
+    if (!normalizedTitle)
       throw new TaskModelValidationError(
         this.#getError(this.#codes.TASK_EMPTY),
       );
+    return normalizedTitle;
   }
 
   #assertTaskExists(id) {
@@ -93,9 +95,8 @@ export default class TaskModel {
 
   addTask(newTitle) {
     try {
-      const normalizedTitle = this.#normalizeTitle(newTitle);
 
-      this.#assertNoEmptyTitle(normalizedTitle);
+      const normalizedTitle = this.#assertNoEmptyTitleAndNormalize(normalizedTitle);
 
       this.#assertNoDuplicateTitle(normalizedTitle);
 
@@ -142,9 +143,7 @@ export default class TaskModel {
     try {
       this.#assertTaskExists(id);
 
-      const normalizedNewTitle = this.#normalizeTitle(newTitle);
-
-      this.#assertNoEmptyTitle(normalizedNewTitle);
+      const normalizedNewTitle = this.#assertNoEmptyTitleAndNormalize(newTitle);
 
       const task = this.#tasks.find((task) => task.id === id);
       if (normalizedNewTitle === task.title) return this.#success();
