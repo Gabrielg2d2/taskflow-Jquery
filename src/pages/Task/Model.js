@@ -59,13 +59,15 @@ export default class TaskModel {
     return normalizedTitle;
   }
 
-  #assertTaskExists(id) {
-    const exists = this.#tasks.some((task) => task.id === id);
-    if (!exists)
+  #assertTaskExistsAndReturnIndex(id) { 
+    const idx = this.#tasks.findIndex((task) => task.id === id);
+    if (idx === -1)
       throw new TaskModelValidationError(
         this.#getError(this.#codes.TASK_NOT_FOUND),
       );
+    return idx;
   }
+
 
   #assertNoDuplicateTitle(normalizedTitle, excludeId = null) {
     const duplicate = this.#tasks.some(
@@ -95,7 +97,6 @@ export default class TaskModel {
 
   addTask(newTitle) {
     try {
-
       const normalizedTitle = this.#assertNoEmptyTitleAndNormalize(newTitle);
 
       this.#assertNoDuplicateTitle(normalizedTitle);
@@ -115,11 +116,10 @@ export default class TaskModel {
 
   toggleTask(id) {
     try {
-      this.#assertTaskExists(id);
-
-      this.#tasks = this.#tasks.map((item) =>
-        item.id === id ? { ...item, done: !item.done } : item,
-      );
+      const idx = this.#assertTaskExistsAndReturnIndex(id);
+      const next = this.#tasks.slice();
+      next[idx] = { ...next[idx], done: !next[idx].done };
+      this.#tasks = next;
 
       return this.#success();
     } catch (error) {
@@ -129,9 +129,10 @@ export default class TaskModel {
 
   removeTask(id) {
     try {
-      this.#assertTaskExists(id);
-
-      this.#tasks = this.#tasks.filter((item) => item.id !== id);
+      const idx = this.#assertTaskExistsAndReturnIndex(id)
+      const next = this.#tasks.slice();
+      next.splice(idx, 1);
+      this.#tasks = next; 
 
       return this.#success();
     } catch (error) {
@@ -141,18 +142,19 @@ export default class TaskModel {
 
   editTask(id, newTitle) {
     try {
-      this.#assertTaskExists(id);
-
+      const idx = this.#assertTaskExistsAndReturnIndex(id);
+      
       const normalizedNewTitle = this.#assertNoEmptyTitleAndNormalize(newTitle);
 
-      const task = this.#tasks.find((task) => task.id === id);
-      if (normalizedNewTitle === task.title) return this.#success();
+      const next = this.#tasks.slice();
+      const currentTask = next[idx];
 
-      this.#assertNoDuplicateTitle(normalizedNewTitle, id);
+      if (normalizedNewTitle.toLocaleLowerCase() === currentTask.title.toLowerCase()) return this.#success(); 
 
-      this.#tasks = this.#tasks.map((item) =>
-        item.id === id ? { ...item, title: normalizedNewTitle } : item,
-      );
+      this.#assertNoDuplicateTitle(normalizedNewTitle, idx);
+      
+      currentTask.title = normalizedNewTitle;
+      this.#tasks = next;
 
       return this.#success();
     } catch (error) {
