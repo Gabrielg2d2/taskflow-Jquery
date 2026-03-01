@@ -59,15 +59,16 @@ export default class TaskModel {
     return normalizedTitle;
   }
 
-  #assertTaskExistsAndReturnIndex(id) { 
+  #assertTaskExistsAndReturnIndex(id) {
     const idx = this.#tasks.findIndex((task) => task.id === id);
+
     if (idx === -1)
       throw new TaskModelValidationError(
         this.#getError(this.#codes.TASK_NOT_FOUND),
       );
+
     return idx;
   }
-
 
   #assertNoDuplicateTitle(normalizedTitle, excludeId = null) {
     const duplicate = this.#tasks.some(
@@ -132,11 +133,11 @@ export default class TaskModel {
 
   removeTask(id) {
     try {
-      const idx = this.#assertTaskExistsAndReturnIndex(id)
+      const idx = this.#assertTaskExistsAndReturnIndex(id);
       const copyTasks = this.#tasks.slice();
 
       copyTasks.splice(idx, 1);
-      this.#tasks = copyTasks; 
+      this.#tasks = copyTasks;
 
       return this.#success();
     } catch (error) {
@@ -147,16 +148,20 @@ export default class TaskModel {
   editTask(id, newTitle) {
     try {
       const idx = this.#assertTaskExistsAndReturnIndex(id);
-      
+
       const normalizedNewTitle = this.#assertNoEmptyTitleAndNormalize(newTitle);
 
       const copyTasks = this.#tasks.slice();
       const currentTask = copyTasks[idx];
 
-      if (normalizedNewTitle.toLocaleLowerCase() === currentTask.title.toLowerCase()) return this.#success(); 
+      if (
+        normalizedNewTitle.toLocaleLowerCase() ===
+        currentTask.title.toLowerCase()
+      )
+        return this.#success();
 
       this.#assertNoDuplicateTitle(normalizedNewTitle, idx);
-      
+
       currentTask.title = normalizedNewTitle;
       this.#tasks = copyTasks;
 
