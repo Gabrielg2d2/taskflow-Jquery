@@ -28,7 +28,6 @@ export default class TaskController {
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set("filter", filter);
 
-    // mantém search atual na URL (se existir)
     const q = this.#verifySearch(this.#ui.search);
     if (q) urlParams.set("search", q);
     else urlParams.delete("search");
@@ -39,7 +38,6 @@ export default class TaskController {
   #updateUrlParamsSearch(search) {
     const urlParams = new URLSearchParams(window.location.search);
 
-    // mantém filter atual na URL
     urlParams.set("filter", this.#ui.filter);
 
     const q = this.#verifySearch(search);
@@ -112,7 +110,7 @@ export default class TaskController {
     this.#ui.search = search;
     this.#ui.editingTask = null;
 
-    this.#sync(); // render baseado na URL atual
+    this.#sync();
   }
 
   #start() {
