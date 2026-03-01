@@ -166,6 +166,7 @@ export default class TaskModel {
       this.#assertNoDuplicateTitle(normalizedNewTitle, idx);
 
       currentTask.title = normalizedNewTitle;
+      
       this.#tasks = copyTasks;
 
       return this.#success();
