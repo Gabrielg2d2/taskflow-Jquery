@@ -76,6 +76,7 @@ export default class TaskModel {
         (excludeId == null || task.id !== excludeId) &&
         task.title.toLowerCase() === normalizedTitle.toLowerCase(),
     );
+    
     if (duplicate)
       throw new TaskModelValidationError(
         this.#getError(this.#codes.TASK_DUPLICATE),
@@ -108,6 +109,7 @@ export default class TaskModel {
         done: false,
         createdAt: Date.now(),
       };
+
       this.#tasks = [task, ...this.#tasks];
       return this.#success();
     } catch (error) {
@@ -120,8 +122,9 @@ export default class TaskModel {
       const idx = this.#assertTaskExistsAndReturnIndex(id);
 
       const copyTasks = this.#tasks.slice();
+      const currentTask = copyTasks[idx];
 
-      copyTasks[idx] = { ...copyTasks[idx], done: !copyTasks[idx].done };
+      currentTask.done = !currentTask.done;
 
       this.#tasks = copyTasks;
 
