@@ -96,7 +96,7 @@ export default class TaskModel {
   addTask(newTitle) {
     try {
 
-      const normalizedTitle = this.#assertNoEmptyTitleAndNormalize(normalizedTitle);
+      const normalizedTitle = this.#assertNoEmptyTitleAndNormalize(newTitle);
 
       this.#assertNoDuplicateTitle(normalizedTitle);
 
