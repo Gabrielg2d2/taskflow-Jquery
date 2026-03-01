@@ -117,9 +117,12 @@ export default class TaskModel {
   toggleTask(id) {
     try {
       const idx = this.#assertTaskExistsAndReturnIndex(id);
-      const next = this.#tasks.slice();
-      next[idx] = { ...next[idx], done: !next[idx].done };
-      this.#tasks = next;
+
+      const copyTasks = this.#tasks.slice();
+
+      copyTasks[idx] = { ...copyTasks[idx], done: !copyTasks[idx].done };
+
+      this.#tasks = copyTasks;
 
       return this.#success();
     } catch (error) {
@@ -130,9 +133,10 @@ export default class TaskModel {
   removeTask(id) {
     try {
       const idx = this.#assertTaskExistsAndReturnIndex(id)
-      const next = this.#tasks.slice();
-      next.splice(idx, 1);
-      this.#tasks = next; 
+      const copyTasks = this.#tasks.slice();
+
+      copyTasks.splice(idx, 1);
+      this.#tasks = copyTasks; 
 
       return this.#success();
     } catch (error) {
@@ -146,15 +150,15 @@ export default class TaskModel {
       
       const normalizedNewTitle = this.#assertNoEmptyTitleAndNormalize(newTitle);
 
-      const next = this.#tasks.slice();
-      const currentTask = next[idx];
+      const copyTasks = this.#tasks.slice();
+      const currentTask = copyTasks[idx];
 
       if (normalizedNewTitle.toLocaleLowerCase() === currentTask.title.toLowerCase()) return this.#success(); 
 
       this.#assertNoDuplicateTitle(normalizedNewTitle, idx);
       
       currentTask.title = normalizedNewTitle;
-      this.#tasks = next;
+      this.#tasks = copyTasks;
 
       return this.#success();
     } catch (error) {
