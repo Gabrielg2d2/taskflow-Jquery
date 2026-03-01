@@ -1,4 +1,4 @@
 import "./style.css";
-import controller from "./pages/Task/index.js";
+import controller from "./ui/jquery/index.js";
 
 controller.init();
