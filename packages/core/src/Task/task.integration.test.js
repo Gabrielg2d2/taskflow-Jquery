@@ -26,7 +26,7 @@ describe("TaskApplicationService Integration", () => {
         su.addTask("Minha tarefa");
         su.addTask("Minha tarefa 2");
         su.addTask("Minha tarefa 3");
-        
+
         const result = su.filterTasks(su.getState().tasks, "all", "2");
 
         expect(result.length).toBe(1);
@@ -85,6 +85,20 @@ describe("TaskApplicationService Integration", () => {
 
         const result = su.filterTasks(su.getState().tasks, "done", "");
         expect(result.length).toBe(2);
+      });
+
+      it("deve retornar 2 tarefas filtradas, filtro pending", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+
+        su.toggleTask(su.getState().tasks[2].id);
+
+        const result = su.filterTasks(su.getState().tasks, "pending", "");
+
+        expect(result.length).toBe(2);
+        expect(result[0].title).toBe("Minha tarefa 3");
+        expect(result[1].title).toBe("Minha tarefa 2");
       });
     });
 
