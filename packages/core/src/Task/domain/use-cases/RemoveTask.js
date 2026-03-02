@@ -10,12 +10,20 @@ export class RemoveTaskUseCase {
       const task = this.#taskRepository.findById(id);
 
       if (!task) {
-        return { ok: false, code: "TASK_NOT_FOUND", error: "Task not found" };
+        return {
+          ok: false,
+          code: "TASK_NOT_FOUND",
+          error: "Task not found"
+        };
       }
 
       this.#taskRepository.remove(id);
 
-      return { ok: true, code: null, error: null };
+      return {
+        ok: true,
+        code: null,
+        error: null
+      };
     } catch (error) {
       return { ok: false, code: "TASK_NOT_DELETABLE", error: error.message };
     }

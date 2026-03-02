@@ -22,30 +22,34 @@ describe("ToggleTaskUseCase", () => {
     addUseCase = new AddTaskUseCase({ taskRepository, idGenerator });
   });
 
-  it("deve fazer toggle de pending para done", () => {
-    const { task } = addUseCase.execute("Tarefa");
-    
-    const result = toggleUseCase.execute(task.id);
+  describe("Success", () => {
+    it("deve fazer toggle de pending para done", () => {
+      const { task } = addUseCase.execute("Tarefa");
 
-    expect(result.ok).toBe(true);
-    
-    const updated = taskRepository.findById(task.id);
-    expect(updated.done).toBe(true);
+      const result = toggleUseCase.execute(task.id);
+
+      expect(result.ok).toBe(true);
+
+      const updated = taskRepository.findById(task.id);
+      expect(updated.done).toBe(true);
+    });
+
+    it("deve fazer toggle de done para pending", () => {
+      const { task } = addUseCase.execute("Tarefa");
+      toggleUseCase.execute(task.id);
+      toggleUseCase.execute(task.id);
+
+      const updated = taskRepository.findById(task.id);
+      expect(updated.done).toBe(false);
+    });
   });
 
-  it("deve fazer toggle de done para pending", () => {
-    const { task } = addUseCase.execute("Tarefa");
-    toggleUseCase.execute(task.id);
-    toggleUseCase.execute(task.id);
+  describe("Error", () => {
+    it("deve retornar erro quando tarefa não existe", () => {
+      const result = toggleUseCase.execute("id-inexistente");
 
-    const updated = taskRepository.findById(task.id);
-    expect(updated.done).toBe(false);
-  });
-
-  it("deve retornar erro quando tarefa não existe", () => {
-    const result = toggleUseCase.execute("id-inexistente");
-
-    expect(result.ok).toBe(false);
-    expect(result.code).toBe("TASK_NOT_FOUND");
+      expect(result.ok).toBe(false);
+      expect(result.code).toBe("TASK_NOT_FOUND");
+    });
   });
 });
