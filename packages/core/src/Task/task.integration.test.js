@@ -10,77 +10,123 @@ class FakeIdGenerator {
 }
 
 describe("TaskApplicationService Integration", () => {
-  let su = TaskApplicationService;
+  describe("Success", () => {
+    let su = TaskApplicationService;
 
-  beforeEach(() => {
-    su = new TaskApplicationService({
-      taskRepository: new InMemoryTaskRepository(),
-      idGenerator: new FakeIdGenerator(),
-      storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+    beforeEach(() => {
+      su = new TaskApplicationService({
+        taskRepository: new InMemoryTaskRepository(),
+        idGenerator: new FakeIdGenerator(),
+        storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+      });
     });
-  });
 
-  describe("addTask", () => {
-    it("deve adicionar uma tarefa com sucesso", () => {
-      const result = su.addTask("Minha tarefa");
+    describe("addTask", () => {
+      it("deve adicionar uma tarefa com sucesso", () => {
+        const result = su.addTask("Minha tarefa");
 
-      expect(result.ok).toBe(true);
-      expect(result.data.task.title).toBe("Minha tarefa");
-      expect(result.data.task.done).toBe(false);
-      expect(result.data.task).toEqual({
-        id: expect.any(String),
-        title: "Minha tarefa",
-        done: false,
-        createdAt: expect.any(Number),
+        expect(result.ok).toBe(true);
+        expect(result.data.task.title).toBe("Minha tarefa");
+        expect(result.data.task.done).toBe(false);
+        expect(result.data.task).toEqual({
+          id: expect.any(String),
+          title: "Minha tarefa",
+          done: false,
+          createdAt: expect.any(Number),
+        });
+      });
+    });
+
+    describe("toggleTask", () => {
+      it("deve fazer toggle de uma tarefa com sucesso", () => {
+        const result = su.addTask("Minha tarefa");
+        expect(result.ok).toBe(true);
+        expect(result.data.task.done).toBe(false);
+
+        su.toggleTask(result.data.task.id);
+        const result2 = su.getState();
+        expect(result2.tasks[0].done).toBe(true);
+      });
+    });
+
+    describe("removeTask", () => {
+      it("deve remover uma tarefa com sucesso", () => {
+        const result = su.addTask("Minha tarefa");
+        expect(result.ok).toBe(true);
+        expect(result.data.task.done).toBe(false);
+
+        su.removeTask(result.data.task.id);
+        const result2 = su.getState();
+        expect(result2.tasks.length).toBe(0);
+      });
+    });
+
+    describe("editTask", () => {
+      it("deve editar uma tarefa com sucesso", () => {
+        const result = su.addTask("Minha tarefa");
+        expect(result.ok).toBe(true);
+        expect(result.data.task.title).toBe("Minha tarefa");
+
+        su.editTask(result.data.task.id, "Minha tarefa editada");
+        const result2 = su.getState();
+        expect(result2.tasks[0].title).toBe("Minha tarefa editada");
+      });
+    });
+
+    describe("clearAllTasks", () => {
+      it("deve limpar todas as tarefas com sucesso", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+
+        su.clearAllTasks();
+        const result2 = su.getState();
+        expect(result2.tasks.length).toBe(0);
       });
     });
   });
 
-  describe("toggleTask", () => {
-    it("deve fazer toggle de uma tarefa com sucesso", () => {
-      const result = su.addTask("Minha tarefa");
-      expect(result.ok).toBe(true);
-      expect(result.data.task.done).toBe(false);
+  describe("Failure", () => {
+    let su = TaskApplicationService;
 
-      su.toggleTask(result.data.task.id);
-      const result2 = su.getState();
-      expect(result2.tasks[0].done).toBe(true);
+    beforeEach(() => {
+      su = new TaskApplicationService({
+        taskRepository: new InMemoryTaskRepository(),
+        idGenerator: new FakeIdGenerator(),
+        storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+      });
     });
-  });
 
-  describe("removeTask", () => {
-    it("deve remover uma tarefa com sucesso", () => {
-      const result = su.addTask("Minha tarefa");
-      expect(result.ok).toBe(true);
-      expect(result.data.task.done).toBe(false);
+    it("deve retornar um erro ao adicionar uma tarefa com título vazio", () => {
+      const result = su.addTask("");
 
-      su.removeTask(result.data.task.id);
-      const result2 = su.getState();
-      expect(result2.tasks.length).toBe(0);
+      expect(result.ok).toBe(false);
+      expect(result.error).toBe("Task title cannot be empty");
     });
-  });
 
-  describe("editTask", () => {
-    it("deve editar uma tarefa com sucesso", () => {
+    it("deve retornar um erro ao editar uma tarefa com título vazio", () => {
       const result = su.addTask("Minha tarefa");
-      expect(result.ok).toBe(true);
-      expect(result.data.task.title).toBe("Minha tarefa");
+      const result2 = su.editTask(result.data.task.id, "");
 
-      su.editTask(result.data.task.id, "Minha tarefa editada");
-      const result2 = su.getState();
-      expect(result2.tasks[0].title).toBe("Minha tarefa editada");
+      expect(result2.ok).toBe(false);
+      expect(result2.error).toBe("Task title cannot be empty");
     });
-  });
 
-  describe("clearAllTasks", () => {
-    it("deve limpar todas as tarefas com sucesso", () => {
+    it("deve retornar um erro ao adicionar uma tarefa com título duplicado", () => {
       su.addTask("Minha tarefa");
-      su.addTask("Minha tarefa 2");
-      su.addTask("Minha tarefa 3");
+      const result = su.addTask("Minha tarefa");
 
-      su.clearAllTasks();
-      const result2 = su.getState();
-      expect(result2.tasks.length).toBe(0);
+      expect(result.ok).toBe(false);
+      expect(result.error).toBe("Task already exists");
+    });
+
+    it("deve retornar um erro ao editar uma tarefa com título duplicado", () => {
+      su.addTask("Minha tarefa");
+      const result = su.addTask("Minha tarefa 2");
+
+      const result2 = su.editTask(result.data.task.id, "Minha tarefa");
+      expect(result2.ok).toBe(false);
+      expect(result2.error).toBe("Task already exists");
     });
   });
 });
