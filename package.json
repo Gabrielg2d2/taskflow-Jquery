@@ -16,6 +16,7 @@
     "test:jquery": "npm test --workspace=@taskflow/ui-jquery",
     "test:react": "npm test --workspace=@taskflow/ui-react",
     "test": "vitest run",
+    "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage"
   },
