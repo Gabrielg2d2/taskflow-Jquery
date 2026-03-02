@@ -128,5 +128,28 @@ describe("TaskApplicationService Integration", () => {
       expect(result2.ok).toBe(false);
       expect(result2.error).toBe("Task already exists");
     });
+
+    it("deve retornar um erro ao remover uma tarefa que não existe", () => {
+      const result = su.removeTask("123");
+      expect(result.ok).toBe(false);
+      expect(result.error).toBe("Task not found");
+    });
+
+    it("deve retornar um erro ao editar uma tarefa que não existe", () => {
+      const result = su.editTask("123", "Minha tarefa");
+      expect(result.ok).toBe(false);
+      expect(result.error).toBe("Task not found");
+    });
+
+    it("deve retornar um erro quando o repositório de tarefas não está implementado", () => {
+
+      const taskService = new TaskApplicationService({
+        taskRepository: null,
+        idGenerator: new FakeIdGenerator(),
+        storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+      });
+      const result = taskService.addTask("Minha tarefa");
+      expect(result.ok).toBe(false);
+    });
   });
 });
