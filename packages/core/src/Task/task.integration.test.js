@@ -101,7 +101,6 @@ describe("TaskApplicationService Integration", () => {
         expect(result[1].title).toBe("Minha tarefa 2");
       });
 
-
       it("deve normalizar o filtro para all, quando o filtro é invalid", () => {
         su.addTask("Minha tarefa");
         su.addTask("Minha tarefa 2");
@@ -109,6 +108,29 @@ describe("TaskApplicationService Integration", () => {
 
         const result = su.filterTasks(su.getState().tasks, "invalid");
         expect(result.length).toBe(3);
+      });
+    });
+
+    describe("normalizeFilter", () => {
+      it("deve normalizar o filtro para all, quando o filtro é invalid", () => {
+        const result = su.normalizeFilter("invalid");
+        expect(result).toBe("all");
+      });
+    });
+
+    describe("normalizeSearch", () => {
+      it("deve normalizar a busca para '', quando a busca é undefined ou null", () => {
+        const result = su.normalizeSearch(undefined);
+        expect(result).toBe("");
+
+        const result2 = su.normalizeSearch(null);
+        expect(result2).toBe("");
+
+        const result3 = su.normalizeSearch("undefined");
+        expect(result3).toBe("");
+
+        const result4 = su.normalizeSearch("null");
+        expect(result4).toBe("");
       });
     });
 
