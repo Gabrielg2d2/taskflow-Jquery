@@ -109,6 +109,11 @@ describe("TaskApplicationService Integration", () => {
         const result = su.filterTasks(su.getState().tasks, "invalid");
         expect(result.length).toBe(3);
       });
+
+      it("deve normalizar o filtro para all, quando o filtro é vazio", () => {
+        const result = su.normalizeFilter("");
+        expect(result).toBe("all");
+      });
     });
 
     describe("normalizeFilter", () => {
@@ -169,10 +174,13 @@ describe("TaskApplicationService Integration", () => {
         const taskService = new TaskApplicationService({
           taskRepository: null,
           idGenerator: new FakeIdGenerator(),
-          storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+          storage: new LocalStorageAdapter({
+            key: "taskflow-test",
+            version: 1,
+          }),
         });
         const result = taskService.loadFromStorage();
-        
+
         expect(result.ok).toBe(false);
         expect(result.code).toBe("TASK_NOT_HYDRATABLE");
         expect(result.error).toBeDefined();
