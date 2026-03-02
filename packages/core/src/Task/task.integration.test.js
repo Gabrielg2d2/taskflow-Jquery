@@ -151,5 +151,15 @@ describe("TaskApplicationService Integration", () => {
       const result = taskService.addTask("Minha tarefa");
       expect(result.ok).toBe(false);
     });
+
+    it("deve retornar um erro quando o limpar todas as tarefas não está implementado", () => {
+      const taskService = new TaskApplicationService({
+        taskRepository: null,
+        idGenerator: new FakeIdGenerator(),
+        storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+      });
+      const result = taskService.clearAllTasks();
+      expect(result.ok).toBe(false);
+    });
   });
 });
