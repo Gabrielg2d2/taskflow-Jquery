@@ -323,6 +323,14 @@ describe("TaskApplicationService Integration", () => {
         expect(result.error).toBe("Task not found");
       });
 
+      it("deve retornar o mesmo título da tarefa quando o título é o mesmo", () => {
+        const result = su.addTask("Minha tarefa");
+        expect(result.data.task.title).toBe("Minha tarefa");
+
+        const result2 = su.editTask(result.data.task.id, "Minha tarefa");
+        expect(result2.ok).toBe(true);
+      });
+
       it("deve retornar um erro quando falhar ao editar uma tarefa", () => {
         const taskService = new TaskApplicationService({
           taskRepository: null,
