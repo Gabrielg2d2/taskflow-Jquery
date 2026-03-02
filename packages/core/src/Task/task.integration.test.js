@@ -134,12 +134,48 @@ describe("TaskApplicationService Integration", () => {
       });
     });
 
+    describe("saveToStorage", () => {
+      it("deve retornar sucesso quando salvar as tarefas", () => {
+        const result = su.saveToStorage();
+
+        expect(result.ok).toBe(true);
+        expect(result.code).toBe(null);
+        expect(result.error).toBe(null);
+      });
+
+      it("deve retornar erro quando falhar ao salvar as tarefas", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: new InMemoryTaskRepository(),
+          idGenerator: new FakeIdGenerator(),
+          storage: null,
+        });
+        const result = taskService.saveToStorage();
+
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("STORAGE_ERROR");
+        expect(result.error).toBeDefined();
+      });
+    });
+
     describe("hydrateTasks", () => {
-      it("deve retornar sucesso quando hydratar as tarefas", () => {
+      it("deve retornar sucesso quando hidratar as tarefas", () => {
         const result = su.loadFromStorage();
         expect(result.ok).toBe(true);
         expect(result.code).toBe(null);
         expect(result.error).toBe(null);
+      });
+
+      it("deve retornar erro quando falhar ao hidratar as tarefas", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: null,
+          idGenerator: new FakeIdGenerator(),
+          storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+        });
+        const result = taskService.loadFromStorage();
+        
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("TASK_NOT_HYDRATABLE");
+        expect(result.error).toBeDefined();
       });
     });
 
