@@ -100,6 +100,16 @@ describe("TaskApplicationService Integration", () => {
         expect(result[0].title).toBe("Minha tarefa 3");
         expect(result[1].title).toBe("Minha tarefa 2");
       });
+
+
+      it("deve normalizar o filtro para all, quando o filtro é invalid", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+
+        const result = su.filterTasks(su.getState().tasks, "invalid");
+        expect(result.length).toBe(3);
+      });
     });
 
     describe("hydrateTasks", () => {
