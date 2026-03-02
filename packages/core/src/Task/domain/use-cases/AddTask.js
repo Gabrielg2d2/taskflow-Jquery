@@ -28,7 +28,7 @@ export class AddTaskUseCase {
 
       this.#taskRepository.add(task);
 
-      return { ok: true, code: null, error: null, task };
+      return { ok: true, code: null, error: null, data: { task: task.toPlainObject() } };
     } catch (error) {
       if (error instanceof TaskTitleEmptyError) {
         return { ok: false, code: error.code, error: error.message };
