@@ -1,0 +1,20 @@
+{
+  "name": "@taskflow/core",
+  "version": "1.0.0",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./task": "./src/Task/index.js",
+    "./task/domain": "./src/Task/domain/index.js",
+    "./task/application": "./src/Task/application/index.js",
+    "./shared": "./src/shared/index.js",
+    "./shared/ports": "./src/shared/ports/index.js"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  }
+}

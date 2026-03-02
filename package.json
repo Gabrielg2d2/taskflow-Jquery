@@ -1,25 +1,31 @@
 {
-  "name": "taskflow",
+  "name": "taskflow-monorepo",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test": "vitest",
+    "dev": "npm run dev:jquery",
+    "dev:jquery": "npm run dev --workspace=@taskflow/ui-jquery",
+    "dev:react": "npm run dev --workspace=@taskflow/ui-react",
+    "dev:all": "npm run dev:jquery & npm run dev:react",
+    "build": "npm run build --workspaces --if-present",
+    "build:jquery": "npm run build --workspace=@taskflow/ui-jquery",
+    "build:react": "npm run build --workspace=@taskflow/ui-react",
+    "test:core": "npm test --workspace=@taskflow/core",
+    "test:infra": "npm test --workspace=@taskflow/infrastructure",
+    "test:jquery": "npm test --workspace=@taskflow/ui-jquery",
+    "test:react": "npm test --workspace=@taskflow/ui-react",
+    "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "@tailwindcss/vite": "^4.2.1",
+    "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
     "jsdom": "^28.1.0",
-    "tailwindcss": "^4.2.1",
-    "vite": "^7.3.1",
     "vitest": "^4.0.18"
-  },
-  "dependencies": {
-    "jquery": "^4.0.0"
   }
 }

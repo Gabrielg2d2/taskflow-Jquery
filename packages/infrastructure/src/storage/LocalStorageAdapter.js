@@ -1,0 +1,46 @@
+import { IStoragePort } from "@taskflow/core/shared/ports";
+
+/**
+ * Implementação de storage usando localStorage do browser.
+ */
+export class LocalStorageAdapter extends IStoragePort {
+  #key;
+  #version;
+
+  constructor({ key, version }) {
+    super();
+    this.#key = key;
+    this.#version = version;
+  }
+
+  load() {
+    try {
+      const raw = localStorage.getItem(this.#key);
+      if (!raw) return null;
+
+      const data = JSON.parse(raw);
+
+      if (!data || data.version !== this.#version || !Array.isArray(data.tasks)) {
+        return null;
+      }
+
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
+  save(tasks) {
+    const payload = {
+      version: this.#version,
+      savedAt: Date.now(),
+      tasks,
+    };
+
+    localStorage.setItem(this.#key, JSON.stringify(payload));
+  }
+
+  clear() {
+    localStorage.removeItem(this.#key);
+  }
+}

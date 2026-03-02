@@ -1,0 +1,20 @@
+{
+  "name": "@taskflow/infrastructure",
+  "version": "1.0.0",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./storage": "./src/storage/index.js",
+    "./router": "./src/router/index.js",
+    "./id-generator": "./src/id-generator/index.js"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@taskflow/core": "*"
+  }
+}
