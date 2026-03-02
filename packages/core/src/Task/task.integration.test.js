@@ -160,6 +160,14 @@ describe("TaskApplicationService Integration", () => {
       });
       const result = taskService.clearAllTasks();
       expect(result.ok).toBe(false);
+      expect(result.code).toBe("TASK_NOT_CLEARABLE");
+    });
+
+    it("deve retornar um erro quando o toggle de uma tarefa não está implementado", () => {
+      
+      const result = su.toggleTask("777");
+      expect(result.ok).toBe(false);
+      expect(result.code).toBe("TASK_NOT_FOUND");
     });
   });
 });
