@@ -1,0 +1,16 @@
+{
+  "name": "@taskflow/core",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./domain": "./src/domain/index.js",
+    "./application": "./src/application/index.js"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  }
+}
