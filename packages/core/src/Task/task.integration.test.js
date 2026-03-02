@@ -72,7 +72,7 @@ describe("TaskApplicationService Integration", () => {
         su.addTask("Minha tarefa 2");
         su.addTask("Minha tarefa 3");
 
-        const result = su.filterTasks(su.getState().tasks, "pending", "");
+        const result = su.filterTasks(su.getState().tasks, "pending");
         expect(result.length).toBe(3);
       });
 
@@ -83,7 +83,7 @@ describe("TaskApplicationService Integration", () => {
         su.toggleTask(su.getState().tasks[0].id);
         su.toggleTask(su.getState().tasks[1].id);
 
-        const result = su.filterTasks(su.getState().tasks, "done", "");
+        const result = su.filterTasks(su.getState().tasks, "done");
         expect(result.length).toBe(2);
       });
 
@@ -94,7 +94,7 @@ describe("TaskApplicationService Integration", () => {
 
         su.toggleTask(su.getState().tasks[2].id);
 
-        const result = su.filterTasks(su.getState().tasks, "pending", "");
+        const result = su.filterTasks(su.getState().tasks, "pending");
 
         expect(result.length).toBe(2);
         expect(result[0].title).toBe("Minha tarefa 3");
