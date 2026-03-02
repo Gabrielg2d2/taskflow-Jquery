@@ -21,6 +21,33 @@ describe("TaskApplicationService Integration", () => {
       });
     });
 
+    describe("filterAndSearchTasks", () => {
+      it("deve retornar sucesso quando filtrar e buscar as tarefas", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+        
+        const result = su.filterTasks(su.getState().tasks, "all", "2");
+
+        expect(result.length).toBe(1);
+        expect(result[0].title).toBe("Minha tarefa 2");
+      });
+
+      it("deve retornar sucesso quando filtrar e buscar as tarefas, filtro done", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+        su.toggleTask(su.getState().tasks[0].id);
+        su.toggleTask(su.getState().tasks[1].id);
+
+        const result = su.filterTasks(su.getState().tasks, "done", "");
+
+        expect(result.length).toBe(2);
+        expect(result[0].title).toBe("Minha tarefa 3");
+        expect(result[1].title).toBe("Minha tarefa 2");
+      });
+    });
+
     describe("filterTasks", () => {
       it("deve retornar sucesso quando filtrar as tarefas, todos os filtros", () => {
         su.addTask("Minha tarefa");
