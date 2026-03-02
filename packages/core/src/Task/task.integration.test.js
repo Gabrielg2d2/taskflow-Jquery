@@ -150,6 +150,21 @@ describe("TaskApplicationService Integration", () => {
         expect(result.ok).toBe(false);
         expect(result.error).toBe("Task not found");
       });
+
+      it("deve retornar um erro quando falhar ao editar uma tarefa", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: null,
+          idGenerator: new FakeIdGenerator(),
+          storage: new LocalStorageAdapter({
+            key: "taskflow-test",
+            version: 1,
+          }),
+        });
+        const result = taskService.editTask("777", "Minha tarefa");
+        
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("TASK_NOT_EDITABLE");
+      });
     });
 
     describe("clearAllTasks", () => {
@@ -163,6 +178,21 @@ describe("TaskApplicationService Integration", () => {
           }),
         });
         const result = taskService.clearAllTasks();
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("TASK_NOT_CLEARABLE");
+      });
+
+      it("deve retornar um erro quando falhar ao limpar todas as tarefas", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: null,
+          idGenerator: new FakeIdGenerator(),
+          storage: new LocalStorageAdapter({
+            key: "taskflow-test",
+            version: 1,
+          }),
+        });
+        const result = taskService.clearAllTasks();
+        
         expect(result.ok).toBe(false);
         expect(result.code).toBe("TASK_NOT_CLEARABLE");
       });
@@ -185,7 +215,7 @@ describe("TaskApplicationService Integration", () => {
           }),
         });
         const result = taskService.toggleTask("777");
-        
+
         expect(result.ok).toBe(false);
         expect(result.code).toBe("TASK_NOT_TOGGLEABLE");
       });
@@ -196,6 +226,20 @@ describe("TaskApplicationService Integration", () => {
         const result = su.removeTask("123");
         expect(result.ok).toBe(false);
         expect(result.error).toBe("Task not found");
+      });
+
+      it("deve retornar um erro quando falhar ao remover uma tarefa", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: null,
+          idGenerator: new FakeIdGenerator(),
+          storage: new LocalStorageAdapter({
+            key: "taskflow-test",
+            version: 1,
+          }),
+        });
+        const result = taskService.removeTask("777");
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("TASK_NOT_DELETABLE");
       });
     });
   });

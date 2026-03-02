@@ -18,7 +18,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "test:wc": "vitest watch --coverage"
   },
   "workspaces": [
     "packages/*"
