@@ -15,7 +15,9 @@
     "test:infra": "npm test --workspace=@taskflow/infrastructure",
     "test:jquery": "npm test --workspace=@taskflow/ui-jquery",
     "test:react": "npm test --workspace=@taskflow/ui-react",
-    "test:all": "npm run test:core & npm run test:infra & npm run test:jquery & npm run test:react"
+    "test:all": "npm run test:core & npm run test:infra & npm run test:jquery & npm run test:react",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
   },
   "workspaces": [
     "packages/*"
