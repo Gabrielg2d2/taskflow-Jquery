@@ -97,77 +97,106 @@ describe("TaskApplicationService Integration", () => {
       });
     });
 
-    it("deve retornar um erro ao adicionar uma tarefa com título vazio", () => {
-      const result = su.addTask("");
+    describe("addTask", () => {
+      it("deve retornar um erro ao adicionar uma tarefa com título vazio", () => {
+        const result = su.addTask("");
 
-      expect(result.ok).toBe(false);
-      expect(result.error).toBe("Task title cannot be empty");
-    });
-
-    it("deve retornar um erro ao editar uma tarefa com título vazio", () => {
-      const result = su.addTask("Minha tarefa");
-      const result2 = su.editTask(result.data.task.id, "");
-
-      expect(result2.ok).toBe(false);
-      expect(result2.error).toBe("Task title cannot be empty");
-    });
-
-    it("deve retornar um erro ao adicionar uma tarefa com título duplicado", () => {
-      su.addTask("Minha tarefa");
-      const result = su.addTask("Minha tarefa");
-
-      expect(result.ok).toBe(false);
-      expect(result.error).toBe("Task already exists");
-    });
-
-    it("deve retornar um erro ao editar uma tarefa com título duplicado", () => {
-      su.addTask("Minha tarefa");
-      const result = su.addTask("Minha tarefa 2");
-
-      const result2 = su.editTask(result.data.task.id, "Minha tarefa");
-      expect(result2.ok).toBe(false);
-      expect(result2.error).toBe("Task already exists");
-    });
-
-    it("deve retornar um erro ao remover uma tarefa que não existe", () => {
-      const result = su.removeTask("123");
-      expect(result.ok).toBe(false);
-      expect(result.error).toBe("Task not found");
-    });
-
-    it("deve retornar um erro ao editar uma tarefa que não existe", () => {
-      const result = su.editTask("123", "Minha tarefa");
-      expect(result.ok).toBe(false);
-      expect(result.error).toBe("Task not found");
-    });
-
-    it("deve retornar um erro quando o repositório de tarefas não está implementado", () => {
-
-      const taskService = new TaskApplicationService({
-        taskRepository: null,
-        idGenerator: new FakeIdGenerator(),
-        storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+        expect(result.ok).toBe(false);
+        expect(result.error).toBe("Task title cannot be empty");
       });
-      const result = taskService.addTask("Minha tarefa");
-      expect(result.ok).toBe(false);
-    });
 
-    it("deve retornar um erro quando o limpar todas as tarefas não está implementado", () => {
-      const taskService = new TaskApplicationService({
-        taskRepository: null,
-        idGenerator: new FakeIdGenerator(),
-        storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+      it("deve retornar um erro ao editar uma tarefa com título vazio", () => {
+        const result = su.addTask("Minha tarefa");
+        const result2 = su.editTask(result.data.task.id, "");
+
+        expect(result2.ok).toBe(false);
+        expect(result2.error).toBe("Task title cannot be empty");
       });
-      const result = taskService.clearAllTasks();
-      expect(result.ok).toBe(false);
-      expect(result.code).toBe("TASK_NOT_CLEARABLE");
+
+      it("deve retornar um erro ao adicionar uma tarefa com título duplicado", () => {
+        su.addTask("Minha tarefa");
+        const result = su.addTask("Minha tarefa");
+
+        expect(result.ok).toBe(false);
+        expect(result.error).toBe("Task already exists");
+      });
+
+      it("deve retornar um erro ao editar uma tarefa com título duplicado", () => {
+        su.addTask("Minha tarefa");
+        const result = su.addTask("Minha tarefa 2");
+
+        const result2 = su.editTask(result.data.task.id, "Minha tarefa");
+        expect(result2.ok).toBe(false);
+        expect(result2.error).toBe("Task already exists");
+      });
+
+      it("deve retornar um erro quando o repositório de tarefas não está implementado", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: null,
+          idGenerator: new FakeIdGenerator(),
+          storage: new LocalStorageAdapter({
+            key: "taskflow-test",
+            version: 1,
+          }),
+        });
+        const result = taskService.addTask("Minha tarefa");
+        expect(result.ok).toBe(false);
+      });
     });
 
-    it("deve retornar um erro quando o toggle de uma tarefa não está implementado", () => {
-      
-      const result = su.toggleTask("777");
-      expect(result.ok).toBe(false);
-      expect(result.code).toBe("TASK_NOT_FOUND");
+    describe("editTask", () => {
+      it("deve retornar um erro ao editar uma tarefa que não existe", () => {
+        const result = su.editTask("123", "Minha tarefa");
+        expect(result.ok).toBe(false);
+        expect(result.error).toBe("Task not found");
+      });
+    });
+
+    describe("clearAllTasks", () => {
+      it("deve retornar um erro quando o limpar todas as tarefas não está implementado", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: null,
+          idGenerator: new FakeIdGenerator(),
+          storage: new LocalStorageAdapter({
+            key: "taskflow-test",
+            version: 1,
+          }),
+        });
+        const result = taskService.clearAllTasks();
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("TASK_NOT_CLEARABLE");
+      });
+    });
+
+    describe("toggleTask", () => {
+      it("deve retornar um erro quando o toggle de uma tarefa não está implementado", () => {
+        const result = su.toggleTask("777");
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("TASK_NOT_FOUND");
+      });
+
+      it("deve retornar um erro quando falhar ao toggle de uma tarefa", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: null,
+          idGenerator: new FakeIdGenerator(),
+          storage: new LocalStorageAdapter({
+            key: "taskflow-test",
+            version: 1,
+          }),
+        });
+        const result = taskService.toggleTask("777");
+        
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("TASK_NOT_TOGGLEABLE");
+      });
+    });
+
+    describe("removeTask", () => {
+      it("deve retornar um erro ao remover uma tarefa que não existe", () => {
+        const result = su.removeTask("123");
+        expect(result.ok).toBe(false);
+        expect(result.error).toBe("Task not found");
+      });
     });
   });
 });
