@@ -1,4 +1,4 @@
-import { IStoragePort } from "@taskflow/core/application";
+import { IStoragePort } from "@taskflow/core/shared/ports";
 
 /**
  * Implementação de storage usando localStorage do browser.

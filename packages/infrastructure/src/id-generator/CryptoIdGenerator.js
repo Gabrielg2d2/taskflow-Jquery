@@ -1,4 +1,4 @@
-import { IIdGenerator } from "@taskflow/core/application";
+import { IIdGenerator } from "@taskflow/core/shared/ports";
 
 /**
  * Gerador de IDs usando crypto.randomUUID().

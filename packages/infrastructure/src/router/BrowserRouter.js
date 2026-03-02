@@ -1,4 +1,4 @@
-import { IRouter } from "@taskflow/core/application";
+import { IRouter } from "@taskflow/core/shared/ports";
 
 /**
  * Implementação de router usando History API do browser.
