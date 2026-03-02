@@ -74,12 +74,16 @@ export class TaskApplicationService {
   }
 
   loadFromStorage() {
-    const data = this.#storage.load();
+    try {
+      const data = this.#storage.load();
     if (data) {
       const tasks = Array.isArray(data) ? data : data.tasks;
       return this.#hydrateTasksUseCase.execute(tasks);
     }
     return { ok: true, code: null, error: null };
+    } catch (error) {
+      return { ok: false, code: "TASK_NOT_HYDRATABLE", error: error.message };
+    }
   }
 
   saveToStorage() {

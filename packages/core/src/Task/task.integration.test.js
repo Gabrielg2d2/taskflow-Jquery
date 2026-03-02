@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, onTestFailed } from "vitest";
 import { TaskApplicationService } from "./index";
 import { InMemoryTaskRepository } from "./domain/repositories/InMemoryTaskRepository";
 import { LocalStorageAdapter } from "../../../infrastructure/src/storage/LocalStorageAdapter";
@@ -18,6 +18,55 @@ describe("TaskApplicationService Integration", () => {
         taskRepository: new InMemoryTaskRepository(),
         idGenerator: new FakeIdGenerator(),
         storage: new LocalStorageAdapter({ key: "taskflow-test", version: 1 }),
+      });
+    });
+
+    describe("filterTasks", () => {
+      it("deve retornar sucesso quando filtrar as tarefas, todos os filtros", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+
+        const result = su.filterTasks(su.getState().tasks, "all", "");
+        expect(result.length).toBe(3);
+      });
+
+      it("deve retornar sucesso quando filtrar as tarefas, filtro done", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+
+        const result = su.filterTasks(su.getState().tasks, "done", "");
+        expect(result.length).toBe(0);
+      });
+
+      it("deve retornar sucesso quando filtrar as tarefas, filtro pending", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+
+        const result = su.filterTasks(su.getState().tasks, "pending", "");
+        expect(result.length).toBe(3);
+      });
+
+      it("deve retornar 2 tarefas filtradas, filtro done", () => {
+        su.addTask("Minha tarefa");
+        su.addTask("Minha tarefa 2");
+        su.addTask("Minha tarefa 3");
+        su.toggleTask(su.getState().tasks[0].id);
+        su.toggleTask(su.getState().tasks[1].id);
+
+        const result = su.filterTasks(su.getState().tasks, "done", "");
+        expect(result.length).toBe(2);
+      });
+    });
+
+    describe("hydrateTasks", () => {
+      it("deve retornar sucesso quando hydratar as tarefas", () => {
+        const result = su.loadFromStorage();
+        expect(result.ok).toBe(true);
+        expect(result.code).toBe(null);
+        expect(result.error).toBe(null);
       });
     });
 
@@ -97,6 +146,20 @@ describe("TaskApplicationService Integration", () => {
       });
     });
 
+    describe("hydrateTasks", () => {
+      it("deve retornar um erro quando falhar ao hydratar as tarefas", () => {
+        const taskService = new TaskApplicationService({
+          taskRepository: null,
+          idGenerator: new FakeIdGenerator(),
+          storage: null,
+        });
+        const result = taskService.loadFromStorage();
+
+        expect(result.ok).toBe(false);
+        expect(result.code).toBe("TASK_NOT_HYDRATABLE");
+      });
+    });
+
     describe("addTask", () => {
       it("deve retornar um erro ao adicionar uma tarefa com título vazio", () => {
         const result = su.addTask("");
@@ -161,7 +224,7 @@ describe("TaskApplicationService Integration", () => {
           }),
         });
         const result = taskService.editTask("777", "Minha tarefa");
-        
+
         expect(result.ok).toBe(false);
         expect(result.code).toBe("TASK_NOT_EDITABLE");
       });
@@ -192,7 +255,7 @@ describe("TaskApplicationService Integration", () => {
           }),
         });
         const result = taskService.clearAllTasks();
-        
+
         expect(result.ok).toBe(false);
         expect(result.code).toBe("TASK_NOT_CLEARABLE");
       });
