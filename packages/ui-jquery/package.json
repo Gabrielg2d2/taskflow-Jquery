@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "cypress:open": "cypress open --browser chrome",
+    "cypress:open": "npm run dev & cypress open --browser chrome",
     "cypress:run:e2e": "ELECTRON_EXTRA_LAUNCH_ARGS='--no-sandbox --disable-dev-shm-usage --disable-gpu' cypress run",
     "cypress:run:e2e:headed": "ELECTRON_EXTRA_LAUNCH_ARGS='--no-sandbox --disable-dev-shm-usage --disable-gpu' cypress run --headed",
     "cypress:run": "start-server-and-test dev http://127.0.0.1:3001 cypress:run:e2e",
