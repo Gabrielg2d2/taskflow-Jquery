@@ -1,0 +1,90 @@
+:root {
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 8px;
+  --ds-radius-lg: 16px;
+
+  --ds-spacing-xs: 4px;
+  --ds-spacing-sm: 8px;
+  --ds-spacing-md: 16px;
+  --ds-spacing-lg: 32px;
+  --ds-spacing-xl: 64px;
+  --ds-spacing-2xl: 128px;
+  --ds-spacing-3xl: 256px;
+  --ds-spacing-4xl: 512px;
+  --ds-spacing-5xl: 1024px;
+
+  --ds-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --ds-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --ds-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --ds-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --ds-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --ds-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --ds-shadow-none: 0 0 #0000;
+
+  --ds-font-size-xs: 12px;
+  --ds-font-size-sm: 14px;
+  --ds-font-size-md: 16px;
+  --ds-font-size-lg: 18px;
+  --ds-font-size-xl: 20px;
+  --ds-font-size-2xl: 24px;
+  --ds-font-size-3xl: 32px;
+  --ds-font-size-4xl: 40px;
+  --ds-font-size-5xl: 48px;
+
+  --ds-font-weight-light: 300;
+  --ds-font-weight-normal: 400;
+  --ds-font-weight-medium: 500;
+  --ds-font-weight-semibold: 600;
+  --ds-font-weight-bold: 700;
+  --ds-font-weight-extrabold: 800;
+  --ds-font-weight-black: 900;
+
+  --ds-bg: #ffffff;
+  --ds-fg: #0f172a;
+  --ds-muted: #64748b;
+
+  --ds-border: #e2e8f0;
+  --ds-ring: #94a3b8;
+
+  --ds-primary: #0f172a;
+  --ds-primary-fg: #ffffff;
+
+  --ds-secondary: #64748b;
+  --ds-secondary-fg: #ffffff;
+
+  --ds-success: #10b981;
+  --ds-success-fg: #ffffff;
+
+  --ds-warning: #f59e0b;
+  --ds-warning-fg: #ffffff;
+
+  --ds-info: #3b82f6;
+  --ds-info-fg: #ffffff;
+  
+  --ds-error: #ef4444;
+  --ds-error-fg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --ds-bg: #0b1220;
+  --ds-fg: #e2e8f0;
+  --ds-muted: #94a3b8;
+
+  --ds-border: #1f2a3a;
+  --ds-ring: #64748b;
+
+  --ds-primary: #e2e8f0;
+  --ds-primary-fg: #0b1220;
+}
+
+[data-theme="light"] {
+  --ds-bg: #ffffff;
+  --ds-fg: #0f172a;
+  --ds-muted: #64748b;
+
+  --ds-border: #e2e8f0;
+  --ds-ring: #94a3b8;
+
+  --ds-primary: #0f172a;
+  --ds-primary-fg: #ffffff;
+}

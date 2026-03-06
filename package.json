@@ -23,7 +23,9 @@
     "cypress:open:jquery": "npm run cypress:open --workspace=@taskflow/ui-jquery",
     "cypress:open:react": "npm run cypress:open --workspace=@taskflow/ui-react",
     "cypress:run:jquery": "npm run cypress:run --workspace=@taskflow/ui-jquery",
-    "cypress:run:react": "npm run cypress:run --workspace=@taskflow/ui-react"
+    "cypress:run:react": "npm run cypress:run --workspace=@taskflow/ui-react",
+    "build:design-system": "npm run build --workspace=@taskflow/design-system",
+    "storybook:design-system": "npm run storybook --workspace=@taskflow/design-system"
   },
   "workspaces": [
     "packages/*"
