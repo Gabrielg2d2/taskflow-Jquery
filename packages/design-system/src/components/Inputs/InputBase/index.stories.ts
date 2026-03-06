@@ -8,7 +8,19 @@ const meta = {
   args: {
     label: "Input Base",
     placeholder: "Digite aqui...",
-    type: "text"
+    type: "text",
+    disabled: false,
+    error: "",
+    name: "input-base"
+  },
+  argTypes: {
+    disabled: { control: "boolean" },
+    error: { control: "text" },
+    label: { control: "text" },
+    placeholder: { control: "text" },
+    type: { control: "text" },
+    name: { control: "text" },
+    value: { control: "text" },
   }
 } satisfies Meta<InputBaseProps>;
 
