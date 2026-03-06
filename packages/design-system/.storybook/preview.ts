@@ -1,5 +1,5 @@
-import type { Preview } from "@storybook/html-vite";
-import "../src/styles/input.css";
+import type { Preview } from "@storybook/html";
+import "../src/styles/talwind.css";
 
 const preview: Preview = {
   parameters: {
