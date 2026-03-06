@@ -1,0 +1,3 @@
+.rounded-sm { border-radius: var(--ds-radius-sm); }
+.rounded-md { border-radius: var(--ds-radius-md); }
+.rounded-lg { border-radius: var(--ds-radius-lg); }

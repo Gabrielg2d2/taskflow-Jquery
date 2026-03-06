@@ -1,0 +1,18 @@
+/* Colors */
+.bg-primary { background-color: var(--ds-bg); }
+.bg-fg { background-color: var(--ds-fg); }
+.bg-muted { background-color: var(--ds-muted); }
+.bg-border { background-color: var(--ds-border); }
+.bg-ring { background-color: var(--ds-ring); }
+.bg-primary { background-color: var(--ds-primary); }
+.bg-primary-fg { background-color: var(--ds-primary-fg); }
+.bg-secondary { background-color: var(--ds-secondary); }
+.bg-secondary-fg { background-color: var(--ds-secondary-fg); }
+.bg-success { background-color: var(--ds-success); }
+.bg-success-fg { background-color: var(--ds-success-fg); }
+.bg-warning { background-color: var(--ds-warning); }
+.bg-warning-fg { background-color: var(--ds-warning-fg); }
+.bg-info { background-color: var(--ds-info); }
+.bg-info-fg { background-color: var(--ds-info-fg); }
+.bg-error { background-color: var(--ds-error); }
+.bg-error-fg { background-color: var(--ds-error-fg); }

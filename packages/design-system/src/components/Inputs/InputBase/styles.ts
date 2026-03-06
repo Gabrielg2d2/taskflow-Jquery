@@ -12,19 +12,19 @@ export type IProps = {
 
 export const inputBaseStyles: IProps = {
   slots: {
-    root: "flex flex-col gap-ds-sm",
-    label: "text-ds-sm font-ds-sans text-ds-fg",
+    root: "flex flex-col",
+    label: "text-sm font-sans text-fg",
     input: [
-      "w-full h-10 px-ds-md rounded-ds-lg border border-ds-border",
-      "bg-ds-bg text-ds-sm text-ds-fg",
+      "h-10 px-md rounded-lg border border-border",
+      "bg-bg text-sm text-fg",
       "outline-none transition",
-      "placeholder:text-ds-muted",
-      "focus:border-ds-info focus:ring-4 focus:ring-ds-info/20",
-      "disabled:bg-ds-muted/10 disabled:text-ds-muted disabled:cursor-not-allowed",
+      "placeholder:text-muted",
+      "focus:border-info focus:ring focus:ring-info",
+      "disabled:bg-muted disabled:text-muted disabled:cursor-not-allowed",
     ].join(" "),
-    error: "text-ds-xs text-ds-error",
+    error: "text-xs text-error pl-sm",
   },
   states: {
-    error: "border-ds-error focus:border-ds-error focus:ring-ds-error/20",
+    error: "focus:border-error focus:ring-error border-solid border-color-error text-error",
   },
 };

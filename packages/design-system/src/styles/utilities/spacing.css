@@ -1,0 +1,9 @@
+.gap-xs { gap: var(--ds-spacing-xs); }
+.gap-sm { gap: var(--ds-spacing-sm); }
+.gap-md { gap: var(--ds-spacing-md); }
+.gap-lg { gap: var(--ds-spacing-lg); }
+.gap-xl { gap: var(--ds-spacing-xl); }
+.gap-2xl { gap: var(--ds-spacing-2xl); }
+.gap-3xl { gap: var(--ds-spacing-3xl); }
+.gap-4xl { gap: var(--ds-spacing-4xl); }
+.gap-5xl { gap: var(--ds-spacing-5xl); }

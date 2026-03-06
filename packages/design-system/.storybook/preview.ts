@@ -1,5 +1,8 @@
 import type { Preview } from "@storybook/html";
-import "../src/styles/talwind.css";
+import "../src/styles/tokens.css";
+import "../src/styles/globals.css";
+import "../src/styles/utilities";
+
 
 const preview: Preview = {
   parameters: {
