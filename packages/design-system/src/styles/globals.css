@@ -1,5 +1,5 @@
 body {
   background: var(--ds-bg);
   color: var(--ds-fg);
-  font-family: sans-serif;
+  font-family: var(--ds-font-family);
 }

@@ -1,9 +1,21 @@
-export const inputBaseStyles = {
+export type IProps = {
   slots: {
-    root: "flex flex-col gap-sm",
+    root: string;
+    label: string;
+    input: string;
+    error: string;
+  };
+  states: {
+    error: string;
+  };
+};
+
+export const inputBaseStyles: IProps = {
+  slots: {
+    root: "flex flex-col gap-ds-sm",
     label: "text-ds-sm font-medium text-ds-fg",
     input: [
-      "w-full h-10 px-md rounded-lg border border-ds-border",
+      "w-full h-10 px-ds-md rounded-ds-lg border border-ds-border",
       "bg-ds-bg text-ds-sm text-ds-fg",
       "outline-none transition",
       "placeholder:text-ds-muted",
