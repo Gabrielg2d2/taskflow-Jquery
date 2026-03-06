@@ -42,6 +42,7 @@ export function InputBase({
       value,
       placeholder,
       disabled,
+      autocomplete: "off",
       "aria-invalid": String(Boolean(error)),
       "aria-describedby": error ? `${inputId}-error` : undefined,
       class: [
