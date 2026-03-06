@@ -22,7 +22,7 @@ export const inputBaseStyles: IProps = {
       "focus:border-info focus:ring focus:ring-info",
       "disabled:bg-muted disabled:text-muted disabled:cursor-not-allowed",
     ].join(" "),
-    error: "text-xs text-error pl-sm mt-xs",
+    error: "text-xs text-error mt-xs",
   },
   states: {
     error: "focus:border-error focus:ring-error border-solid border-color-error text-error",
