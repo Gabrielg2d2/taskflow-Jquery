@@ -62,6 +62,9 @@
 .text-info { color: var(--ds-info); }
 .text-error { color: var(--ds-error); }
 
+/* Text Color Typography */
+.text-color-default { color: #5a5959; }
+
 /* Text Color Custom */
 /* Use with style="--text-color: #f59e0b" (or any value) */
 .text-custom-color {
