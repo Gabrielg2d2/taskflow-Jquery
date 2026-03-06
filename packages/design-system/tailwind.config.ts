@@ -57,6 +57,11 @@ export default {
         "ds-extrabold": "var(--ds-font-weight-extrabold)",
         "ds-black": "var(--ds-font-weight-black)",
       },
+      fontFamily: {
+        "ds-family": "var(--ds-font-family)",
+        "ds-sans": "var(--ds-font-family-sans)",
+        "ds-mono": "var(--ds-font-family-mono)",
+      },
       borderRadius: {
         "ds-sm": "var(--ds-radius-sm)",
         "ds-md": "var(--ds-radius-md)",

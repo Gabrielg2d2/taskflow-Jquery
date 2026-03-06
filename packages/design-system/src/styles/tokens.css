@@ -56,6 +56,11 @@
   --ds-transition-9s: 0.9s;
   --ds-transition-10s: 1s;
 
+  /* Font Family */
+  --ds-font-family: "Inter", sans-serif;
+  --ds-font-family-mono: "Roboto Mono", monospace;
+  --ds-font-family-sans: "Inter", sans-serif;
+
   /* Semantic colors - fallback (light theme) */
   --ds-bg: #ffffff;
   --ds-fg: #0f172a;

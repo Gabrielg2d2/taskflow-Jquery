@@ -13,7 +13,7 @@ export type IProps = {
 export const inputBaseStyles: IProps = {
   slots: {
     root: "flex flex-col gap-ds-sm",
-    label: "text-ds-sm font-medium text-ds-fg",
+    label: "text-ds-sm font-ds-sans text-ds-fg",
     input: [
       "w-full h-10 px-ds-md rounded-ds-lg border border-ds-border",
       "bg-ds-bg text-ds-sm text-ds-fg",
