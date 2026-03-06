@@ -62,6 +62,9 @@ export default {
         "ds-md": "var(--ds-radius-md)",
         "ds-lg": "var(--ds-radius-lg)",
       },
+      border: {
+        "ds-border": "var(--ds-border)",
+      },
       transitionDuration: {
         "ds-2s": "var(--ds-transition-2s)",
         "ds-3s": "var(--ds-transition-3s)",
