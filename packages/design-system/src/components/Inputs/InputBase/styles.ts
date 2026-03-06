@@ -15,8 +15,9 @@ export const inputBaseStyles: IProps = {
     root: "flex flex-col",
     label: "text-sm text-semibold text-color-default mb-xs",
     input: [
-      "h-10 px-md rounded-lg border border-border",
-      "bg-bg text-sm text-fg",
+      "h-10 px-md",
+      "rounded-md border border-border",
+      "text-sm text-fg",
       "outline-none transition",
       "placeholder:text-muted",
       "focus:border-info focus:ring focus:ring-info",
