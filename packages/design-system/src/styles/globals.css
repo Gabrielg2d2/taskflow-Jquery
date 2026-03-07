@@ -1,25 +1,29 @@
-/* Reset básico */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+@layer base, utilities;
 
-html {
-  /* 1rem = 4px */
-  font-size: 4px;
-}
+@layer base {
+  /* Reset básico */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
+  html {
+    /* 1rem = 4px */
+    font-size: 4px;
+  }
 
-body {
-  font-family: var(--ds-font-family);
-  font-size: var(--ds-font-size-md);
-  line-height: 1.5;
-  color: var(--ds-fg);
-  background-color: var(--ds-bg);
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--ds-font-family);
+    font-size: var(--ds-font-size-md);
+    line-height: 1.5;
+    color: var(--ds-fg);
+    background-color: var(--ds-bg);
+  }
 }

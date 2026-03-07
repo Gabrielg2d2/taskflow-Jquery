@@ -2,7 +2,9 @@ import type { Preview } from "@storybook/html";
 import "../src/styles/tokens.css";
 import "../src/styles/globals.css";
 import "../src/styles/utilities";
+import { initArbitraryStyles } from "../src/utils/arbitrary-styles";
 
+initArbitraryStyles();
 
 const preview: Preview = {
   parameters: {

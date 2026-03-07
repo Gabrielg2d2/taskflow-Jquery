@@ -1,5 +1,4 @@
 import { h } from "../../../dom/h.js";
-import { inputBaseStyles } from "./styles.js";
 
 export type InputBaseProps = {
   id?: string;
@@ -27,11 +26,11 @@ export function InputBase({
   const inputId = id || `input-${name || "text"}`;
 
   return h("div", {
-    class: inputBaseStyles.slots.root
+    class: "flex flex-col"
   }, [
     label &&
       h("label", {
-        class: inputBaseStyles.slots.label,
+        class: "text-sm text-semibold text-default mb-xs",
         for: inputId
       }, label),
 
@@ -46,8 +45,9 @@ export function InputBase({
       "aria-invalid": String(Boolean(error)),
       "aria-describedby": error ? `${inputId}-error` : undefined,
       class: [
-        inputBaseStyles.slots.input,
-        error ? inputBaseStyles.states.error : "",
+        "h-10 px-md rounded-md border border-border text-sm text-fg outline-none transition placeholder:text-muted focus:border-info focus:ring focus:ring-info disabled:bg-muted disabled:text-muted disabled:cursor-not-allowed",
+        error ? "focus:border-error focus:ring-error border-color-error text-error" : "focus:border-primary",
+        disabled ? "bg-muted text-muted cursor-not-allowed" : "",
         className
       ].filter(Boolean).join(" ")
     }),
@@ -55,7 +55,7 @@ export function InputBase({
     error &&
       h("p", {
         id: `${inputId}-error`,
-        class: inputBaseStyles.slots.error
+        class: "text-xs text-error mt-xs"
       }, error)
   ].filter(Boolean));
 }

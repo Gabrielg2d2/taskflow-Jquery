@@ -1,7 +1,0 @@
-.s-sm { box-shadow: var(--ds-shadow-sm); }
-.s-md { box-shadow: var(--ds-shadow-md); }
-.s-lg { box-shadow: var(--ds-shadow-lg); }
-.s-xl { box-shadow: var(--ds-shadow-xl); }
-.s-2xl { box-shadow: var(--ds-shadow-2xl); }
-.s-inner { box-shadow: var(--ds-shadow-inner); }
-.s-none { box-shadow: var(--ds-shadow-none); }

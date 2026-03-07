@@ -1,10 +1,1 @@
-import "./layout.css";
-import "./colors.css";
-import "./margin.css";
-import "./padding.css";
-import "./radius.css";
-import "./shadow.css";
-import "./typography.css";
-import "./spacing.css";
-import "./border.css";
-import "./cursor.css";
+import "./utilities.css";

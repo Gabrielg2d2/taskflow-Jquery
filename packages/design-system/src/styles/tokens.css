@@ -5,6 +5,7 @@
   --ds-radius-lg: 16px;
 
   /* Spacing */
+  --ds-spacing-0: 0;
   --ds-spacing-xs: 4px;
   --ds-spacing-sm: 8px;
   --ds-spacing-md: 16px;
@@ -62,6 +63,7 @@
   --ds-letter-spacing-loose: 0.05em;
 
   /* Border Width */
+  --ds-border-width-0: 0;
   --ds-border-width-sm: 1px;
   --ds-border-width-md: 2px;
   --ds-border-width-lg: 4px;
@@ -91,7 +93,8 @@
   /* Semantic colors - fallback (light theme) */
   --ds-bg: #ffffff;
   --ds-fg: #0f172a;
-  --ds-muted: #64748b;
+  --ds-text-default: #64748b;
+  --ds-muted: #64748b4b;
 
   --ds-border: #e2e8f0;
   --ds-ring: #94a3b8;
@@ -119,6 +122,7 @@
 [data-theme="dark"] {
   --ds-bg: #0b1220;
   --ds-fg: #e2e8f0;
+  --ds-text-default: #94a3b8;
   --ds-muted: #94a3b8;
 
   --ds-border: #1f2a3a;
