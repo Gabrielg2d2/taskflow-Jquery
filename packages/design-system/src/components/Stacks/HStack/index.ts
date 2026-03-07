@@ -1,4 +1,5 @@
 import { type DSChild } from "../../../dom/h.js";
+  import { cx, cn } from "../../../styles/classes.js";
 import { StackBase, StackBaseProps } from "../@StackBase/index.js";
 
 export type HStackProps = {
@@ -15,7 +16,7 @@ export function HStack({
   const c = Array.isArray(children) ? children : children ? [children] : [];
   return StackBase({
     id,
-    className: ["flex-row md:flex-row gap-md", className].filter(Boolean).join(" "),
+    className: cn(cx.flex.row, cx.responsive["md:flex-row"], cx.gap.md, className),
     children: c,
   });
 }
