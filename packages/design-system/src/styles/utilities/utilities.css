@@ -430,12 +430,18 @@
   [class~="focus:ring-info"]:focus { outline: 2px solid var(--ds-info); outline-offset: 2px; }
   [class~="focus:ring-error"]:focus { outline: 2px solid var(--ds-error); outline-offset: 2px; }
   [class~="focus:ring-color-primary"]:focus { outline: 2px solid var(--ds-border-primary); outline-offset: 2px; }
+  
+  
   [class~="disabled:bg-muted"]:disabled { background-color: var(--ds-muted); }
   [class~="disabled:text-muted"]:disabled { color: var(--ds-muted); }
   [class~="disabled:cursor-not-allowed"]:disabled { cursor: not-allowed; }
   [class~="disabled:opacity-50"]:disabled { opacity: 0.5; }
+  
+  
   [class~="placeholder:text-muted"]::placeholder { color: var(--ds-muted); }
   [class~="placeholder:text-default"]::placeholder { color: var(--ds-text-default); }
+  
+  
   [class~=":active:focus:border-primary"]:active { border-color: var(--ds-border-primary); }
   [class~=":active:focus:ring-primary"]:active { outline: 2px solid var(--ds-border-primary); outline-offset: 2px; }
   [class~=":active:focus:ring-info"]:active { outline: 2px solid var(--ds-info); outline-offset: 2px; }
