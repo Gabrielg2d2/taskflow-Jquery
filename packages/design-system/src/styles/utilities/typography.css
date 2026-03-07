@@ -65,8 +65,9 @@
 /* Text Color Typography */
 .text-color-default { color: #5a5959; }
 
-/* Text Color Custom */
-/* Use with style="--text-color: #f59e0b" (or any value) */
+/* Text Color Custom 
+  Use with style="--text-custom-color-value: #f59e0b" (or any value).
+*/
 .text-custom-color {
-    color: var(--text-color);
-  }
+    color: var(--text-custom-color-value);
+}
