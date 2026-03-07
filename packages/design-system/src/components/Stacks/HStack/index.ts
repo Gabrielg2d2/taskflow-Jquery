@@ -15,7 +15,7 @@ export function HStack({
   const c = Array.isArray(children) ? children : children ? [children] : [];
   return StackBase({
     id,
-    className: ["flex flex-row md:flex-row gap-md", className].filter(Boolean).join(" "),
+    className: ["flex-row md:flex-row gap-md", className].filter(Boolean).join(" "),
     children: c,
   });
 }

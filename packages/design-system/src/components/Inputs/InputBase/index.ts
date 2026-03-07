@@ -53,10 +53,9 @@ export function InputBase({
       ].filter(Boolean).join(" ")
     }),
 
-    error && h("p", {
-      id: `${inputId}-error`,
+    h("p", {
       class: "text-xs text-error mt-xs"
-    }, error)
+    }, error),
   ].filter(Boolean)
   });
 }
