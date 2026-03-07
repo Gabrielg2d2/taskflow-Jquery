@@ -1,4 +1,6 @@
 import { h } from "../../../dom/h.js";
+import { HStack } from "../../Stacks/HStack/index.js";
+import { VStack } from "../../Stacks/VStack/index.js";
 
 export type InputBaseProps = {
   id?: string;
@@ -25,10 +27,9 @@ export function InputBase({
 } : InputBaseProps) {
   const inputId = id || `input-${name || "text"}`;
 
-  return h("div", {
-    class: "flex flex-col"
-  }, [
-    label &&
+  return VStack({
+    id,
+    children: [label &&
       h("label", {
         class: "text-sm text-semibold text-default mb-xs",
         for: inputId
@@ -52,10 +53,10 @@ export function InputBase({
       ].filter(Boolean).join(" ")
     }),
 
-    error &&
-      h("p", {
-        id: `${inputId}-error`,
-        class: "text-xs text-error mt-xs"
-      }, error)
-  ].filter(Boolean));
+    error && h("p", {
+      id: `${inputId}-error`,
+      class: "text-xs text-error mt-xs"
+    }, error)
+  ].filter(Boolean)
+  });
 }
