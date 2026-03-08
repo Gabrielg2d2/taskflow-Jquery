@@ -239,7 +239,7 @@ export default class TaskView {
     const styleDark = {};
 
     const styleLight = {
-      form: "flex gap-2 mb-4",
+      form: "ds-hstack",
       input: "ds-input:base",
       buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl",
       buttonCancel: "bg-red-500 text-white px-4 py-2 rounded-xl",
