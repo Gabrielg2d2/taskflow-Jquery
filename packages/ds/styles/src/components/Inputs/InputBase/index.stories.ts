@@ -21,7 +21,7 @@ const meta = {
     placeholder: "Digite aqui...",
     type: "text",
     disabled: false,
-    error: "",
+    error: false,
     name: "input-story",
     value: "",
     class: "ds-input:base",
@@ -69,6 +69,7 @@ export const Base: StoryObj = {
 
 export const Error: StoryObj = {
   args: {
+    name: "input-error",
     class: "ds-input:base ds-input:error",
   },
 };
