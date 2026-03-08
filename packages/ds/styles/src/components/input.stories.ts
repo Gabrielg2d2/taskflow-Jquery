@@ -13,6 +13,7 @@ const meta = {
 
         ${args.error ? "class=" + '"' + "ds-input:base ds-input:error" + '"' : ""}
         ${args.class ? "class=" + '"' + args.class + '"' : ""}
+        ${args.helperText ? "helperText=" + '"' + args.helperText + '"' : ""}
       />  
     </div>
   `,
@@ -49,6 +50,7 @@ const meta = {
     name: { control: "text" },
     value: { control: "text" },
     class: { control: "text" },
+    helperText: { control: "text" },
   },
 } satisfies Meta;
 
@@ -87,7 +89,8 @@ function createInput(props: Record<string, unknown>): HTMLElement {
   }
 
   const input = document.createElement("input");
-  input.className = String(props.class ?? "ds-input:base");
+  input.className = "ds-input:base";
+  if (props.error) input.classList.add("ds-input:error");
   if (props.placeholder) input.setAttribute("placeholder", String(props.placeholder));
   if (props.type) input.setAttribute("type", String(props.type));
   if (props.name) input.setAttribute("name", String(props.name));
@@ -95,12 +98,18 @@ function createInput(props: Record<string, unknown>): HTMLElement {
   if (props.disabled) input.setAttribute("disabled", "");
   container.appendChild(input);
 
+
+  if(props.helperText) {
+    const helperText = document.createElement("p");
+    helperText.className = "ds-input:helper-text";
+    helperText.textContent = String(props.helperText);
+    container.appendChild(helperText);
+  }
+  
   if (props.error) {
-    input.classList.add("ds-input:error");
     const err = document.createElement("p");
     err.className = "ds-input:error-message";
     err.textContent = String(props.error);
-    //# container.appendChild(input);
     container.appendChild(err);
   } 
 
