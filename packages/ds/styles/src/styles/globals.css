@@ -1,24 +1,22 @@
-@layer base, utilities;
+@layer reset, base, utilities;
 
-@layer base {
-  /* Reset básico */
-  *,
-  *::before,
-  *::after {
+@layer reset {
+  :where(*, *::before, *::after) {
     box-sizing: border-box;
+  }
+
+  :where(html, body, p, h1, h2, h3, h4, h5, h6) {
+    margin: 0;
+    padding: 0;
   }
 
   html {
     /* 1rem = 4px */
     font-size: 4px;
   }
+}
 
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-  }
-
+@layer base {
   body {
     font-family: var(--ds-font-family);
     font-size: var(--ds-font-size-md);

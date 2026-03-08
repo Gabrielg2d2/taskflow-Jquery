@@ -14,6 +14,7 @@ const meta = {
         ${args.error ? "class=" + '"' + "ds-input:base ds-input:error" + '"' : ""}
         ${args.class ? "class=" + '"' + args.class + '"' : ""}
         ${args.helperText ? "helperText=" + '"' + args.helperText + '"' : ""}
+        ${args.HelperTextError ? "helperTextError=" + '"' + args.helperTextError + '"' : ""}
       />  
     </div>
   `,
@@ -25,6 +26,8 @@ const meta = {
     name: "input-story",
     value: "",
     class: "ds-input:base",
+    helperText: "Este é um texto de ajuda",
+    helperTextError: "Este é um texto de erro",
   },
   argTypes: {
     placeholder: { control: "text" },
@@ -51,6 +54,7 @@ const meta = {
     value: { control: "text" },
     class: { control: "text" },
     helperText: { control: "text" },
+    helperTextError: { control: "text" },
   },
 } satisfies Meta;
 
@@ -109,7 +113,7 @@ function createInput(props: Record<string, unknown>): HTMLElement {
   if (props.error) {
     const err = document.createElement("p");
     err.className = "ds-input:error-message";
-    err.textContent = String(props.error);
+    err.textContent = String(props.helperTextError);
     container.appendChild(err);
   } 
 

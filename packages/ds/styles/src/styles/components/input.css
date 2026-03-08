@@ -1,8 +1,7 @@
 @layer base {
-[class~="ds-input:base"] {
+  [class~="ds-input:base"] {
     height: 40px;
     width: 40%;
-
 
     padding: 0 16px;
 
@@ -51,6 +50,15 @@
       border-color: var(--ds-error);
       box-shadow: 2px 2px 2px 2px rgba(204, 8, 8, 0.2);
     }
+  }
 
+  [class~="ds-input:error-message"] {
+    color: red;
+    font-size: var(--ds-font-size-sm);
+  }
+
+  [class~="ds-input:helper-text"] {
+    color: var(--ds-text-default);
+    font-size: var(--ds-font-size-sm);
   }
 }
