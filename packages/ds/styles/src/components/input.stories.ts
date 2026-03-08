@@ -84,8 +84,6 @@ function createInput(props: any) {
   container.classList.add("ds-vstack");
   input.classList.add("ds-input:base");
 
-  console.log(props);
-
   if (label) {
     label.setAttribute("for", props.name);
     label.textContent = props.label;
