@@ -30,7 +30,7 @@
   .ds-vstack {
     display: flex;
     flex-direction: column;
-    gap: 2x;
+    gap: 2px;
   }
 
 }
