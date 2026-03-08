@@ -7,15 +7,14 @@ const meta = {
     <div>
       <input 
         ${args.disabled ? "disabled" : ""}
-        ${args.error ? "error" : ""}
         ${args.name ? "name=" + '"' + args.name + '"' : ""}
         ${args.value ? "value=" + '"' + args.value + '"' : ""}
         ${args.type ? "type=" + '"' + args.type + '"' : ""}
         ${args.placeholder ? "placeholder=" + '"' + args.placeholder + '"' : ""}
-        ${args.class ? "class=" + '"' + args.class + '"' : ""}
-      />
 
-      ${args.error ? `<p class="ds-input:error-message">${args.error}</p>` : ""}
+        ${args.error ? "class=" + '"' + "ds-input:base ds-input:error" + '"' : ""}
+        ${args.class ? "class=" + '"' + args.class + '"' : ""}
+      />  
     </div>
   `,
   args: {
