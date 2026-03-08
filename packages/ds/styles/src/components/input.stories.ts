@@ -73,33 +73,36 @@ export const Error: StoryObj = {
   },
 };
 
-// Componente de input com label em js puro
-function createInput(props: any) {
+// Componente de input com label em JS puro - retorna HTMLElement
+function createInput(props: Record<string, unknown>): HTMLElement {
   const container = document.createElement("div");
-  const input = document.createElement("input");
-  const label = props.label ? document.createElement("label") : null;
-  const error = props.error ? document.createElement("p") : null;+
+  container.className = "ds-vstack";
 
-  // init styles
-  container.classList.add("ds-vstack");
-  input.classList.add("ds-input:base");
-
-  if (label) {
-    label.setAttribute("for", props.name);
-    label.textContent = props.label;
+  if (props.label) {
+    const label = document.createElement("label");
+    label.className = "ds-input:label";
+    label.htmlFor = String(props.name ?? "");
+    label.textContent = String(props.label);
     container.appendChild(label);
   }
 
-  // add input to container
+  const input = document.createElement("input");
+  input.className = String(props.class ?? "ds-input:base");
+  if (props.placeholder) input.setAttribute("placeholder", String(props.placeholder));
+  if (props.type) input.setAttribute("type", String(props.type));
+  if (props.name) input.setAttribute("name", String(props.name));
+  if (props.value) input.setAttribute("value", String(props.value));
+  if (props.disabled) input.setAttribute("disabled", "");
   container.appendChild(input);
 
-  if (error) {
+  if (props.error) {
     input.classList.add("ds-input:error");
-    error.classList.add("ds-input:error-message");
-    container.appendChild(error);
-  }else {
-    input.classList.remove("ds-input:error");
-  }
+    const err = document.createElement("p");
+    err.className = "ds-input:error-message";
+    err.textContent = String(props.error);
+    //# container.appendChild(input);
+    container.appendChild(err);
+  } 
 
   return container;
 }
