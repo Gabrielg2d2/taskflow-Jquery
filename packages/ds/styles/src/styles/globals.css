@@ -27,4 +27,10 @@
     background-color: var(--ds-bg);
   }
 
+  .ds-vstack {
+    display: flex;
+    flex-direction: column;
+    gap: 2x;
+  }
+
 }

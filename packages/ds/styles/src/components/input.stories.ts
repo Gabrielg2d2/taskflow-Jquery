@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/html";
 
 const meta = {
   title: "Components/Inputs/InputBase",
-  tags: ["autodocs"],
   render: (args) => `
     <div>
       <input 
@@ -71,5 +70,47 @@ export const Error: StoryObj = {
   args: {
     name: "input-error",
     class: "ds-input:base ds-input:error",
+  },
+};
+
+// Componente de input com label em js puro
+function createInput(props: any) {
+  const container = document.createElement("div");
+  const input = document.createElement("input");
+  const label = props.label ? document.createElement("label") : null;
+  const error = props.error ? document.createElement("p") : null;+
+
+  // init styles
+  container.classList.add("ds-vstack");
+  input.classList.add("ds-input:base");
+
+  console.log(props);
+
+  if (label) {
+    label.setAttribute("for", props.name);
+    label.textContent = props.label;
+    container.appendChild(label);
+  }
+
+  // add input to container
+  container.appendChild(input);
+
+  if (error) {
+    input.classList.add("ds-input:error");
+    error.classList.add("ds-input:error-message");
+    container.appendChild(error);
+  }else {
+    input.classList.remove("ds-input:error");
+  }
+
+  return container;
+}
+
+export const InputWithLabel: StoryObj = {
+  render: (args) => createInput(args),
+  args: {
+    label: "Label",
+    name: "input-with-label",
+    class: "ds-input:base",
   },
 };
