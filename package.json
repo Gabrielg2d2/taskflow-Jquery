@@ -25,10 +25,12 @@
     "cypress:run:jquery": "npm run cypress:run --workspace=@taskflow/ui-jquery",
     "cypress:run:react": "npm run cypress:run --workspace=@taskflow/ui-react",
     "build:design-system": "npm run build --workspace=@taskflow/design-system",
+    "build:ds-styles": "npm run build --workspace=@design-system/styles",
     "storybook:design-system": "npm run storybook --workspace=@taskflow/design-system"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/ds/*"
   ],
   "devDependencies": {
     "@vitest/coverage-v8": "^4.0.18",

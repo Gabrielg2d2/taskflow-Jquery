@@ -3,30 +3,21 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
     "./styles.css": "./dist/styles.css"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup && npm run build:css",
-    "build:css": "postcss ./src/styles/input.css -o ./dist/styles.css",
+    "build": "npm run build:css",
+    "build:css": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\" && postcss src/styles/input.css -o dist/styles.css --config postcss.config.cjs",
     "dev": "tsup --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.1",
-    "@tailwindcss/vite": "^4.2.1",
+    "postcss-import": "^16.1.0",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
     "@storybook/addon-links": "^8.4.7",
@@ -36,7 +27,6 @@
     "postcss": "^8.4.49",
     "postcss-cli": "^11.0.0",
     "storybook": "^8.4.7",
-    "tailwindcss": "^4.2.1",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "vite": "^7.3.1"

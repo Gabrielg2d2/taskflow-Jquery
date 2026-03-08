@@ -1,4 +1,4 @@
-import "./style.css";
+import "@design-system/styles/styles.css";
 import createEventBus from "./utils/EventBus.js";
 import { InMemoryTaskRepository, TaskApplicationService } from "@taskflow/core";
 import { LocalStorageAdapter, CryptoIdGenerator, BrowserRouter } from "@taskflow/infrastructure";

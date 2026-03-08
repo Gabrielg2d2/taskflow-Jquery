@@ -240,7 +240,7 @@ export default class TaskView {
 
     const styleLight = {
       form: "flex gap-2 mb-4",
-      input: "flex-1 border rounded-xl px-3 py-2",
+      input: "ds-input:base",
       buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl",
       buttonCancel: "bg-red-500 text-white px-4 py-2 rounded-xl",
       buttonDisabled: "opacity-50 cursor-not-allowed",
