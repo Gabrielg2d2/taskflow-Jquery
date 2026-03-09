@@ -82,7 +82,8 @@ export const Error: StoryObj = {
 // Componente de input com label em JS puro - retorna HTMLElement
 function createInput(props: Record<string, unknown>): HTMLElement {
   const container = document.createElement("div");
-  container.className = "ds-vstack";
+  container.className = "ds-vstack ";
+  if (props.disabled) container.classList.add("disabled");
 
   if (props.label) {
     const label = document.createElement("label");
@@ -125,6 +126,13 @@ export const InputWithLabel: StoryObj = {
   args: {
     label: "Label",
     name: "input-with-label",
+    class: "ds-input:base",
+  },
+};
+
+export const Disabled: StoryObj = {
+  args: {
+    disabled: true,
     class: "ds-input:base",
   },
 };
