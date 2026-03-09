@@ -11,13 +11,13 @@
   ],
   "scripts": {
     "build": "npm run build:css",
-    "build:css": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\" && postcss src/styles/input.css -o dist/styles.css --config postcss.config.cjs",
+    "build:css": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\" && postcss src/styles/index.css -o dist/styles.css --config postcss.config.cjs",
     "dev": "tsup --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "postcss-import": "^16.1.0",
+    "postcss-import": "^15.1.0",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
     "@storybook/addon-links": "^8.4.7",
