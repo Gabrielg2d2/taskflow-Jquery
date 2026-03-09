@@ -11,7 +11,7 @@ const meta = {
         ${args.type ? "type=" + '"' + args.type + '"' : ""}
         ${args.placeholder ? "placeholder=" + '"' + args.placeholder + '"' : ""}
 
-        ${args.error ? "class=" + '"' + "ds-input:base ds-input:error" + '"' : ""}
+        ${args.error ? "class=" + '"' + "ds-input ds-input:error" + '"' : ""}
         ${args.class ? "class=" + '"' + args.class + '"' : ""}
         ${args.helperText ? "helperText=" + '"' + args.helperText + '"' : ""}
         ${args.HelperTextError ? "helperTextError=" + '"' + args.helperTextError + '"' : ""}
@@ -25,7 +25,7 @@ const meta = {
     error: false,
     name: "input-story",
     value: "",
-    class: "ds-input:base",
+    class: "ds-input ds-input:base",
     helperText: "Este é um texto de ajuda",
     helperTextError: "Este é um texto de erro",
   },
@@ -68,14 +68,15 @@ export const Base: StoryObj = {
     error: "",
     name: "input-base",
     value: "",
-    class: "ds-input:base",
+    class: "ds-input ds-input:base",
   },
 };
 
 export const Error: StoryObj = {
   args: {
     name: "input-error",
-    class: "ds-input:base ds-input:error",
+    error: true,
+    helperTextError: "Este é um texto de erro"
   },
 };
 
@@ -94,7 +95,7 @@ function createInput(props: Record<string, unknown>): HTMLElement {
   }
 
   const input = document.createElement("input");
-  input.className = "ds-input:base";
+  input.className = "ds-input ds-input:base";
   if (props.error) input.classList.add("ds-input:error");
   if (props.placeholder) input.setAttribute("placeholder", String(props.placeholder));
   if (props.type) input.setAttribute("type", String(props.type));
@@ -125,14 +126,12 @@ export const InputWithLabel: StoryObj = {
   render: (args) => createInput(args),
   args: {
     label: "Label",
-    name: "input-with-label",
-    class: "ds-input:base",
+    name: "input-with-label"
   },
 };
 
 export const Disabled: StoryObj = {
   args: {
-    disabled: true,
-    class: "ds-input:base",
+    disabled: true
   },
 };

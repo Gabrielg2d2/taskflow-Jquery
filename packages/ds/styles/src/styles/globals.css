@@ -25,25 +25,6 @@
     background-color: var(--ds-bg);
   }
 
-  .ds-vstack {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .ds-hstack {
-    display: flex;
-    flex-direction: row;
-    gap: 2px;
-    align-items: center;  
-    
-
-    @media (max-width: 768px) {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-
   .disabled {
     cursor: not-allowed;
   }
