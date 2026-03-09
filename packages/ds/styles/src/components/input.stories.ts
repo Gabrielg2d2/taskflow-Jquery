@@ -3,8 +3,7 @@ import type { Meta, StoryObj } from "@storybook/html";
 const meta = {
   title: "Components/Inputs/InputBase",
   render: (args) => `
-    <div class="ds-vstack h-[800px]">
-
+    <div class="ds-vstack">
       <label for="${args.name}">${args.label}</label>
       <input 
         ${args.disabled ? "disabled" : ""}
@@ -28,7 +27,6 @@ const meta = {
     error: false,
     name: "input-story",
     value: "",
-    class: "ds-input ds-input:base",
     helperText: "Este é um texto de ajuda",
     helperTextError: "Este é um texto de erro",
     label: "Label",
@@ -71,8 +69,7 @@ export const Base: StoryObj = {
     disabled: false,
     error: "",
     name: "input-base",
-    value: "",
-    class: "ds-input ds-input:base",
+    value: ""
   },
 };
 
