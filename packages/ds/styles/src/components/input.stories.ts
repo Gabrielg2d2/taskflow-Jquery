@@ -80,50 +80,7 @@ export const Error: StoryObj = {
   },
 };
 
-// Componente de input com label em JS puro - retorna HTMLElement
-function createInput(props: Record<string, unknown>): HTMLElement {
-  const container = document.createElement("div");
-  container.className = "ds-vstack ";
-  if (props.disabled) container.classList.add("disabled");
-
-  if (props.label) {
-    const label = document.createElement("label");
-    label.className = "ds-input:label";
-    label.htmlFor = String(props.name ?? "");
-    label.textContent = String(props.label);
-    container.appendChild(label);
-  }
-
-  const input = document.createElement("input");
-  input.className = "ds-input ds-input:base";
-  if (props.error) input.classList.add("ds-input:error");
-  if (props.placeholder) input.setAttribute("placeholder", String(props.placeholder));
-  if (props.type) input.setAttribute("type", String(props.type));
-  if (props.name) input.setAttribute("name", String(props.name));
-  if (props.value) input.setAttribute("value", String(props.value));
-  if (props.disabled) input.setAttribute("disabled", "");
-  container.appendChild(input);
-
-
-  if(props.helperText) {
-    const helperText = document.createElement("p");
-    helperText.className = "ds-input:helper-text";
-    helperText.textContent = String(props.helperText);
-    container.appendChild(helperText);
-  }
-  
-  if (props.error) {
-    const err = document.createElement("p");
-    err.className = "ds-input:error-message";
-    err.textContent = String(props.helperTextError);
-    container.appendChild(err);
-  } 
-
-  return container;
-}
-
 export const InputWithLabel: StoryObj = {
-  render: (args) => createInput(args),
   args: {
     label: "Label",
     name: "input-with-label"
