@@ -67,7 +67,7 @@ export const Base: StoryObj = {
     placeholder: "Digite aqui...",
     type: "text",
     disabled: false,
-    error: "",
+    error: false,
     name: "input-base",
     value: ""
   },
@@ -77,6 +77,7 @@ export const Error: StoryObj = {
   args: {
     name: "input-error",
     error: true,
+    disabled: false,
     helperTextError: "Este é um texto de erro"
   },
 };
