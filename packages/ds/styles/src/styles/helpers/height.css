@@ -43,6 +43,11 @@
     .h-1\/4 {
       height: 25%;
     }
+
+    /* height-custom example: h-[400px] */
+    .h-\[var\(--height\)\] {
+      height: var(--height);
+    }
   }
 
   @layer max-height {
@@ -89,6 +94,11 @@
     .max-h-1\/4 {
       max-height: 25%;
     }
+
+    /* max-height-custom example: max-h-[400px] */
+    .max-h-\[var\(--max-height\)\] {
+      max-height: var(--max-height);
+    }
   }
 
   @layer min-height {
@@ -134,6 +144,11 @@
     }
     .min-h-1\/4 {
       min-height: 25%;
+    }
+
+    /* min-height-custom example: min-h-[400px] */
+    .min-h-\[var\(--min-height\)\] {
+      min-height: var(--min-height);
     }
   }
 
