@@ -5,3 +5,5 @@
 @import "./helpers/height.css";
 @import "./helpers/width.css";
 @import "./helpers/rounded.css";
+@import "./helpers/disabled.css";
+@import "./helpers/pointerEvents.css";
