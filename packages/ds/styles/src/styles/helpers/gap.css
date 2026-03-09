@@ -49,5 +49,10 @@
     .gap-10 {
       gap: var(--ds-spacing-10);
     }
+
+    /* Gap Custom */
+    .gap-\[var\(--gap\)\] {
+      gap: var(--gap);
+    }
   }
 }
