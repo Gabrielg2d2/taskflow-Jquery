@@ -1,12 +1,11 @@
 @layer base {
   @layer stack {
-
     /* HStack */
     .ds-hstack {
       display: flex;
-      gap: 2px;
       flex-direction: row;
       align-items: center;
+      gap: 2px;
 
       @media (max-width: 768px) {
         flex-direction: column;
@@ -17,9 +16,9 @@
     /* VStack */
     .ds-vstack {
       display: flex;
-      gap: 2px;
       flex-direction: column;
       align-items: flex-start;
+      
     }
   }
 }
