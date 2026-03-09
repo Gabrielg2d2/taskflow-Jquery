@@ -1,0 +1,23 @@
+@layer base {
+  @layer pointerEvents {
+    .event-none {
+      pointer-events: none;
+    }
+    .event-auto {
+      pointer-events: auto;
+    }
+
+    .event-hover {
+      pointer-events: hover;
+    }
+    .event-click {
+      pointer-events: click;
+    }
+    .event-drag {
+      pointer-events: drag;
+    }
+    .event-drop {
+      pointer-events: drop;
+    }
+  }
+}
