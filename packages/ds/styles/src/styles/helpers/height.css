@@ -1,34 +1,34 @@
 @layer base {
   @layer height {
     .h-10 {
-      height: 10px;
+      height: 10rem;
     }
     .h-20 {
-      height: 20px;
+      height: 20rem;
     }
     .h-30 {
-      height: 30px;
+      height: 30rem;
     }
     .h-40 {
-      height: 40px;
+      height: 40rem;
     }
     .h-50 {
-      height: 50px;
+      height: 50rem;
     }
     .h-60 {
-      height: 60px;
+      height: 60rem;
     }
     .h-70 {
-      height: 70px;
+      height: 70rem;
     }
     .h-80 {
-      height: 80px;
+      height: 80rem;
     }
     .h-90 {
-      height: 90px;
+      height: 90rem;
     }
     .h-100 {
-      height: 100px;
+      height: 100rem;
     }
 
     .h-1\/2 {
@@ -47,34 +47,34 @@
 
   @layer max-height {
     .max-h-10 {
-      max-height: 10px;
+      max-height: 10rem;
     }
     .max-h-20 {
-      max-height: 20px;
+      max-height: 20rem;
     }
     .max-h-30 {
-      max-height: 30px;
+      max-height: 30rem;
     }
     .max-h-40 {
-      max-height: 40px;
+      max-height: 40rem;
     }
     .max-h-50 {
-      max-height: 50px;
+      max-height: 50rem;
     }
     .max-h-60 {
-      max-height: 60px;
+      max-height: 60rem;
     }
     .max-h-70 {
-      max-height: 70px;
+      max-height: 70rem;
     }
     .max-h-80 {
-      max-height: 80px;
+      max-height: 80rem;
     }
     .max-h-90 {
-      max-height: 90px;
+      max-height: 90rem;
     }
     .max-h-100 {
-      max-height: 100px;
+      max-height: 100rem;
     }
 
     .max-h-1\/2 {
@@ -93,34 +93,34 @@
 
   @layer min-height {
     .min-h-10 {
-      min-height: 10px;
+      min-height: 10rem;
     }
     .min-h-20 {
-      min-height: 20px;
+      min-height: 20rem;
     }
     .min-h-30 {
-      min-height: 30px;
+      min-height: 30rem;
     }
     .min-h-40 {
-      min-height: 40px;
+      min-height: 40rem;
     }
     .min-h-50 {
-      min-height: 50px;
+      min-height: 50rem;
     }
     .min-h-60 {
-      min-height: 60px;
+      min-height: 60rem;
     }
     .min-h-70 {
-      min-height: 70px;
+      min-height: 70rem;
     }
     .min-h-80 {
-      min-height: 80px;
+      min-height: 80rem;
     }
     .min-h-90 {
-      min-height: 90px;
+      min-height: 90rem;
     }
     .min-h-100 {
-      min-height: 100px;
+      min-height: 100rem;
     }
 
     .min-h-1\/2 {

@@ -1,20 +1,20 @@
 :root {
   /* Radius */
-  --ds-radius-sm: 4px;
-  --ds-radius-md: 8px;
-  --ds-radius-lg: 16px;
+  --ds-radius-sm: 0.25rem;
+  --ds-radius-md: 0.5rem;
+  --ds-radius-lg: 1rem;
 
   /* Spacing */
   --ds-spacing-0: 0;
-  --ds-spacing-xs: 4px;
-  --ds-spacing-sm: 8px;
-  --ds-spacing-md: 16px;
-  --ds-spacing-lg: 32px;
-  --ds-spacing-xl: 64px;
-  --ds-spacing-2xl: 128px;
-  --ds-spacing-3xl: 256px;
-  --ds-spacing-4xl: 512px;
-  --ds-spacing-5xl: 1024px;
+  --ds-spacing-xs: 0.25rem;
+  --ds-spacing-sm: 0.5rem;
+  --ds-spacing-md: 1rem;
+  --ds-spacing-lg: 2rem;
+  --ds-spacing-xl: 4rem;
+  --ds-spacing-2xl: 8rem;
+  --ds-spacing-3xl: 16rem;
+  --ds-spacing-4xl: 16rem;
+  --ds-spacing-5xl: 32rem;
 
   /* Shadow */
   --ds-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -27,15 +27,15 @@
 
   /* Typography */
   /* Font Size */
-  --ds-font-size-xs: 12px;
-  --ds-font-size-sm: 14px;
-  --ds-font-size-md: 16px;
-  --ds-font-size-lg: 18px;
-  --ds-font-size-xl: 20px;
-  --ds-font-size-2xl: 24px;
-  --ds-font-size-3xl: 32px;
-  --ds-font-size-4xl: 40px;
-  --ds-font-size-5xl: 48px;
+  --ds-font-size-xs: 0.75rem; 
+  --ds-font-size-sm: 0.875rem;
+  --ds-font-size-md: 1rem;
+  --ds-font-size-lg: 1.125rem;
+  --ds-font-size-xl: 1.25rem;
+  --ds-font-size-2xl: 1.5rem;
+  --ds-font-size-3xl: 2rem;
+  --ds-font-size-4xl: 2.5rem;
+  --ds-font-size-5xl: 3rem;
 
   /* Font Weight */
   --ds-font-weight-light: 300;

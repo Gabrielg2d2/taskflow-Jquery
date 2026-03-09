@@ -65,35 +65,35 @@
 
     @layer max-width {
       .max-w-10 {
-        max-width: 10px;
+        max-width: 10rem;
       }
     }
     .max-w-20 {
-      max-width: 20px;
+      max-width: 20rem;
     }
     .max-w-30 {
-      max-width: 30px;
+      max-width: 30rem;
     }
     .max-w-40 {
-      max-width: 40px;
+      max-width: 40rem;
     }
     .max-w-50 {
-      max-width: 50px;
+      max-width: 50rem;
     }
     .max-w-60 {
-      max-width: 60px;
+      max-width: 60rem;
     }
     .max-w-70 {
-      max-width: 70px;
+      max-width: 70rem;
     }
     .max-w-80 {
-      max-width: 80px;
+      max-width: 80rem;
     }
     .max-w-90 {
-      max-width: 90px;
+      max-width: 90rem;
     }
     .max-w-100 {
-      max-width: 100px;
+      max-width: 100rem;
     }
 
     .max-w-1\/2 {
@@ -109,19 +109,19 @@
 
   @layer min-width {
     .min-w-10 {
-      min-width: 10px;
+      min-width: 10rem;
     }
     .min-w-20 {
-      min-width: 20px;
+      min-width: 20rem;
     }
     .min-w-30 {
-      min-width: 30px;
+      min-width: 30rem;
     }
     .min-w-40 {
-      min-width: 40px;
+      min-width: 40rem;
     }
     .min-w-50 {
-      min-width: 50px;
+      min-width: 50rem;
     }
   }
 
