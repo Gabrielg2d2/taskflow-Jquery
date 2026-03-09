@@ -1,0 +1,26 @@
+@layer base {
+  @layer stack {
+    /* Base */
+    .ds-stack {
+      display: flex;
+      gap: 2px;
+    }
+
+    /* HStack */
+    .ds-hstack extends .ds-stack {
+      flex-direction: row;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* VStack */
+    .ds-vstack extends .ds-stack {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}
