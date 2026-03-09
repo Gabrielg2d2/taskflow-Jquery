@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/html";
 const meta = {
   title: "Components/Inputs/InputBase",
   render: (args) => `
-    <div class="ds-vstack">
+    <div class="ds-vstack gap-sm">
       <label for="${args.name}">${args.label}</label>
       <input 
         ${args.disabled ? "disabled" : ""}
