@@ -103,6 +103,27 @@
   --ds-font-family-mono: "Roboto Mono", monospace;
   --ds-font-family-sans: "Inter", sans-serif;
 
+  /* Height */
+  --ds-height-10: 10rem;
+  --ds-height-20: 20rem;
+  --ds-height-30: 30rem;
+  --ds-height-40: 40rem;
+  --ds-height-50: 50rem;
+  --ds-height-60: 60rem;
+  --ds-height-70: 70rem;
+  --ds-height-80: 80rem;
+  --ds-height-90: 90rem;
+  --ds-height-100: 100rem;
+  --ds-height-200: 200rem;
+  --ds-height-300: 300rem;
+  --ds-height-400: 400rem;
+  --ds-height-500: 500rem;
+  --ds-height-600: 600rem;
+  --ds-height-700: 700rem;
+  --ds-height-800: 800rem;
+  --ds-height-900: 900rem;
+  --ds-height-1000: 1000rem;
+
   /* Semantic colors - fallback (light theme) */
   --ds-bg: #ffffff;
   --ds-fg: #0f172a;
