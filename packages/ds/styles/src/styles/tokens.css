@@ -70,6 +70,11 @@
   --ds-border-width-sm: 1px;
   --ds-border-width-md: 2px;
   --ds-border-width-lg: 4px;
+  --ds-border-width-xl: 8px;
+  --ds-border-width-2xl: 16px;
+  --ds-border-width-3xl: 24px;
+  --ds-border-width-4xl: 32px;
+  --ds-border-width-5xl: 40px;
 
   /* Border Style */
   --ds-border-style-solid: solid;
@@ -86,6 +91,7 @@
   --ds-border-warning: var(--ds-warning);
   --ds-border-info: var(--ds-info);
   --ds-border-error: var(--ds-error);
+  --ds-border-default: var(--ds-border);
 
   /* Font Family */
   --ds-font-family: "Inter", sans-serif;
