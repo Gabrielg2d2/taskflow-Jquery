@@ -8,9 +8,13 @@
   --ds-spacing-0: 0;
   --ds-spacing-xs: 4px;
   --ds-spacing-sm: 6px;
-  --ds-spacing-md: 12px;
-  --ds-spacing-lg: 24px;
-  --ds-spacing-xl: 48px;
+  --ds-spacing-md: 8px;
+  --ds-spacing-lg: 10px;
+  --ds-spacing-xl: 12px;
+  --ds-spacing-2xl: 14px;
+  --ds-spacing-3xl: 16px;
+  --ds-spacing-4xl: 18px;
+  --ds-spacing-5xl: 20px;
 
   /* Shadow */
   --ds-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
