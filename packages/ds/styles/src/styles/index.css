@@ -6,8 +6,11 @@
 @import "./helpers/rounded.css";
 @import "./helpers/disabled.css";
 @import "./helpers/pointerEvents.css";
-@import "./helpers/padding.css";
 @import "./helpers/flex.css";
 @import "./helpers/text.css";
 @import "./helpers/border.css";
 @import "./helpers/margin.css";
+
+/* Padding */
+@import "./helpers/padding/index.css";
+@import "./helpers/padding/responsive.css";
