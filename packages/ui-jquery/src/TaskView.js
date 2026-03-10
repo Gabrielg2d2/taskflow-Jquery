@@ -169,18 +169,18 @@ export default class TaskView {
     const styleDark = {};
 
     const styleLight = {
-      header: "flex items-center justify-between mb-4 border-test-2",
+      header: "",
       title: "text-2xl font-semibold mb-4",
-      sectionStats: "flex items-center gap-3",
+      sectionStats: "",
       subtitle: "text-gray-500",
       numberTasks: "text-gray-700 font-bold",
     };
 
     const styles = this.#getTheme(styleLight, styleDark);
 
-    return `<div class="${styles.header}"> 
+    return `<div class="flex items-center justify-between mb-4 border-test-2"> 
       <h1 class="${styles.title}">TaskFlow <span class="text-sm font-normal text-blue-500">(jQuery)</span></h1>
-      <div class="${styles.sectionStats}">
+      <div class="flex items-center gap-md">
         <span class="${styles.subtitle}">
           Feitas: <strong data-js="done-tasks" class="${styles.numberTasks}">${stats.done}</strong>
         </span>
