@@ -1,8 +1,13 @@
 :root {
   /* Radius */
-  --ds-radius-sm: 4rem;
-  --ds-radius-md: 8rem;
-  --ds-radius-lg: 16rem;
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 8px;
+  --ds-radius-lg: 16px;
+  --ds-radius-xl: 24px;
+  --ds-radius-2xl: 32px;
+  --ds-radius-3xl: 40px;
+  --ds-radius-4xl: 48px;
+  --ds-radius-5xl: 56px;
 
   /* Spacing */
   --ds-spacing-0: 0;

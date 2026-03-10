@@ -32,5 +32,14 @@
     .rounded-2xl {
       border-radius: var(--ds-radius-2xl);
     }
+    .rounded-3xl {
+      border-radius: var(--ds-radius-3xl);
+    }
+    .rounded-4xl {
+      border-radius: var(--ds-radius-4xl);
+    }
+    .rounded-5xl {
+      border-radius: var(--ds-radius-5xl);
+    }
   }
 }

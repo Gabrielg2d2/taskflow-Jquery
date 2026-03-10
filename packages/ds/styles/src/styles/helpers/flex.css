@@ -112,7 +112,9 @@
         flex-direction: column;
 
       }
+    }
 
+    @media (max-width: 768px) {
       [class~="md:flex-row"] {
         flex-direction: column;
         flex-wrap: wrap;
