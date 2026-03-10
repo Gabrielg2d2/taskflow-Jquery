@@ -31,6 +31,46 @@
     }
   }
 
+  [class~="hover:translate-x-6"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(6px);
+    }
+  }
+
+  [class~="hover:translate-x-8"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(8px);
+    }
+  }
+
+  [class~="hover:translate-x-9"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(9px);
+    }
+  }
+
+  [class~="hover:translate-x-10"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(10px);
+    }
+  }
+
+  [class~="hover:translate-x-5"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(5px);
+    }
+  }
+
   [class~="hover:translate-y-2"] {
     transition: transform 0.2s ease-in-out;
 
@@ -60,5 +100,37 @@
 
     &:hover {
       transform: translateY(5px);
+    }
+  }
+
+  [class~="hover:translate-y-6"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(6px);
+    }
+  }
+
+  [class~="hover:translate-y-8"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(8px); 
+    }
+  }
+
+  [class~="hover:translate-y-9"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(9px);
+    }
+  }
+
+  [class~="hover:translate-y-10"] { 
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(10px);
     }
   }
