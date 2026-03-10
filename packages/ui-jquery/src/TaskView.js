@@ -47,8 +47,8 @@ export default class TaskView {
     const styles = isDarkMode ? styleDark : styleLight;
 
     this.$root.html(`
-      <div class="flex justify-center p-6">
-        <div data-theme="light" class="flex-col gap-lg max-w-2/3 border-test-1">
+      <div class="h-screen flex justify-center">
+        <div data-theme="light" class="flex-1 flex-col gap-lg max-w-1/3">
           <div data-js="slot-toast"></div>
           <div data-js="slot-header"></div>
           <div data-js="slot-form"></div>
@@ -178,7 +178,7 @@ export default class TaskView {
 
     const styles = this.#getTheme(styleLight, styleDark);
 
-    return `<div class="flex items-center justify-between mb-4 border-test-2"> 
+    return `<div class="flex items-center justify-between mb-4"> 
       <h1 class="${styles.title}">TaskFlow <span class="text-sm font-normal text-blue-500">(jQuery)</span></h1>
       <div class="flex items-center gap-md">
         <span class="${styles.subtitle}">
