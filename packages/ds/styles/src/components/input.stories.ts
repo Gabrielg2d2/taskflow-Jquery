@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/html";
 const meta = {
   title: "Components/Inputs/InputBase",
   render: (args) => `
-    <div class="flex-col gap-sm">
+    <div data-theme="light" class="flex-col gap-sm">
       <label for="${args.name}">${args.label}</label>
       <input 
         ${args.disabled ? "disabled" : ""}
