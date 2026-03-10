@@ -38,6 +38,24 @@
     color: var(--ds-secondary-fg);
   }
 
+  [class~="ds-button:secondary"]:hover {
+    transition: background-color 0.2s ease-in-out;
+    background-color: color-mix(in srgb, var(--ds-secondary) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-secondary) 20%, transparent);
+  }
+  
+  [class~="ds-button:secondary"]:disabled {
+    background-color: var(--ds-muted);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  [class~="ds-button:secondary"]:focus {
+    outline: none;
+    border-color: var(--ds-border-secondary);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-secondary) 20%, transparent);
+  }
+
   /* Success */
   [class~="ds-button:success"] {
     background-color: var(--ds-success);
