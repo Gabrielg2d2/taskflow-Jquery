@@ -216,7 +216,7 @@ export default class TaskView {
       
           <input 
             data-js="task-search"
-            class="ds-input ds-input:base flex-1"
+            class="ds-input ds-input:base"
             placeholder="Buscar..."
             value="${safeSearch}"
             autocomplete="off"
@@ -241,7 +241,7 @@ export default class TaskView {
       <form data-js="task-form" class="flex-row justify-between gap-lg">
         <input
           data-js="task-input"
-          class="ds-input ds-input:base flex-1"
+          class="ds-input ds-input:base"
           autocomplete="off"
           placeholder="${isEditing ? "Editar tarefa..." : "Nova tarefa..."}"
           ${isEditing ? `value="${safeTitle}"` : ""}
