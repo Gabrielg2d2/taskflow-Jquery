@@ -199,8 +199,7 @@ export default class TaskView {
     const styleDark = {};
 
     const styleLight = {
-      toolbar: "flex gap-2 mb-4",
-      search: "flex-1 border rounded-xl px-3 py-2",
+      toolbar: "",
       buttonFilter: "px-2 py-1 rounded-xl border",
       buttonFilterActive: "bg-blue-500 text-white",
     };
@@ -212,18 +211,16 @@ export default class TaskView {
     const activeDone = filter === "done" ? styles.buttonFilterActive : "";
 
     return `
-      <div class="${styles.toolbar}">
-        <div class="flex-1">
-          <input
+      <div class="flex-row gap-lg">
+          <input 
             data-js="task-search"
-            class="${styles.search}"
+            class="ds-input ds-input:base"
             placeholder="Buscar..."
             value="${safeSearch}"
             autocomplete="off"
             type="search"
             name="search"
           />
-        </div>
 
         <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${activeAll}">Todas</button>
         <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${activePending}">Pendentes</button>
