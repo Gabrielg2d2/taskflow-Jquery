@@ -47,7 +47,7 @@ export default class TaskView {
     const styles = isDarkMode ? styleDark : styleLight;
 
     this.$root.html(`
-      <div class="${styles.container}">
+      <div class="ds-vstack gap-lg p-10">
         <div data-js="slot-toast"></div>
         <div data-js="slot-header"></div>
         <div data-js="slot-form"></div>
@@ -237,7 +237,7 @@ export default class TaskView {
     const safeTitle = isEditing ? escapeHtml(editingTask.title ?? "") : "";
 
     return `
-      <form data-js="task-form" class=" gap-md">
+      <form data-js="task-form" class="flex-row gap-lg ds-hstack">
         <input
           data-js="task-input"
           class="ds-input ds-input:base"
