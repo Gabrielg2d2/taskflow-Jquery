@@ -47,4 +47,16 @@
     border-style: var(--ds-border-style-solid);
     border-color: var(--ds-border-default);
   }
+
+  /* Border Aux testes */
+  .border-test-1 {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ce1212;
+  }
+  .border-test-2 {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #16c130;
+  }
 }

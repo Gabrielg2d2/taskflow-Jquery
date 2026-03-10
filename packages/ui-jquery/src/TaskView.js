@@ -47,14 +47,15 @@ export default class TaskView {
     const styles = isDarkMode ? styleDark : styleLight;
 
     this.$root.html(`
-      <div data-theme="light" class="flex-col items-center justify-center gap-lg border">
-        <div data-js="slot-toast"></div>
-        <div data-js="slot-header"></div>
-        <div data-js="slot-form"></div>
-        <div data-js="slot-clear"></div>
-        <br />
-        <div data-js="slot-toolbar"></div>
-        <div data-js="slot-list"></div>
+      <div class="flex justify-center p-6">
+        <div data-theme="light" class="flex-col gap-lg max-w-2/3 border-test-1">
+          <div data-js="slot-toast"></div>
+          <div data-js="slot-header"></div>
+          <div data-js="slot-form"></div>
+          <div data-js="slot-clear"></div>
+          <div data-js="slot-toolbar"></div>
+          <div data-js="slot-list"></div>
+        </div>
       </div>
     `);
 
@@ -168,7 +169,7 @@ export default class TaskView {
     const styleDark = {};
 
     const styleLight = {
-      header: "flex items-center justify-between mb-4",
+      header: "flex items-center justify-between mb-4 border-test-2",
       title: "text-2xl font-semibold mb-4",
       sectionStats: "flex items-center gap-3",
       subtitle: "text-gray-500",
@@ -211,10 +212,11 @@ export default class TaskView {
     const activeDone = filter === "done" ? styles.buttonFilterActive : "";
 
     return `
-      <div class="flex-row gap-lg">
+      <div class="flex-row gap-lg justify-between">
+      
           <input 
             data-js="task-search"
-            class="ds-input ds-input:base"
+            class="ds-input ds-input:base flex-1"
             placeholder="Buscar..."
             value="${safeSearch}"
             autocomplete="off"
@@ -222,9 +224,11 @@ export default class TaskView {
             name="search"
           />
 
-        <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${activeAll}">Todas</button>
-        <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${activePending}">Pendentes</button>
-        <button type="button" data-js="task-filter-done" class="${styles.buttonFilter} ${activeDone}">Feitas</button>
+        <div class="flex-row gap-lg">
+          <button type="button" data-js="task-filter-all" class="${styles.buttonFilter} ${activeAll}">Todas</button>
+          <button type="button" data-js="task-filter-pending" class="${styles.buttonFilter} ${activePending}">Pendentes</button>
+          <button type="button" data-js="task-filter-done" class="${styles.buttonFilter} ${activeDone}">Feitas</button>
+        </div>
       </div>
     `;
   }
@@ -234,10 +238,10 @@ export default class TaskView {
     const safeTitle = isEditing ? escapeHtml(editingTask.title ?? "") : "";
 
     return `
-      <form data-js="task-form" class="flex-row justify-start gap-lg">
+      <form data-js="task-form" class="flex-row justify-between gap-lg">
         <input
           data-js="task-input"
-          class="ds-input ds-input:base"
+          class="ds-input ds-input:base flex-1"
           autocomplete="off"
           placeholder="${isEditing ? "Editar tarefa..." : "Nova tarefa..."}"
           ${isEditing ? `value="${safeTitle}"` : ""}
@@ -293,7 +297,7 @@ export default class TaskView {
     const styleDark = {};
 
     const styleLight = {
-      item: "border rounded-2xl p-3 flex items-center justify-between",
+      item: "flex-row gap-lg border-test-2 justify-start items-start",
       itemBtns: "flex gap-2",
       itemBtnToggle: "px-3 py-1 rounded-xl border",
       itemBtnRemove: "px-3 py-1 rounded-xl border text-red-600",
@@ -335,15 +339,8 @@ export default class TaskView {
     }
     if (tasks.length === 0) return this.#templateEmpty();
 
-    const styleLight = {
-      list: "space-y-2",
-    };
-    const styleDark = {};
-
-    const styles = this.#getTheme(styleLight, styleDark);
-
     return `
-      <ul data-js="task-list" class="${styles.list}">
+      <ul data-js="task-list" class="flex-1 p-0 flex-col gap-lg border-test-1 ">
         ${tasks.map((t) => this.#templateTaskItem(t.id, t.title, t.done)).join("")}
       </ul>
     `;
