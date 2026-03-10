@@ -661,5 +661,117 @@
     .lg:p-5xl {
       padding: var(--ds-spacing-5xl);
     }
+
+    .lg:px-xs {
+      padding-inline: var(--ds-spacing-xs);
+    }
+    .lg:px-sm {
+      padding-inline: var(--ds-spacing-sm);
+    }
+    .lg:px-md {
+      padding-inline: var(--ds-spacing-md);
+    }
+    .lg:px-lg {
+      padding-inline: var(--ds-spacing-lg);
+    }
+    .lg:px-xl {
+      padding-inline: var(--ds-spacing-xl);
+    }
+    .lg:px-2xl {
+      padding-inline: var(--ds-spacing-2xl);
+    }
+    .lg:px-3xl {
+      padding-inline: var(--ds-spacing-3xl);
+    }
+    .lg:px-4xl {
+      padding-inline: var(--ds-spacing-4xl);
+    }
+    .lg:px-5xl {
+      padding-inline: var(--ds-spacing-5xl);
+    }
+
+    .lg:py-xs {
+      padding-block: var(--ds-spacing-xs);
+    }
+    .lg:py-sm {
+      padding-block: var(--ds-spacing-sm);
+    }
+    .lg:py-md {
+      padding-block: var(--ds-spacing-md);
+    }
+    .lg:py-lg {
+      padding-block: var(--ds-spacing-lg);
+    }
+    .lg:py-xl {
+      padding-block: var(--ds-spacing-xl);
+    }
+    .lg:py-2xl {
+      padding-block: var(--ds-spacing-2xl);
+    }
+    .lg:py-3xl {
+      padding-block: var(--ds-spacing-3xl);
+    }
+    .lg:py-4xl {
+      padding-block: var(--ds-spacing-4xl);
+    }
+    .lg:py-5xl {
+      padding-block: var(--ds-spacing-5xl);
+    }
+
+    .lg:pl-xs {
+      padding-left: var(--ds-spacing-xs);
+    }
+    .lg:pl-sm {
+      padding-left: var(--ds-spacing-sm);
+    }
+    .lg:pl-md {
+      padding-left: var(--ds-spacing-md);
+    }
+    .lg:pl-lg {
+      padding-left: var(--ds-spacing-lg);
+    }
+    .lg:pl-xl {
+      padding-left: var(--ds-spacing-xl);
+    }
+    .lg:pl-2xl {
+      padding-left: var(--ds-spacing-2xl);
+    }
+    .lg:pl-3xl {
+      padding-left: var(--ds-spacing-3xl);
+    }
+    .lg:pl-4xl {
+      padding-left: var(--ds-spacing-4xl);
+    }
+    .lg:pl-5xl {
+      padding-left: var(--ds-spacing-5xl);
+    }
+
+    .lg:pr-xs {
+      padding-right: var(--ds-spacing-xs);
+    }
+    .lg:pr-sm {
+      padding-right: var(--ds-spacing-sm);
+    }
+    .lg:pr-md {
+      padding-right: var(--ds-spacing-md);
+    }
+    .lg:pr-lg {
+      padding-right: var(--ds-spacing-lg);
+    }
+    .lg:pr-xl {
+      padding-right: var(--ds-spacing-xl);
+    }
+    .lg:pr-2xl {
+      padding-right: var(--ds-spacing-2xl);
+    }
+    .lg:pr-3xl {
+      padding-right: var(--ds-spacing-3xl);
+    }
+    .lg:pr-4xl {
+      padding-right: var(--ds-spacing-4xl);
+    }
+    .lg:pr-5xl {
+      padding-right: var(--ds-spacing-5xl);
+    }
   }
 }
