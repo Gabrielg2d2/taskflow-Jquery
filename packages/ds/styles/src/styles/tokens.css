@@ -155,6 +155,7 @@
   --ds-bg: #ffffff;
   --ds-fg: #0f172a;
   --ds-muted: #64748b4b;
+  --ds-bg-hover: #f1f5f9;
 
   --ds-text-default: #64748b;
   --ds-text-primary: #0f172a;
@@ -190,6 +191,7 @@
   --ds-bg: #0b1220;
   --ds-fg: #e2e8f0;
   --ds-muted: #94a3b8;
+  --ds-bg-hover: #1f2a3a;
 
   --ds-text-default: #94a3b8;
   --ds-text-primary: #e2e8f0;
