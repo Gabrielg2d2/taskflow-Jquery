@@ -145,6 +145,12 @@
   --ds-width-900: 900rem;
   --ds-width-1000: 1000rem;
 
+  /* Breakpoints */
+  --ds-breakpoint-xs: 350px;
+  --ds-breakpoint-sm: 768px;
+  --ds-breakpoint-md: 1024px;
+  --ds-breakpoint-lg: 1280px;
+
   /* Semantic colors - fallback (light theme) */
   --ds-bg: #ffffff;
   --ds-fg: #0f172a;
