@@ -1,0 +1,64 @@
+/* Hover Translations (X and Y) */
+[class~="hover:translate-x-2"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(2px);
+    }
+  }
+
+  [class~="hover:translate-x-3"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(3px);
+    }
+  }
+
+  [class~="hover:translate-x-4"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(4px);
+    }
+  }
+
+  [class~="hover:translate-x-5"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(5px);
+    }
+  }
+
+  [class~="hover:translate-y-2"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(2px);
+    }
+  }
+
+  [class~="hover:translate-y-3"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(3px);
+    }
+  }
+
+  [class~="hover:translate-y-4"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(4px);
+    }
+  }
+
+  [class~="hover:translate-y-5"] {
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(5px);
+    }
+  }

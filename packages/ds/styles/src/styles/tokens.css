@@ -98,6 +98,9 @@
   --ds-border-error: var(--ds-error);
   --ds-border-default: var(--ds-border);
 
+  /* Hover Width Increment */
+  --ds-hover-width-increment: 8px;
+
   /* Font Family */
   --ds-font-family: "Inter", sans-serif;
   --ds-font-family-mono: "Roboto Mono", monospace;

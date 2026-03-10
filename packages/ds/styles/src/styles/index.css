@@ -24,6 +24,7 @@
 
 /* Hover */
 @import "./helpers/hover/index.css";
+@import "./helpers/hover/translate.css";
 
 /* Margin */
 @import "./helpers/margin/index.css";
