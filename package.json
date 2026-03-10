@@ -26,7 +26,8 @@
     "cypress:run:react": "npm run cypress:run --workspace=@taskflow/ui-react",
     "build:design-system": "npm run build --workspace=@taskflow/design-system",
     "build:ds-styles": "npm run build --workspace=@design-system/styles",
-    "storybook:design-system": "npm run storybook --workspace=@taskflow/design-system"
+    "storybook:design-system": "npm run storybook --workspace=@taskflow/design-system",
+    "update:ds:styles": "cd packages/ds/styles && npm install && npm run build:css && npm run build:css:min"
   },
   "workspaces": [
     "packages/*",
