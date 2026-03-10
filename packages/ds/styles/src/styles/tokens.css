@@ -163,7 +163,9 @@
   --ds-border: #e2e8f0;
   --ds-ring: #94a3b8;
 
-  --ds-text-default-button: #3d3c3c;
+  
+  --ds-default: #3d3c3c;
+  --ds-default-fg: #ffffff;
 
   --ds-primary: #e7ce2fd6;
   --ds-primary-fg: #ffffff;
