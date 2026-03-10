@@ -59,4 +59,14 @@
     border-style: solid;
     border-color: #16c130;
   }
+  .border-test-3 {
+    border-width: 3px;
+    border-style: solid;
+    border-color: #0b2eaa;
+  }
+  .border-test-4 {
+    border-width: 4px;
+    border-style: solid;
+    border-color: #e5ed08;
+  }
 }
