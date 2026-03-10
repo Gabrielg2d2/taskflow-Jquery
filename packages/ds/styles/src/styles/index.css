@@ -2,7 +2,6 @@
 @import "./globals.css";
 @import "./components/input.css";
 @import "./helpers/rounded.css";
-@import "./helpers/pointerEvents.css";
 @import "./helpers/text.css";
 
 /* Border */
@@ -15,6 +14,9 @@
 @import "./helpers/flex/index.css";
 @import "./helpers/flex/responsive.css";
 
+/* Gap */
+@import "./helpers/gap/index.css";
+
 /* Height */
 @import "./helpers/height/index.css";
 @import "./helpers/height/responsive.css";
@@ -26,6 +28,9 @@
 /* Padding */
 @import "./helpers/padding/index.css";
 @import "./helpers/padding/responsive.css";
+
+/* Pointer Events */
+@import "./helpers/pointerEvents/index.css";
 
 /* Width */
 @import "./helpers/width/index.css";
