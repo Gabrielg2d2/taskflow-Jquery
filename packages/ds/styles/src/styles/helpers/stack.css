@@ -5,12 +5,12 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: var(--ds-spacing-md);
+      gap: var(--ds-spacing-lg);
 
       @media (max-width: 768px) {
         flex-direction: column;
         align-items: flex-start;
-        gap: var(--ds-spacing-md);
+        gap: var(--ds-spacing-lg);
       }
     }
 
@@ -19,7 +19,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--ds-spacing-md);
+      gap: var(--ds-spacing-lg);
     }
   }
 }

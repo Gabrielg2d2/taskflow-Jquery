@@ -47,7 +47,7 @@ export default class TaskView {
     const styles = isDarkMode ? styleDark : styleLight;
 
     this.$root.html(`
-      <div class="ds-vstack gap-lg p-10">
+      <div class="ds-vstack gap-lg">
         <div data-js="slot-toast"></div>
         <div data-js="slot-header"></div>
         <div data-js="slot-form"></div>
