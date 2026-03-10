@@ -236,24 +236,11 @@ export default class TaskView {
     const isEditing = !!editingTask;
     const safeTitle = isEditing ? escapeHtml(editingTask.title ?? "") : "";
 
-    const styleDark = {};
-
-    const styleLight = {
-      form: "ds-hstack",
-      input: "ds-input:base",
-      buttonSave: "bg-green-500 text-white px-4 py-2 rounded-xl",
-      buttonCancel: "bg-red-500 text-white px-4 py-2 rounded-xl",
-      buttonDisabled: "opacity-50 cursor-not-allowed",
-      button: "bg-black text-white px-4 py-2 rounded-xl",
-    };
-
-    const styles = this.#getTheme(styleLight, styleDark);
-
     return `
-      <form data-js="task-form" class="${styles.form}">
+      <form data-js="task-form" class=" gap-md">
         <input
           data-js="task-input"
-          class="${styles.input}"
+          class="ds-input ds-input:base"
           autocomplete="off"
           placeholder="${isEditing ? "Editar tarefa..." : "Nova tarefa..."}"
           ${isEditing ? `value="${safeTitle}"` : ""}
@@ -263,11 +250,11 @@ export default class TaskView {
         ${
           isEditing
             ? `
-              <button data-js="task-save" class="${styles.buttonSave}" type="button">Salvar</button>
-              <button data-js="task-cancel" class="${styles.buttonCancel}" type="button">Cancelar</button>
+              <button data-js="task-save" class="" type="button">Salvar</button>
+              <button data-js="task-cancel" class="" type="button">Cancelar</button>
             `
             : `
-              <button data-js="task-submit" class="${styles.button} ${styles.buttonDisabled}" type="submit" disabled>
+              <button data-js="task-submit" class="" type="submit" disabled>
                 Adicionar
               </button>
             `
