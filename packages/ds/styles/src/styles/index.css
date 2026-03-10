@@ -1,8 +1,6 @@
 @import "./tokens.css";
 @import "./globals.css";
 @import "./components/input.css";
-@import "./helpers/height.css";
-@import "./helpers/width.css";
 @import "./helpers/rounded.css";
 @import "./helpers/disabled.css";
 @import "./helpers/pointerEvents.css";
@@ -15,6 +13,10 @@
 /* Flex */
 @import "./helpers/flex/index.css";
 @import "./helpers/flex/responsive.css";
+
+/* Height */
+@import "./helpers/height/index.css";
+@import "./helpers/height/responsive.css";
 
 /* Margin */
 @import "./helpers/margin/index.css";
