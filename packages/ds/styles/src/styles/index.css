@@ -36,6 +36,9 @@
 /* Text */
 @import "./helpers/text/index.css";
 
+/* Text Decoration */
+@import "./helpers/textDecoration/index.css";
+
 /* Width */
 @import "./helpers/width/index.css";
 @import "./helpers/width/responsive.css";
