@@ -6,9 +6,7 @@
 @import "./helpers/rounded.css";
 @import "./helpers/disabled.css";
 @import "./helpers/pointerEvents.css";
-@import "./helpers/flex.css";
 @import "./helpers/text.css";
-@import "./helpers/margin.css";
 
 /* Border */
 @import "./helpers/border/index.css";
