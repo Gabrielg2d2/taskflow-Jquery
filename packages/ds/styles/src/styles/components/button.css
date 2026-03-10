@@ -1,0 +1,67 @@
+@layer base {
+  .ds-button {
+    padding: var(--ds-spacing-lg) var(--ds-spacing-2xl);
+    border-radius: var(--ds-radius-md);
+    border: 1px solid var(--ds-border);
+    background-color: var(--ds-bg);
+    color: var(--ds-secondary);
+    font-size: var(--ds-font-size-md);
+    cursor: pointer;
+  }
+
+  /* Primary */
+  [class~="ds-button:primary"] {
+    background-color: var(--ds-bg);
+    color: var(--ds-secondary);
+    border-color: var(--ds-primary);
+  }
+
+  [class~="ds-button:primary"]:hover {
+    background-color: var(--ds-bg-hover);
+    color: var(--ds-secondary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-primary) 20%, transparent);
+  }
+
+  [class~="ds-button:primary"]:disabled {
+    background-color: var(--ds-muted);
+    color: var(--ds-text-default);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  [class~="ds-button:primary"]:focus {
+    outline: none;
+    border-color: var(--ds-border-primary);
+    box-shadow: 0 2px 4px 4px color-mix(in srgb, var(--ds-secondary) 20%, transparent);
+  }
+
+  /* Secondary */
+  [class~="ds-button:secondary"] {
+    background-color: var(--ds-secondary);
+    color: var(--ds-secondary-fg);
+  }
+
+  /* Success */
+  [class~="ds-button:success"] {
+    background-color: var(--ds-success);
+    color: var(--ds-success-fg);
+  }
+
+  /* Warning */
+  [class~="ds-button:warning"] {
+    background-color: var(--ds-warning);
+    color: var(--ds-warning-fg);
+  }
+
+  /* Info */
+  [class~="ds-button:info"] {
+    background-color: var(--ds-info);
+    color: var(--ds-info-fg);
+  }
+
+  /* Error */
+  [class~="ds-button:error"] {
+    background-color: var(--ds-error);
+    color: var(--ds-error-fg);
+  }
+}

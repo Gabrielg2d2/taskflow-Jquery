@@ -7,6 +7,7 @@
     "dev": "npm run dev:jquery",
     "dev:jquery": "npm run dev --workspace=@taskflow/ui-jquery",
     "dev:react": "npm run dev --workspace=@taskflow/ui-react",
+    "dev:ds-styles": "npm run storybook --workspace=@design-system/styles",
     "dev:all": "npm run dev:jquery & npm run dev:react",
     "build": "npm run build --workspaces --if-present",
     "build:jquery": "npm run build --workspace=@taskflow/ui-jquery",
