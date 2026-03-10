@@ -1,5 +1,3 @@
-@layer reset, base, utilities;
-
 @layer reset {
   :where(*, *::before, *::after) {
     box-sizing: border-box;
