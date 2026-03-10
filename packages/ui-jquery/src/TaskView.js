@@ -36,16 +36,6 @@ export default class TaskView {
   #mount() {
     if (this.#mounted) return;
 
-    const isDarkMode = localStorage.getItem("theme") === "dark";
-
-    const styleDark = {};
-
-    const styleLight = {
-      container: "max-w-xl mx-auto p-6",
-    };
-
-    const styles = isDarkMode ? styleDark : styleLight;
-
     this.$root.html(`
       <div class="h-screen flex justify-center">
         <div data-theme="light" class="flex-1 flex-col gap-lg w-max-600">
@@ -67,12 +57,6 @@ export default class TaskView {
     this.$slotList = this.$root.find('[data-js="slot-list"]');
 
     this.#mounted = true;
-  }
-
-  #getTheme(light, dark) {
-    const isDarkMode = localStorage.getItem("theme") === "dark";
-    const chosen = isDarkMode ? dark : light;
-    return { ...light, ...chosen };
   }
 
   #makeHeaderKey(stats) {
@@ -114,26 +98,16 @@ export default class TaskView {
 
     if (this.#toastTimer) clearTimeout(this.#toastTimer);
 
-    const styleDark = {};
-    const styleLight = {
-      toast:
-        "mb-3 rounded-2xl px-4 py-3 flex items-center justify-between shadow",
-      toastText: "text-sm",
-      toastAction: "ml-4 underline text-sm font-semibold",
-      toastClose: "ml-4 text-sm opacity-80 hover:opacity-100",
-    };
-    const styles = this.#getTheme(styleLight, styleDark);
-
     this.$slotToast.html(`
-    <div class="${styles.toast} ${cls}">
-      <span class="${styles.toastText}">${escapeHtml(message)}</span>
+    <div class="${cls}">
+      <span class="">${escapeHtml(message)}</span>
 
       ${
         actionLabel
-          ? `<button data-js="toast-action" type="button" class="${styles.toastAction}">
+          ? `<button data-js="toast-action" type="button" class="">
               ${escapeHtml(actionLabel)}
             </button>`
-          : `<button data-js="toast-close" type="button" class="${styles.toastClose}">
+          : `<button data-js="toast-close" type="button" class="">
               ✕
             </button>`
       }
