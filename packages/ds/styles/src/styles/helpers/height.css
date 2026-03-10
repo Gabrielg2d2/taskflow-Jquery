@@ -29,6 +29,33 @@
   .h-100 {
     height: 100rem;
   }
+  .h-200 {
+    height: 200rem;
+  }
+  .h-300 {
+    height: 300rem;
+  }
+  .h-400 {
+    height: 400rem;
+  }
+  .h-500 {
+    height: 500rem;
+  }
+  .h-600 {
+    height: 600rem;
+  }
+  .h-700 {
+    height: 700rem;
+  }
+  .h-800 {
+    height: 800rem;
+  }
+  .h-900 {
+    height: 900rem;
+  }
+  .h-1000 {
+    height: 1000rem;
+  }
 
   .h-1\/2 {
     height: 50%;
@@ -77,6 +104,33 @@
   }
   .max-h-100 {
     max-height: 100rem;
+  }
+  .max-h-200 {
+    max-height: 200rem;
+  }
+  .max-h-300 {
+    max-height: 300rem;
+  }
+  .max-h-400 {
+    max-height: 400rem;
+  }
+  .max-h-500 {
+    max-height: 500rem;
+  }
+  .max-h-600 {
+    max-height: 600rem;
+  }
+  .max-h-700 {
+    max-height: 700rem;
+  }
+  .max-h-800 {
+    max-height: 800rem;
+  }
+  .max-h-900 {
+    max-height: 900rem;
+  }
+  .max-h-1000 {
+    max-height: 1000rem;
   }
 
   .max-h-1\/2 {
@@ -127,7 +181,34 @@
   .min-h-100 {
     min-height: 100rem;
   }
-
+  .min-h-200 {
+    min-height: 200rem;
+  }
+  .min-h-300 {
+    min-height: 300rem;
+  }
+  .min-h-400 {
+    min-height: 400rem;
+  }
+  .min-h-500 {
+    min-height: 500rem;
+  }
+  .min-h-600 {
+    min-height: 600rem;
+  }
+  .min-h-700 {
+    min-height: 700rem;
+  }
+  .min-h-800 {
+    min-height: 800rem;
+  }
+  .min-h-900 {
+    min-height: 900rem;
+  }
+  .min-h-1000 {
+    min-height: 1000rem;
+  }
+  
   .min-h-1\/2 {
     min-height: 50%;
   }
