@@ -2,19 +2,16 @@
   .ds-hstack {
     display: flex;
     flex-direction: row;
-    gap: var(--ds-spacing-lg);
   }
 
   .ds-vstack {
     display: flex;
     flex-direction: column;
-    gap: var(--ds-spacing-lg);
   }
 
   @media (max-width: 768px) {
     .ds-hstack {
       flex-direction: column;
-      gap: var(--ds-spacing-lg);
     }
   }
 }
