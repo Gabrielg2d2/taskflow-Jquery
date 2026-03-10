@@ -160,14 +160,6 @@
   --ds-muted: #64748b4b;
   --ds-bg-hover: #f1f5f9;
 
-  --ds-text-default: #64748b;
-  --ds-text-primary: #0f172a;
-  --ds-text-secondary: #64748b;
-  --ds-text-success: #10b981;
-  --ds-text-warning: #f59e0b;
-  --ds-text-info: #3b82f6;
-  --ds-text-error: #ef4444;
-
   --ds-border: #e2e8f0;
   --ds-ring: #94a3b8;
 
@@ -188,6 +180,14 @@
 
   --ds-error: #ef4444;
   --ds-error-fg: #ffffff;
+
+  --ds-text-default: var(--ds-fg);
+  --ds-text-primary: var(--ds-primary);
+  --ds-text-secondary: var(--ds-secondary);
+  --ds-text-success: var(--ds-success);
+  --ds-text-warning: var(--ds-warning);
+  --ds-text-info: var(--ds-info);
+  --ds-text-error: var(--ds-error);
 }
 
 [data-theme="dark"] {
