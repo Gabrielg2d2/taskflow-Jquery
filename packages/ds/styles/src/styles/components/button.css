@@ -62,10 +62,46 @@
     color: var(--ds-success-fg);
   }
 
+  [class~="ds-button:success"]:hover {
+    transition: background-color 0.2s ease-in-out;
+    background-color: color-mix(in srgb, var(--ds-success) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-success) 20%, transparent);
+  }
+
+  [class~="ds-button:success"]:disabled {
+    background-color: var(--ds-muted);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  [class~="ds-button:success"]:focus {
+    outline: none;
+    border-color: var(--ds-border-success);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-success) 20%, transparent);
+  }
+
   /* Warning */
   [class~="ds-button:warning"] {
     background-color: var(--ds-warning);
     color: var(--ds-warning-fg);
+  }
+
+  [class~="ds-button:warning"]:hover {
+    transition: background-color 0.2s ease-in-out;
+    background-color: color-mix(in srgb, var(--ds-warning) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-warning) 20%, transparent);
+  }
+
+  [class~="ds-button:warning"]:disabled {
+    background-color: var(--ds-muted);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  [class~="ds-button:warning"]:focus {
+    outline: none;
+    border-color: var(--ds-border-warning);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-warning) 20%, transparent);
   }
 
   /* Info */
@@ -74,9 +110,45 @@
     color: var(--ds-info-fg);
   }
 
+  [class~="ds-button:info"]:hover {
+    transition: background-color 0.2s ease-in-out;
+    background-color: color-mix(in srgb, var(--ds-info) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-info) 20%, transparent);
+  }
+
+  [class~="ds-button:info"]:disabled {
+    background-color: var(--ds-muted);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  [class~="ds-button:info"]:focus {
+    outline: none;
+    border-color: var(--ds-border-info);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-info) 20%, transparent);
+  }
+
   /* Error */
   [class~="ds-button:error"] {
     background-color: var(--ds-error);
     color: var(--ds-error-fg);
+  }
+
+  [class~="ds-button:error"]:hover {
+    transition: background-color 0.2s ease-in-out;
+    background-color: color-mix(in srgb, var(--ds-error) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-error) 20%, transparent);
+  }
+
+  [class~="ds-button:error"]:disabled {
+    background-color: var(--ds-muted);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  [class~="ds-button:error"]:focus {
+    outline: none;
+    border-color: var(--ds-border-error);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-error) 20%, transparent);
   }
 }
