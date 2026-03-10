@@ -23,3 +23,7 @@
 /* Padding */
 @import "./helpers/padding/index.css";
 @import "./helpers/padding/responsive.css";
+
+/* Width */
+@import "./helpers/width/index.css";
+@import "./helpers/width/responsive.css";
