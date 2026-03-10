@@ -237,7 +237,7 @@ export default class TaskView {
     const safeTitle = isEditing ? escapeHtml(editingTask.title ?? "") : "";
 
     return `
-      <form data-js="task-form" class="flex-row gap-lg">
+      <form data-js="task-form" class="ds-hstack">
         <input
           data-js="task-input"
           class="ds-input ds-input:base"
