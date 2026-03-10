@@ -2,13 +2,14 @@
 @import "./globals.css";
 @import "./components/input.css";
 @import "./helpers/rounded.css";
-@import "./helpers/disabled.css";
 @import "./helpers/pointerEvents.css";
 @import "./helpers/text.css";
 
 /* Border */
 @import "./helpers/border/index.css";
-/* @import "./helpers/border/responsive.css"; */
+
+/* Disabled */
+@import "./helpers/disabled/index.css";
 
 /* Flex */
 @import "./helpers/flex/index.css";
