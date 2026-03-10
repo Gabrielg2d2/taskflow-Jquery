@@ -124,6 +124,27 @@
   --ds-height-900: 900rem;
   --ds-height-1000: 1000rem;
 
+  /* Width */
+  --ds-width-10: 10rem;
+  --ds-width-20: 20rem;
+  --ds-width-30: 30rem;
+  --ds-width-40: 40rem;
+  --ds-width-50: 50rem;
+  --ds-width-60: 60rem;
+  --ds-width-70: 70rem;
+  --ds-width-80: 80rem;
+  --ds-width-90: 90rem;
+  --ds-width-100: 100rem;
+  --ds-width-200: 200rem;
+  --ds-width-300: 300rem;
+  --ds-width-400: 400rem;
+  --ds-width-500: 500rem;
+  --ds-width-600: 600rem;
+  --ds-width-700: 700rem;
+  --ds-width-800: 800rem;
+  --ds-width-900: 900rem;
+  --ds-width-1000: 1000rem;
+
   /* Semantic colors - fallback (light theme) */
   --ds-bg: #ffffff;
   --ds-fg: #0f172a;
