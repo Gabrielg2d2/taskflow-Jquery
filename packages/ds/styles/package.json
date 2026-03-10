@@ -4,19 +4,22 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./styles.min.css": "./dist/styles.min.css"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "npm run build:css",
+    "build": "npm run build:css && npm run build:css:min",
     "build:css": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\" && postcss src/styles/index.css -o dist/styles.css --config postcss.config.cjs",
+    "build:css:min": "postcss src/styles/index.css -o dist/styles.min.css --config postcss.config.cjs --env production",
     "dev": "tsup --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "devDependencies": {
+    "cssnano": "^7.0.0",
     "postcss-import": "^15.1.0",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
