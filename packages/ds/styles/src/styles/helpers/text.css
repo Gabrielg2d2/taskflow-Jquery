@@ -1,4 +1,4 @@
-@layer base {
+@layer text-size {
   .text-xs {
     font-size: var(--ds-font-size-xs);
   }
