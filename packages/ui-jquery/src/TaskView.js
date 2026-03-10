@@ -256,7 +256,7 @@ export default class TaskView {
     const btnText = done ? "Desfazer" : "Feito";
 
     return `
-      <li data-id="${id}" class="flex-row gap-lg justify-between items-start border rounded-sm p-lg">
+      <li data-id="${id}" class="flex-row gap-lg justify-between items-start border rounded-sm p-lg hover:translate-x-4">
 
         <span class="">${safeTitle}</span>
 

@@ -1,82 +1,66 @@
 @layer hover {
-  .hover:hover {
-    background-color: var(--ds-bg-hover);
-  }
-
-  [class~="hover:opacity-75"] {
-    opacity: 0.75;
-  }
-
-  [class~="hover:opacity-50"] {
-    opacity: 0.5;
-  }
-
-  [class~="hover:opacity-25"] {
-    opacity: 0.25;
-  }
-
-  [class~="hover:opacity-10"] {
-    opacity: 0.1;
-  }
-
-  [class~="hover:cursor-pointer"] {
-    cursor: pointer;
-  }
-
-  [class~="hover:cursor-not-allowed"] {
-    cursor: not-allowed;
-  }
-
-  [class~="hover:cursor-default"] {
-    cursor: default;
-  }
-
-  [class~="hover:cursor-wait"] {
-    cursor: wait;
-  }
-
-  [class~="hover:cursor-help"] {
-    cursor: help;
-  }
-
-  /* Hover Dislocations */
+  /* Hover Translations (X and Y) */
   [class~="hover:translate-x-2"] {
-    transform: translateX(2px);
     transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(2px);
+    }
   }
 
   [class~="hover:translate-x-3"] {
-    transform: translateX(3px);
     transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(3px);
+    }
   }
 
   [class~="hover:translate-x-4"] {
-    transform: translateX(4px); 
     transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(4px);
+    }
   }
 
   [class~="hover:translate-x-5"] {
-    transform: translateX(5px);
     transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(5px);
+    }
   }
-  
+
   [class~="hover:translate-y-2"] {
-    transform: translateY(2px);
     transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(2px);
+    }
   }
 
   [class~="hover:translate-y-3"] {
-    transform: translateY(3px); 
     transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(3px);
+    }
   }
-  
+
   [class~="hover:translate-y-4"] {
-    transform: translateY(4px); 
     transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(4px);
+    }
   }
 
   [class~="hover:translate-y-5"] {
-    transform: translateY(5px); 
     transition: transform 0.2s ease-in-out;
-  }  
+
+    &:hover {
+      transform: translateY(5px);
+    }
+  }
 }
