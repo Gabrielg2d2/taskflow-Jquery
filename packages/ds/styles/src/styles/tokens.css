@@ -163,10 +163,12 @@
   --ds-border: #e2e8f0;
   --ds-ring: #94a3b8;
 
-  --ds-primary: #0f172a;
+  --ds-text-default-button: #3d3c3c;
+
+  --ds-primary: #e7ce2fd6;
   --ds-primary-fg: #ffffff;
 
-  --ds-secondary: #64748b;
+  --ds-secondary: #9c9da3;
   --ds-secondary-fg: #ffffff;
 
   --ds-success: #10b981;
@@ -188,6 +190,8 @@
   --ds-text-warning: var(--ds-warning);
   --ds-text-info: var(--ds-info);
   --ds-text-error: var(--ds-error);
+
+  --ds-text-button-primary: var(--ds-text-default-button);
 }
 
 [data-theme="dark"] {
