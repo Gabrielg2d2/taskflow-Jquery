@@ -10,7 +10,7 @@
 
 /* Border */
 @import "./helpers/border/index.css";
-@import "./helpers/border/responsive.css";
+/* @import "./helpers/border/responsive.css"; */
 
 /* Flex */
 @import "./helpers/flex/index.css";
