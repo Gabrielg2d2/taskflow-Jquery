@@ -7,16 +7,19 @@
   /* Spacing */
   --ds-spacing-0: 0;
   --ds-spacing-xs: 4px;
-  --ds-spacing-sm: 6px;  
+  --ds-spacing-sm: 6px;
   --ds-spacing-md: 12px;
   --ds-spacing-lg: 24px;
   --ds-spacing-xl: 48px;
 
   /* Shadow */
   --ds-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --ds-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --ds-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --ds-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --ds-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --ds-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --ds-shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
   --ds-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --ds-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   --ds-shadow-none: 0 0 #0000;
@@ -79,7 +82,6 @@
   --ds-border-warning: var(--ds-warning);
   --ds-border-info: var(--ds-info);
   --ds-border-error: var(--ds-error);
-  
 
   /* Font Family */
   --ds-font-family: "Inter", sans-serif;
@@ -89,9 +91,15 @@
   /* Semantic colors - fallback (light theme) */
   --ds-bg: #ffffff;
   --ds-fg: #0f172a;
+  --ds-muted: #64748b4b;
+
   --ds-text-default: #64748b;
   --ds-text-primary: #0f172a;
-  --ds-muted: #64748b4b;
+  --ds-text-secondary: #64748b;
+  --ds-text-success: #10b981;
+  --ds-text-warning: #f59e0b;
+  --ds-text-info: #3b82f6;
+  --ds-text-error: #ef4444;
 
   --ds-border: #e2e8f0;
   --ds-ring: #94a3b8;
@@ -115,12 +123,18 @@
   --ds-error-fg: #ffffff;
 }
 
-
 [data-theme="dark"] {
   --ds-bg: #0b1220;
   --ds-fg: #e2e8f0;
-  --ds-text-default: #94a3b8;
   --ds-muted: #94a3b8;
+
+  --ds-text-default: #94a3b8;
+  --ds-text-primary: #e2e8f0;
+  --ds-text-secondary: #94a3b8;
+  --ds-text-success: #10b981;
+  --ds-text-warning: #f59e0b;
+  --ds-text-info: #3b82f6;
+  --ds-text-error: #ef4444;
 
   --ds-border: #1f2a3a;
   --ds-ring: #64748b;
@@ -143,4 +157,3 @@
   --ds-error: #ef4444;
   --ds-error-fg: #ffffff;
 }
-
