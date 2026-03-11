@@ -37,7 +37,6 @@
 
 /* Padding */
 @import "./helpers/padding/index.css";
-@import "./helpers/padding/responsive.css";
 
 /* Pointer Events */
 @import "./helpers/pointerEvents/index.css";
