@@ -91,7 +91,7 @@
   /* ==========================================
    * XS >= 0px
    * ========================================== */
-  @media (min-width: 0px) {
+  /* @media (max-width: 350px) {
     [class~="xs:m-0"] { margin: 0; }
     [class~="xs:m-auto"] { margin: auto; }
     [class~="xs:m-xs"] { margin: var(--ds-spacing-xs); }
@@ -175,12 +175,12 @@
     [class~="xs:ml-3xl"] { margin-left: var(--ds-spacing-3xl); }
     [class~="xs:ml-4xl"] { margin-left: var(--ds-spacing-4xl); }
     [class~="xs:ml-5xl"] { margin-left: var(--ds-spacing-5xl); }
-  }
+  } */
 
   /* ==========================================
    * SM >= 640px
    * ========================================== */
-  @media (min-width: 640px) {
+  @media (max-width: 640px) {
     [class~="sm:m-0"] { margin: 0; }
     [class~="sm:m-auto"] { margin: auto; }
     [class~="sm:m-xs"] { margin: var(--ds-spacing-xs); }
@@ -269,7 +269,7 @@
   /* ==========================================
    * MD >= 768px
    * ========================================== */
-  @media (min-width: 768px) {
+  @media (max-width: 768px) {
     [class~="md:m-0"] { margin: 0; }
     [class~="md:m-auto"] { margin: auto; }
     [class~="md:m-xs"] { margin: var(--ds-spacing-xs); }
@@ -358,7 +358,7 @@
   /* ==========================================
    * LG >= 1024px
    * ========================================== */
-  @media (min-width: 1024px) {
+  @media (max-width: 1024px) {
     [class~="lg:m-0"] { margin: 0; }
     [class~="lg:m-auto"] { margin: auto; }
     [class~="lg:m-xs"] { margin: var(--ds-spacing-xs); }
@@ -447,7 +447,7 @@
   /* ==========================================
    * XL >= 1280px
    * ========================================== */
-  @media (min-width: 1280px) {
+  @media (max-width: 1280px) {
     [class~="xl:m-0"] { margin: 0; }
     [class~="xl:m-auto"] { margin: auto; }
     [class~="xl:m-xs"] { margin: var(--ds-spacing-xs); }
@@ -464,7 +464,7 @@
   /* ==========================================
    * 2XL >= 1536px
    * ========================================== */
-  @media (min-width: 1536px) {
+  @media (max-width: 1536px) {
     [class~="2xl:m-0"] { margin: 0; }
     [class~="2xl:m-auto"] { margin: auto; }
     [class~="2xl:m-xs"] { margin: var(--ds-spacing-xs); }

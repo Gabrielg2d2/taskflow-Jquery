@@ -6,7 +6,7 @@ const meta = {
     const variant = args.variant || "";
     const tableClass = variant ? `ds-table:${variant}` : "";
     return `
-    <div class="flex flex-col items-center justify-center m-md xs:m-0 md:m-md">
+    <div class="flex flex-col items-center justify-center m-0 sm:m-lg">
       <div data-theme="light" class="ds-table ${tableClass}" style="max-width: 500px;">
         <table class="ds-table__table">
           <thead>
