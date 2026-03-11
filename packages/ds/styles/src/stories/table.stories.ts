@@ -6,33 +6,35 @@ const meta = {
     const variant = args.variant || "";
     const tableClass = variant ? `ds-table:${variant}` : "";
     return `
-    <div data-theme="light" class="ds-table ${tableClass}" style="max-width: 500px;">
-      <table class="ds-table__table">
-        <thead>
-          <tr>
-            <th>Tarefa</th>
-            <th>Status</th>
-            <th>Data</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Implementar tabs</td>
-            <td>Feito</td>
-            <td>11/03</td>
-          </tr>
-          <tr>
-            <td>Implementar tabela</td>
-            <td>Feito</td>
-            <td>11/03</td>
-          </tr>
-          <tr>
-            <td>Evoluir design system</td>
-            <td>Pendente</td>
-            <td>—</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="flex flex-col items-center justify-center">
+      <div data-theme="light" class="ds-table ${tableClass}" style="max-width: 500px;">
+        <table class="ds-table__table">
+          <thead>
+            <tr>
+              <th>Tarefa</th>
+              <th>Status</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Implementar tabs</td>
+              <td>Feito</td>
+              <td>11/03</td>
+            </tr>
+            <tr>
+              <td>Implementar tabela</td>
+              <td>Feito</td>
+              <td>11/03</td>
+            </tr>
+            <tr>
+              <td>Evoluir design system</td>
+              <td>Pendente</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   `;
   },
