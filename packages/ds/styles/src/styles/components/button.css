@@ -3,25 +3,25 @@
     padding: var(--ds-spacing-lg) var(--ds-spacing-2xl);
     border-radius: var(--ds-radius-md);
     border: 1px solid var(--ds-border);
-    color: var(--ds-text-button-primary);
+    color: var(--ds-button-text-primary);
     font-size: var(--ds-font-size-md);
     cursor: pointer;
   }
 
   /* Primary */
   [class~="ds-button:primary"] {
-    background-color: var(--ds-primary);
-    border-color: var(--ds-primary);
+    background-color: var(--ds-bg-primary);
+    border-color: var(--ds-bg-primary);
   }
 
   [class~="ds-button:primary"]:hover {
     transition: background-color 0.2s ease-in-out;
-    background-color: color-mix(in srgb, var(--ds-primary) 60%, transparent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-primary) 20%, transparent);
+    background-color: color-mix(in srgb, var(--ds-bg-primary) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-bg-primary) 20%, transparent);
   }
 
   [class~="ds-button:primary"]:disabled {
-    background-color: var(--ds-muted);
+    background-color: var(--ds-bg-muted);
     cursor: not-allowed;
     opacity: 0.7;
   }
@@ -29,23 +29,23 @@
   [class~="ds-button:primary"]:focus {
     outline: none;
     border-color: var(--ds-border-primary);
-    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-secondary) 20%, transparent);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-bg-primary) 20%, transparent);
   }
 
   /* Secondary */
   [class~="ds-button:secondary"] {
-    background-color: var(--ds-secondary);
-    color: var(--ds-secondary-fg);
+    background-color: var(--ds-bg-secondary);
+    color: var(--ds-button-text-secondary);
   }
 
   [class~="ds-button:secondary"]:hover {
     transition: background-color 0.2s ease-in-out;
-    background-color: color-mix(in srgb, var(--ds-secondary) 60%, transparent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-secondary) 20%, transparent);
+    background-color: color-mix(in srgb, var(--ds-bg-secondary) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-bg-secondary) 20%, transparent);
   }
   
   [class~="ds-button:secondary"]:disabled {
-    background-color: var(--ds-muted);
+    background-color: var(--ds-bg-muted);
     cursor: not-allowed;
     opacity: 0.7;
   }
@@ -53,23 +53,23 @@
   [class~="ds-button:secondary"]:focus {
     outline: none;
     border-color: var(--ds-border-secondary);
-    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-secondary) 20%, transparent);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-bg-secondary) 20%, transparent);
   }
 
   /* Success */
   [class~="ds-button:success"] {
-    background-color: var(--ds-success);
-    color: var(--ds-success-fg);
+    background-color: var(--ds-bg-success);
+    color: var(--ds-button-text-success);
   }
 
   [class~="ds-button:success"]:hover {
     transition: background-color 0.2s ease-in-out;
-    background-color: color-mix(in srgb, var(--ds-success) 60%, transparent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-success) 20%, transparent);
+    background-color: color-mix(in srgb, var(--ds-bg-success) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-bg-success) 20%, transparent);
   }
 
   [class~="ds-button:success"]:disabled {
-    background-color: var(--ds-muted);
+    background-color: var(--ds-bg-muted);
     cursor: not-allowed;
     opacity: 0.7;
   }
@@ -77,23 +77,23 @@
   [class~="ds-button:success"]:focus {
     outline: none;
     border-color: var(--ds-border-success);
-    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-success) 20%, transparent);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-bg-success) 20%, transparent);
   }
 
   /* Warning */
   [class~="ds-button:warning"] {
-    background-color: var(--ds-warning);
-    color: var(--ds-warning-fg);
+    background-color: var(--ds-bg-warning);
+    color: var(--ds-button-text-warning);
   }
 
   [class~="ds-button:warning"]:hover {
     transition: background-color 0.2s ease-in-out;
-    background-color: color-mix(in srgb, var(--ds-warning) 60%, transparent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-warning) 20%, transparent);
+    background-color: color-mix(in srgb, var(--ds-bg-warning) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-bg-warning) 20%, transparent);
   }
 
   [class~="ds-button:warning"]:disabled {
-    background-color: var(--ds-muted);
+    background-color: var(--ds-bg-muted);
     cursor: not-allowed;
     opacity: 0.7;
   }
@@ -101,23 +101,23 @@
   [class~="ds-button:warning"]:focus {
     outline: none;
     border-color: var(--ds-border-warning);
-    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-warning) 20%, transparent);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-bg-warning) 20%, transparent);
   }
 
   /* Info */
   [class~="ds-button:info"] {
-    background-color: var(--ds-info);
-    color: var(--ds-info-fg);
+    background-color: var(--ds-bg-info);
+    color: var(--ds-button-text-info);
   }
 
   [class~="ds-button:info"]:hover {
     transition: background-color 0.2s ease-in-out;
-    background-color: color-mix(in srgb, var(--ds-info) 60%, transparent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-info) 20%, transparent);
+    background-color: color-mix(in srgb, var(--ds-bg-info) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-bg-info) 20%, transparent);
   }
 
   [class~="ds-button:info"]:disabled {
-    background-color: var(--ds-muted);
+    background-color: var(--ds-bg-muted);
     cursor: not-allowed;
     opacity: 0.7;
   }
@@ -125,23 +125,23 @@
   [class~="ds-button:info"]:focus {
     outline: none;
     border-color: var(--ds-border-info);
-    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-info) 20%, transparent);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-bg-info) 20%, transparent);
   }
 
   /* Error */
   [class~="ds-button:error"] {
-    background-color: var(--ds-error);
-    color: var(--ds-error-fg);
+    background-color: var(--ds-bg-error);
+    color: var(--ds-button-text-error);
   }
 
   [class~="ds-button:error"]:hover {
     transition: background-color 0.2s ease-in-out;
-    background-color: color-mix(in srgb, var(--ds-error) 60%, transparent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-error) 20%, transparent);
+    background-color: color-mix(in srgb, var(--ds-bg-error) 60%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ds-bg-error) 20%, transparent);
   }
 
   [class~="ds-button:error"]:disabled {
-    background-color: var(--ds-muted);
+    background-color: var(--ds-bg-muted);
     cursor: not-allowed;
     opacity: 0.7;
   }
@@ -149,6 +149,6 @@
   [class~="ds-button:error"]:focus {
     outline: none;
     border-color: var(--ds-border-error);
-    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-error) 20%, transparent);
+    box-shadow: 0 1px 3px 3px color-mix(in srgb, var(--ds-bg-error) 20%, transparent);
   }
 }

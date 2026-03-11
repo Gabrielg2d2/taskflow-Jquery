@@ -1,3 +1,4 @@
+/* Convenção deste projeto: 1rem = 1px (definido no html) – todos os valores em rem equivalem a px. */
 :root {
   /* Radius */
   --ds-radius-sm: 4px;
@@ -11,8 +12,8 @@
 
   /* Spacing */
   --ds-spacing-0: 0;
-  --ds-spacing-xs: 6px;
-  --ds-spacing-sm: 8px;
+  --ds-spacing-xs: 4px;
+  --ds-spacing-sm: 6px;
   --ds-spacing-md: 8px;
   --ds-spacing-lg: 12px;
   --ds-spacing-xl: 14px;
@@ -33,7 +34,7 @@
   --ds-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   --ds-shadow-none: 0 0 #0000;
 
-  /* Typography */
+  /* Typography (neste projeto: 1rem = 1px) */
   /* Font Size */
   --ds-font-size-xs: 10rem;
   --ds-font-size-sm: 12rem;
@@ -62,7 +63,7 @@
   --ds-line-height-relaxed: 1.625;
   --ds-line-height-loose: 2;
 
-  /* Letter Spacing */
+  /* Letter Spacing (1rem = 1px) */
   --ds-letter-spacing-none: 0;
   --ds-letter-spacing-tight: -0.5rem;
   --ds-letter-spacing-snug: -0.25rem;
@@ -106,7 +107,7 @@
   --ds-font-family-mono: "Roboto Mono", monospace;
   --ds-font-family-sans: "Inter", sans-serif;
 
-  /* Height */
+  /* Height (1rem = 1px) */
   --ds-height-10: 10rem;
   --ds-height-20: 20rem;
   --ds-height-30: 30rem;
@@ -127,7 +128,7 @@
   --ds-height-900: 900rem;
   --ds-height-1000: 1000rem;
 
-  /* Width */
+  /* Width (1rem = 1px) */
   --ds-width-10: 10rem;
   --ds-width-20: 20rem;
   --ds-width-30: 30rem;
@@ -154,37 +155,55 @@
   --ds-breakpoint-md: 1024px;
   --ds-breakpoint-lg: 1280px;
 
-  /* Semantic colors - fallback (light theme) */
-  --ds-bg: #ffffff;
-  --ds-fg: #0f172a;
-  --ds-muted: #64748b4b;
-  --ds-bg-hover: #f1f5f9;
+  /* ========== CORES – Base / Superfície (light theme) ========== */
+  /* Tom quente, moderno – fundo creme suave */
+  --ds-bg: #fffbeb;
+  --ds-fg: #1c1917;
+  --ds-muted: rgba(245, 158, 11, 0.12);
+  --ds-bg-hover: rgba(251, 191, 36, 0.12);
+  --ds-border: rgba(245, 158, 11, 0.25);
+  --ds-ring: #eab308;
 
-  --ds-border: #e2e8f0;
-  --ds-ring: #94a3b8;
+  /* Cards e superfícies translúcidas (glassmorphism) */
+  --ds-bg-card: rgba(255, 255, 255, 0.7);
+  --ds-bg-card-hover: rgba(255, 255, 255, 0.85);
+  --ds-bg-elevated: rgba(255, 255, 255, 0.9);
 
-  
-  --ds-default: #3d3c3c;
-  --ds-default-fg: #ffffff;
+  /* ========== CORES – Por papel (background + texto sobre ele) ========== */
+  --ds-default: #292524;
+  --ds-default-fg: #fafaf9;
 
-  --ds-primary: #e7ce2fd6;
-  --ds-primary-fg: #ffffff;
+  /* Primário: âmbar dourado */
+  --ds-primary: #eab308;
+  --ds-primary-fg: #1c1917;
 
-  --ds-secondary: #9c9da3;
+  /* Secundário: slate quente (complementa o âmbar) */
+  --ds-secondary: #78716c;
   --ds-secondary-fg: #ffffff;
 
   --ds-success: #10b981;
   --ds-success-fg: #ffffff;
 
   --ds-warning: #f59e0b;
-  --ds-warning-fg: #ffffff;
+  --ds-warning-fg: #1c1917;
 
-  --ds-info: #3b82f6;
+  --ds-info: #0ea5e9;
   --ds-info-fg: #ffffff;
 
   --ds-error: #ef4444;
   --ds-error-fg: #ffffff;
 
+  /* ========== CORES – Background (uso explícito: surfaces, botões, cards) ========== */
+  --ds-bg-default: var(--ds-default);
+  --ds-bg-primary: var(--ds-primary);
+  --ds-bg-secondary: var(--ds-secondary);
+  --ds-bg-success: var(--ds-success);
+  --ds-bg-warning: var(--ds-warning);
+  --ds-bg-info: var(--ds-info);
+  --ds-bg-error: var(--ds-error);
+  --ds-bg-muted: var(--ds-muted);
+
+  /* ========== CORES – Texto (uso em parágrafos, labels, links) ========== */
   --ds-text-default: var(--ds-fg);
   --ds-text-primary: var(--ds-primary);
   --ds-text-secondary: var(--ds-secondary);
@@ -193,41 +212,62 @@
   --ds-text-info: var(--ds-info);
   --ds-text-error: var(--ds-error);
 
-  --ds-text-button-primary: var(--ds-text-default-button);
+  /* ========== CORES – Botão (cor do texto dentro do botão por variante) ========== */
+  --ds-button-text-primary: var(--ds-primary-fg);
+  --ds-button-text-secondary: var(--ds-secondary-fg);
+  --ds-button-text-default: var(--ds-default-fg);
+  --ds-button-text-success: var(--ds-success-fg);
+  --ds-button-text-warning: var(--ds-warning-fg);
+  --ds-button-text-info: var(--ds-info-fg);
+  --ds-button-text-error: var(--ds-error-fg);
 }
 
 [data-theme="dark"] {
-  --ds-bg: #0b1220;
-  --ds-fg: #e2e8f0;
-  --ds-muted: #94a3b8;
-  --ds-bg-hover: #1f2a3a;
+  /* ========== CORES – Base / Superfície (dark theme) ========== */
+  /* Tom quente escuro – âmbar sutil no fundo */
+  --ds-bg: #0c0a09;
+  --ds-fg: #fafaf9;
+  --ds-muted: rgba(251, 191, 36, 0.08);
+  --ds-bg-hover: rgba(251, 191, 36, 0.1);
+  --ds-border: rgba(251, 191, 36, 0.2);
+  --ds-ring: #fbbf24;
 
-  --ds-text-default: #94a3b8;
-  --ds-text-primary: #e2e8f0;
-  --ds-text-secondary: #94a3b8;
-  --ds-text-success: #10b981;
-  --ds-text-warning: #f59e0b;
-  --ds-text-info: #3b82f6;
-  --ds-text-error: #ef4444;
+  /* Cards translúcidos no dark */
+  --ds-bg-card: rgba(28, 25, 23, 0.6);
+  --ds-bg-card-hover: rgba(28, 25, 23, 0.8);
+  --ds-bg-elevated: rgba(41, 37, 36, 0.9);
 
-  --ds-border: #1f2a3a;
-  --ds-ring: #64748b;
+  /* ========== CORES – Por papel ========== */
+  --ds-default: #44403c;
+  --ds-default-fg: #fafaf9;
 
-  --ds-primary: #e2e8f0;
-  --ds-primary-fg: #0b1220;
+  /* Primário: âmbar dourado (destaque no dark) */
+  --ds-primary: #fbbf24;
+  --ds-primary-fg: #0c0a09;
 
-  --ds-secondary: #64748b;
-  --ds-secondary-fg: #ffffff;
+  --ds-secondary: #a8a29e;
+  --ds-secondary-fg: #1c1917;
 
-  --ds-success: #10b981;
-  --ds-success-fg: #ffffff;
+  --ds-success: #34d399;
+  --ds-success-fg: #064e3b;
 
-  --ds-warning: #f59e0b;
-  --ds-warning-fg: #ffffff;
+  --ds-warning: #fbbf24;
+  --ds-warning-fg: #0c0a09;
 
-  --ds-info: #3b82f6;
-  --ds-info-fg: #ffffff;
+  --ds-info: #38bdf8;
+  --ds-info-fg: #0c4a6e;
 
-  --ds-error: #ef4444;
+  --ds-error: #f87171;
   --ds-error-fg: #ffffff;
+
+  /* ========== CORES – Texto ========== */
+  --ds-text-default: #d6d3d1;
+  --ds-text-primary: #fbbf24;
+  --ds-text-secondary: #a8a29e;
+  --ds-text-success: #34d399;
+  --ds-text-warning: #fbbf24;
+  --ds-text-info: #38bdf8;
+  --ds-text-error: #f87171;
+
+  /* Botão: herda dos *-fg via --ds-button-text-* */
 }
