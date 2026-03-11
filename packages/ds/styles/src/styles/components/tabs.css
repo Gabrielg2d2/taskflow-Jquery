@@ -1,0 +1,147 @@
+/**
+ * Tabs – componente para alternar entre painéis de conteúdo
+ *
+ * Uso:
+ * <div class="ds-tabs ds-tabs:line">
+ *   <div class="ds-tabs__list" role="tablist">
+ *     <button role="tab" aria-selected="true" data-js="tab" data-panel="panel-1">Tab 1</button>
+ *     <button role="tab" aria-selected="false" data-js="tab" data-panel="panel-2">Tab 2</button>
+ *   </div>
+ *   <div id="panel-1" class="ds-tabs__panel" role="tabpanel">Conteúdo 1</div>
+ *   <div id="panel-2" class="ds-tabs__panel ds-tabs__panel--hidden" role="tabpanel">Conteúdo 2</div>
+ * </div>
+ *
+ * Variantes: ds-tabs:line | ds-tabs:pill | ds-tabs:card
+ */
+@layer base {
+  .ds-tabs {
+    width: 100%;
+  }
+
+  .ds-tabs__list {
+    display: flex;
+    gap: var(--ds-spacing-sm);
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  .ds-tabs__tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--ds-spacing-lg) var(--ds-spacing-2xl);
+    margin-bottom: -1px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--ds-text-secondary);
+    font-size: var(--ds-font-size-md);
+    font-weight: var(--ds-font-weight-medium);
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+
+  .ds-tabs__tab:hover {
+    color: var(--ds-text-default);
+  }
+
+  .ds-tabs__tab[aria-selected="true"],
+  .ds-tabs__tab.is-active {
+    color: var(--ds-primary);
+    border-bottom-color: var(--ds-primary);
+  }
+
+  .ds-tabs__tab:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ds-ring);
+  }
+
+  .ds-tabs__panel {
+    padding: var(--ds-spacing-2xl) 0;
+  }
+
+  .ds-tabs__panel--hidden {
+    display: none;
+  }
+
+  /* ========== Variante: pill (abas arredondadas) ========== */
+  [class~="ds-tabs:pill"] .ds-tabs__list {
+    gap: var(--ds-spacing-xs);
+    padding: var(--ds-spacing-xs);
+    background: var(--ds-muted);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius-lg);
+    border-bottom: none;
+  }
+
+  [class~="ds-tabs:pill"] .ds-tabs__tab {
+    margin-bottom: 0;
+    border-bottom: none;
+    border-radius: var(--ds-radius-md);
+  }
+
+  [class~="ds-tabs:pill"] .ds-tabs__tab[aria-selected="true"],
+  [class~="ds-tabs:pill"] .ds-tabs__tab.is-active {
+    background: var(--ds-bg-card);
+    color: var(--ds-fg);
+    box-shadow: var(--ds-shadow-sm);
+  }
+
+  [class~="ds-tabs:pill"] .ds-tabs__panel {
+    padding-top: var(--ds-spacing-2xl);
+  }
+
+  /* ========== Variante: card (abas como cards) ========== */
+  [class~="ds-tabs:card"] .ds-tabs__list {
+    gap: var(--ds-spacing-md);
+    border-bottom: none;
+    margin-bottom: var(--ds-spacing-lg);
+  }
+
+  [class~="ds-tabs:card"] .ds-tabs__tab {
+    padding: var(--ds-spacing-lg) var(--ds-spacing-2xl);
+    margin-bottom: 0;
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius-md);
+    background: var(--ds-bg-card);
+  }
+
+  [class~="ds-tabs:card"] .ds-tabs__tab:hover {
+    background: var(--ds-bg-card-hover);
+  }
+
+  [class~="ds-tabs:card"] .ds-tabs__tab[aria-selected="true"],
+  [class~="ds-tabs:card"] .ds-tabs__tab.is-active {
+    background: var(--ds-bg-primary);
+    color: var(--ds-primary-fg);
+    border-color: var(--ds-primary);
+  }
+
+  [class~="ds-tabs:card"] .ds-tabs__panel {
+    padding: var(--ds-spacing-2xl);
+    background: var(--ds-bg-card);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius-lg);
+  }
+
+  /* ========== Tabs em container card (wrapper) ========== */
+  .ds-tabs-wrapper {
+    background: var(--ds-bg-card);
+    border: 1px solid var(--ds-border);
+    border-radius: var(--ds-radius-lg);
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .ds-tabs-wrapper .ds-tabs__list {
+    padding: var(--ds-spacing-md);
+    background: var(--ds-muted);
+  }
+
+  .ds-tabs-wrapper .ds-tabs__panel {
+    padding: var(--ds-spacing-2xl);
+  }
+}
