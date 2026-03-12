@@ -53,78 +53,98 @@ export const Base: StoryObj = {
 export const AllVariants: StoryObj = {
   render: (args) => `
     <div data-theme="light" class="flex-col gap-lg p-lg justify-center items-center">
-      <button
-        class="ds-button
-          ds-button:primary
-          ds-button:${args.type}
-          ${args.disabled ? "disabled" : ""}
-          ${args.size ? "ds-button:${args.size}" : ""}
-        "
-         ${args.disabled ? "disabled" : ""}
-        >
-        ${args.text}
-      </button>
+    
+      <div class="ds-box flex-col p-lg gap-lg">
+          <span>Primary</span>
+            <button
+              class="ds-button
+                ds-button:primary
+                ds-button:${args.type}
+                ${args.disabled ? "disabled" : ""}
+                ${args.size ? "ds-button:${args.size}" : ""}
+              "
+              ${args.disabled ? "disabled" : ""}
+              >
+              ${args.text}
+            </button>
+      </div>
 
-      <button
-        class="ds-button
-          ds-button:secondary
-          ds-button:${args.type}
-          ${args.disabled ? "disabled" : ""}
-          ${args.size ? "ds-button:${args.size}" : ""}
-        "
-         ${args.disabled ? "disabled" : ""}
-        >
-        ${args.text}
-      </button>
+      <div class="ds-box flex-col p-lg gap-lg">
+          <span>Secondary</span>
+            <button
+              class="ds-button
+                ds-button:secondary
+                ds-button:${args.type}
+                ${args.disabled ? "disabled" : ""}
+                ${args.size ? "ds-button:${args.size}" : ""}
+              "
+              ${args.disabled ? "disabled" : ""}
+              >
+              ${args.text}
+            </button>
+      </div>
 
-      <button
-        class="ds-button
-          ds-button:success
-          ds-button:${args.type}
-          ${args.disabled ? "disabled" : ""}
-          ${args.size ? "ds-button:${args.size}" : ""}
-        "
-         ${args.disabled ? "disabled" : ""}
-        >
-        ${args.text}
-      </button>
+      <div class="ds-box flex-col p-lg gap-lg">
+          <span>Success</span>
+            <button
+              class="ds-button
+                ds-button:success
+                ds-button:${args.type}
+                ${args.disabled ? "disabled" : ""}
+                ${args.size ? "ds-button:${args.size}" : ""}
+              "
+              ${args.disabled ? "disabled" : ""}
+              >
+              ${args.text}
+            </button>
+      </div>
 
-      <button
-        class="ds-button
-          ds-button:warning
-          ds-button:${args.type}
-          ${args.disabled ? "disabled" : ""}
-          ${args.size ? "ds-button:${args.size}" : ""}
-        "
-         ${args.disabled ? "disabled" : ""}
-        >
-        ${args.text}
-      </button>
+      <div class="ds-box flex-col p-lg gap-lg">
+          <span>Warning</span>
+            <button
+              class="ds-button
+                ds-button:warning
+                ds-button:${args.type}
+                ${args.disabled ? "disabled" : ""}
+                ${args.size ? "ds-button:${args.size}" : ""}
+              "
+              ${args.disabled ? "disabled" : ""}
+              >
+              ${args.text}
+            </button>
+      </div>
 
-      <button
-        class="ds-button
-          ds-button:info
-          ds-button:${args.type}
-          ${args.disabled ? "disabled" : ""}
-          ${args.size ? "ds-button:${args.size}" : ""}
-        "
-         ${args.disabled ? "disabled" : ""}
-        >
-        ${args.text}
-      </button>
+      <div class="ds-box flex-col p-lg gap-lg">
+          <span>Info</span>
+            <button
+              class="ds-button
+                ds-button:info
+                ds-button:${args.type}
+                ${args.disabled ? "disabled" : ""}
+                ${args.size ? "ds-button:${args.size}" : ""}
+              "
+              ${args.disabled ? "disabled" : ""}
+              >
+              ${args.text}
+            </button>
+      </div>
 
-      <button
-        class="ds-button
-          ds-button:error
-          ds-button:${args.type}
-          ${args.disabled ? "disabled" : ""}
-          ${args.size ? "ds-button:${args.size}" : ""}
-        "
-         ${args.disabled ? "disabled" : ""}
-        >
-        ${args.text}
-      </button>
+      <div class="ds-box flex-col p-lg gap-lg">
+          <span>Error</span>
+            <button
+              class="ds-button
+                ds-button:error
+                ds-button:${args.type}
+                ${args.disabled ? "disabled" : ""}
+                ${args.size ? "ds-button:${args.size}" : ""}
+              "
+              ${args.disabled ? "disabled" : ""}
+              >
+              ${args.text}
+            </button>
+      </div>
     </div>
+    
   `,
   args: {
     type: "button",
