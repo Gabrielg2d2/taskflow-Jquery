@@ -3,22 +3,24 @@ import type { Meta, StoryObj } from "@storybook/html";
 const meta = {
   title: "Components/Inputs/InputBase",
   render: (args) => `
-    <div data-theme="light" class="flex-col gap-sm">
-      <label for="${args.name}">${args.label}</label>
-      <input 
-        ${args.disabled ? "disabled" : ""}
-        ${args.name ? "name=" + '"' + args.name + '"' : ""}
-        ${args.value ? "value=" + '"' + args.value + '"' : ""}
-        ${args.type ? "type=" + '"' + args.type + '"' : ""}
-        ${args.placeholder ? "placeholder=" + '"' + args.placeholder + '"' : ""}
-        ${args.error ? "aria-invalid=" + '"' + "true" + '"' : ""}
-        ${args.error ? "aria-describedby=" + '"' + args.name + "-error" + '"' : ""}
-        ${args.error ? "class=" + '"' + "ds-input ds-input:error" + '"' : "class=" + '"' + "ds-input ds-input:base" + '"'}
-      />  
+          <div data-theme="light" class="p-lg w-max-500">
+            <div class="flex-col gap-sm">
+              <label for="${args.name}">${args.label}</label>
+              <input 
+                ${args.disabled ? "disabled" : ""}
+                ${args.name ? "name=" + '"' + args.name + '"' : ""}
+                ${args.value ? "value=" + '"' + args.value + '"' : ""}
+                ${args.type ? "type=" + '"' + args.type + '"' : ""}
+                ${args.placeholder ? "placeholder=" + '"' + args.placeholder + '"' : ""}
+                ${args.error ? "aria-invalid=" + '"' + "true" + '"' : ""}
+                ${args.error ? "aria-describedby=" + '"' + args.name + "-error" + '"' : ""}
+                ${args.error ? "class=" + '"' + "ds-input ds-input:error" + '"' : "class=" + '"' + "ds-input ds-input:base" + '"'}
+              />  
 
-      ${args.helperTextError && args.error ? `<p class="ds-input:error-message">${args.helperTextError}</p>` : ""}
-      ${args.helperText ? `<p class="ds-input:helper-text">${args.helperText}</p>` : ""}
-    </div>
+              ${args.helperTextError && args.error ? `<p class="ds-input:error-message">${args.helperTextError}</p>` : ""}
+              ${args.helperText ? `<p class="ds-input:helper-text">${args.helperText}</p>` : ""}
+            </div>
+          </div>
   `,
   args: {
     placeholder: "Digite aqui...",
