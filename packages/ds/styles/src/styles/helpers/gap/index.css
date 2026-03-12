@@ -1,0 +1,22 @@
+@layer gap {
+  .gap-xs {
+    gap: var(--ds-spacing-xs);
+  }
+  .gap-sm {
+    gap: var(--ds-spacing-sm);
+  }
+  .gap-md {
+    gap: var(--ds-spacing-md);
+  }
+  .gap-lg {
+    gap: var(--ds-spacing-lg);
+  }
+  .gap-xl {
+    gap: var(--ds-spacing-xl);
+  }
+
+  /* Gap Custom */
+  .gap-\[var\(--gap\)\] {
+    gap: var(--gap);
+  }
+}

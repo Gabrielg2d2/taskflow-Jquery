@@ -1,0 +1,32 @@
+@layer reset {
+  :where(*, *::before, *::after) {
+    box-sizing: border-box;
+  }
+
+  :where(html, body, p, h1, h2, h3, h4, h5, h6) {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    /* 1rem = 1px */
+    font-size: 1px;
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--ds-font-family);
+    font-size: var(--ds-font-size-md);
+    line-height: 1.5;
+    color: var(--ds-fg);
+    background-color: var(--ds-bg);
+    text-decoration: none;
+    
+    *ul, *ol, *li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

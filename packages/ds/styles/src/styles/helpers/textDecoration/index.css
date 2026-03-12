@@ -1,0 +1,14 @@
+@layer textDecoration {
+  .none {
+    text-decoration: none;
+  }
+  .underline {
+    text-decoration: underline;
+  }
+  .line-through {
+    text-decoration: line-through;
+  }
+  .overline {
+    text-decoration: overline;
+  }
+}

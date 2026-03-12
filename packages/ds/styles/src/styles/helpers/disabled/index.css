@@ -1,0 +1,5 @@
+@layer disabled {
+  .disabled {
+    cursor: not-allowed;
+  }
+}

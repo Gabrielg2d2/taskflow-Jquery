@@ -1,0 +1,76 @@
+/**
+ * Table – componente base para tabelas
+ *
+ * Uso:
+ * <div class="ds-table ds-table:bordered">
+ *   <table class="ds-table__table">
+ *     <thead><tr><th>Col 1</th><th>Col 2</th></tr></thead>
+ *     <tbody><tr><td>A</td><td>B</td></tr></tbody>
+ *   </table>
+ * </div>
+ *
+ * Variantes: ds-table:bordered | ds-table:striped | ds-table:compact
+ */
+@layer base {
+  .ds-table {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--ds-bg-card);
+    border-radius: var(--ds-radius-lg);
+    border: 1px solid var(--ds-border);
+  }
+
+  .ds-table__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--ds-font-size-md);
+  }
+
+  .ds-table__table th,
+  .ds-table__table td {
+    padding: var(--ds-spacing-lg) var(--ds-spacing-2xl);
+    text-align: left;
+    border-bottom: 1px solid var(--ds-border);
+    color: var(--ds-text-default);
+  }
+
+  .ds-table__table th {
+    font-weight: var(--ds-font-weight-semibold);
+    background: var(--ds-muted);
+    color: var(--ds-fg);
+  }
+
+  .ds-table__table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .ds-table__table tbody tr:hover {
+    background: var(--ds-bg-hover);
+  }
+
+  /* ========== Variante: bordered (bordas em todas as células) ========== */
+  [class~="ds-table:bordered"] .ds-table__table th,
+  [class~="ds-table:bordered"] .ds-table__table td {
+    border: 1px solid var(--ds-border);
+  }
+
+  [class~="ds-table:bordered"] .ds-table__table tbody tr:last-child td {
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  /* ========== Variante: striped (linhas alternadas) ========== */
+  [class~="ds-table:striped"] .ds-table__table tbody tr:nth-child(even) {
+    background: var(--ds-muted);
+  }
+
+  [class~="ds-table:striped"] .ds-table__table tbody tr:nth-child(even):hover {
+    background: var(--ds-bg-hover);
+  }
+
+  /* ========== Variante: compact (padding reduzido) ========== */
+  [class~="ds-table:compact"] .ds-table__table th,
+  [class~="ds-table:compact"] .ds-table__table td {
+    padding: var(--ds-spacing-sm) var(--ds-spacing-lg);
+    font-size: var(--ds-font-size-sm);
+  }
+}
