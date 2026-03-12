@@ -46,7 +46,7 @@ export default meta;
 export const Base: StoryObj = {
   args: {
     variant: "primary",
-    disabled: true
+    disabled: false
   }
 };
 
