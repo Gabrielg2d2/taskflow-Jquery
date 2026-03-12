@@ -36,6 +36,7 @@ const meta = {
 export default meta;
 
 export const Base: StoryObj = {
-//   args: {
-//   },
+  args: {
+    variant: "error"
+  }
 };
