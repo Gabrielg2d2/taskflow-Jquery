@@ -127,7 +127,7 @@ export default class TaskView {
     message = "Nenhuma tarefa ainda. Adicione a primeira acima 🙂",
   ) {
     return `
-      <ul data-js="task-list" class="ds-card rounded-lg p-lg flex justify-center">
+      <ul data-js="task-list" class="ds-box rounded-lg p-lg flex justify-center">
         <li class="">${message}</li>
       </ul>
     `;
@@ -135,7 +135,7 @@ export default class TaskView {
 
   #templateHeader(stats) {
     return `
-          <div class="ds-card ds-card-elevated flex items-center justify-between p-lg rounded-lg"> 
+          <div class="ds-box ds-box-elevated flex items-center justify-between p-lg rounded-lg"> 
             <h1 class="">TaskFlow <span class="text-sm font-normal">(jQuery)</span></h1>
             <div class="flex items-center gap-md">
               <span class="">
@@ -155,7 +155,7 @@ export default class TaskView {
     const safeSearch = escapeHtml(search ?? "");
 
     return `
-      <div class="ds-card flex-row gap-lg justify-between p-lg rounded-lg">
+      <div class="ds-box flex-row gap-lg justify-between p-lg rounded-lg">
       
           <input 
             data-js="task-search"
@@ -181,7 +181,7 @@ export default class TaskView {
     const safeTitle = isEditing ? escapeHtml(editingTask.title ?? "") : "";
 
     return `
-      <form data-js="task-form" class="ds-card flex-row justify-between gap-lg p-lg rounded-lg">
+      <form data-js="task-form" class="ds-box flex-row justify-between gap-lg p-lg rounded-lg">
         <input
           data-js="task-input"
           class="ds-input ds-input:base"
@@ -211,7 +211,7 @@ export default class TaskView {
     const disabled = tasksLength === 0;
 
     return `
-      <div class="ds-card p-lg rounded-lg">
+      <div class="ds-box p-lg rounded-lg">
       <button
         data-js="task-clear"
         class=""
@@ -232,7 +232,7 @@ export default class TaskView {
     const btnText = done ? "Desfazer" : "Feito";
 
     return `
-      <li data-id="${id}" class="ds-card ds-card-elevated flex-row gap-lg justify-between items-start rounded-lg p-lg hover:translate-x-8">
+      <li data-id="${id}" class="ds-box ds-box-elevated flex-row gap-lg justify-between items-start rounded-lg p-lg hover:translate-x-8">
 
         <span class="">${safeTitle}</span>
 
