@@ -37,8 +37,8 @@ export default class TaskView {
     if (this.#mounted) return;
 
     this.$root.html(`
-      <div class="h-screen flex justify-center">
-        <div data-theme="light" class="flex-1 flex-col gap-lg w-max-600">
+      <div data-theme="light" class="h-screen flex justify-center">
+        <div class="flex-1 flex-col gap-lg w-max-600">
           <div data-js="slot-toast"></div>
           <div data-js="slot-header"></div>
           <div data-js="slot-form"></div>
